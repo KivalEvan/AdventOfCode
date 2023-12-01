@@ -1,0 +1,7 @@
+{
+   "files.associations": {
+      "run.h": "c",
+      "string.h": "c",
+      "cmath": "c"
+   }
+}
