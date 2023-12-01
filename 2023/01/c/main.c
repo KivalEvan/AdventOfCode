@@ -6,7 +6,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-char *slice(const char *src, char *dest, size_t start, size_t end) {
+char *slice(const char *restrict src, char *restrict dest, size_t start,
+            size_t end) {
   return strncpy(dest, src + start, end - start);
 }
 
