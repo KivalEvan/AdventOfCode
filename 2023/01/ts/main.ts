@@ -18,17 +18,27 @@ function isNum(str: string) {
    );
 }
 
-const strToNum: Record<string, string> = {
-   zero: '0',
-   one: '1',
-   two: '2',
-   three: '3',
-   four: '4',
-   five: '5',
-   six: '6',
-   seven: '7',
-   eight: '8',
-   nine: '9',
+const strToNum: Record<string, number> = {
+   zero: 0,
+   one: 1,
+   two: 2,
+   three: 3,
+   four: 4,
+   five: 5,
+   six: 6,
+   seven: 7,
+   eight: 8,
+   nine: 9,
+   '0': 0,
+   '1': 1,
+   '2': 2,
+   '3': 3,
+   '4': 4,
+   '5': 5,
+   '6': 6,
+   '7': 7,
+   '8': 8,
+   '9': 9,
 };
 
 // i dont feel like doing single pass
@@ -55,43 +65,15 @@ export function part1(input: string): unknown {
 }
 
 export function part2(input: string): unknown {
-   let res = 0;
-   const toSearch = Object.keys(strToNum);
-   input.split('\n').forEach((s) => {
-      let first = '';
-      let last = '';
-      let search: string | string[] = '';
-      first: for (let i = 0; i < s.length; i++) {
-         if (isNum(s[i])) {
-            first = s[i];
-            break;
-         }
-         search += s[i];
-         for (const lookFor of toSearch) {
-            if (search.includes(lookFor)) {
-               first = strToNum[lookFor];
-               break first;
-            }
-         }
-      }
-      search = [];
-      last: for (let i = s.length - 1; i >= 0; i--) {
-         if (isNum(s[i])) {
-            last = s[i];
-            break;
-         }
-         search.push(s[i]);
-         const joined = search.toReversed().join('');
-         for (const lookFor of toSearch) {
-            if (joined.includes(lookFor)) {
-               last = strToNum[lookFor];
-               break last;
-            }
-         }
-      }
-      res += Number(first + last);
-   });
-   return res;
+   return input
+      .split('\n')
+      .filter((s) => s)
+      .reduce((pv, s) => {
+         const regexd = [
+            ...s.matchAll(/(?=(\d|zero|one|two|three|four|five|six|seven|eight|nine))/g),
+         ];
+         return pv + strToNum[regexd[0][1]] * 10 + strToNum[regexd[regexd.length - 1][1]];
+      }, 0);
 }
 
 if (import.meta.main) {

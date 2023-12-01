@@ -114,13 +114,13 @@ function test(actual: unknown, expected: unknown) {
    console.assert(actual == expected, 'Expected', expected, 'got', actual);
 }
 
-function perform(tag: string, func: (path: string) => unknown, path: string) {
+function perform(tag: string, func: (input: string) => unknown, input: string) {
    let perfStart = performance.now();
    let perfEnd = performance.now();
 
    console.log('\n\\', tag);
    perfStart = performance.now();
-   result = func(path);
+   result = func(input);
    perfEnd = performance.now();
    console.log(' -- Time taken (ms):', Math.round((perfEnd - perfStart) * 100) / 100);
    console.log('/ Result:', result);
