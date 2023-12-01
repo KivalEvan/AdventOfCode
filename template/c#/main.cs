@@ -1,11 +1,11 @@
 class AdventOfCode
 {
-   object Part1(string input)
+   static string Part1(string input)
    {
 
    }
 
-   object Part2(string input)
+   static string Part2(string input)
    {
 
    }

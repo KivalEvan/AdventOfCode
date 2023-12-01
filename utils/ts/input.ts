@@ -1,18 +1,18 @@
-/**
- * Return sanitised input.
- * @param path
- * @returns
- */
-export function getInput(path: string): string {
-   return Deno.readTextFileSync(path).replaceAll('\r', '');
-}
-
 export type Answers = {
    part1: string;
    part2: string;
    test1: string;
    test2: string;
 };
+
+/**
+ * Return sanitised input and removes redundant line break at the end.
+ * @param path
+ * @returns
+ */
+export function getInput(path: string): string {
+   return Deno.readTextFileSync(path).replaceAll('\r', '').replace(/\n$/, '');
+}
 
 /**
  * Obtain answers from `answers.txt` file.

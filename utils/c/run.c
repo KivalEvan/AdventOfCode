@@ -7,16 +7,21 @@
 #include <string.h>
 #include <time.h>
 
-void *result;
+char *result;
 
 char *strdupcat(char *restrict src1, char *restrict src2) {
   return strcat(strcpy((char *)malloc(strlen(src1) + strlen(src2) + 1), src1),
                 src2);
 }
 
-void _test(void *actual, void *expected) {}
+void _test(char *actual, char *expected) {
+  if (strlen(expected) == 0)
+    return;
+  if (strcmp(actual, expected) != 0)
+    fprintf(stderr, "Expected %s Got %s", expected, actual);
+}
 
-void _perform(char *tag, void *(*fun)(char *), char *input) {
+void _perform(char *tag, char *(*fun)(char *), char *input) {
   clock_t start, end;
 
   printf("\n\\ %s\n", tag);
@@ -27,11 +32,11 @@ void _perform(char *tag, void *(*fun)(char *), char *input) {
   double time_taken = ((double)(end - start)) / CLOCKS_PER_SEC;
 
   printf(" -- Time taken (ms): %.2lf\n", time_taken * 1000);
-  printf("/ Result: %lld\n", *(long long *)result);
+  printf("/ Result: %s\n", result);
 }
 
-int run(int argc, char *argv[], void *(*fun_part1)(char *),
-        void *(*fun_part2)(char *), bool has_alternate) {
+int run(int argc, char *argv[], char *(*fun_part1)(char *),
+        char *(*fun_part2)(char *), bool has_alternate) {
   if (argc == 1) {
     fprintf(stderr, "Usage: <path/to/year/day/c>\n");
     return -1;
@@ -39,10 +44,14 @@ int run(int argc, char *argv[], void *(*fun_part1)(char *),
   Answers answers = getanswers(strdupcat(argv[1], "/../answers.txt"));
 
   _perform("Test 1", fun_part1, getinput(strdupcat(argv[1], "/../test1.txt")));
+  _test(result, answers.test1);
   _perform("Part 1", fun_part1, getinput(strdupcat(argv[1], "/../input.txt")));
+  _test(result, answers.part1);
   _perform("Test 2", fun_part2,
            getinput(strdupcat(argv[1], has_alternate ? "/../test2.txt"
                                                      : "/../test1.txt")));
+  _test(result, answers.test2);
   _perform("Part 2", fun_part2, getinput(strdupcat(argv[1], "/../input.txt")));
+  _test(result, answers.part2);
   return 0;
 }

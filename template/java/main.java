@@ -1,11 +1,11 @@
 boolean hasAlternate = false;
 
-Object part1(String input) {
-   return null;
+String part1(String input) {
+   return "";
 }
 
-Object part2(String input) {
-   return null;
+String part2(String input) {
+   return "";
 }
 
 void main(String[] args) {

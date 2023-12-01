@@ -3,12 +3,12 @@ import { run } from 'utils/run.ts';
 /** If part 2 test input has completely different input, set this to `true`. */
 export const hasAlternate = false;
 
-export function part1(input: string): unknown {
-   return;
+export function part1(input: string): string {
+   return '';
 }
 
-export function part2(input: string): unknown {
-   return;
+export function part2(input: string): string {
+   return '';
 }
 
 if (import.meta.main) {

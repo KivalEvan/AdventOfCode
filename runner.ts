@@ -15,6 +15,15 @@ const langTranslate: Record<string, string> = {
    rs: 'rust',
    csharp: 'c#',
 };
+const langFullName: Record<string, string> = {
+   c: 'C17',
+   'c#': 'C# 12',
+   go: 'Go 1.42',
+   java: 'Java 21',
+   python: 'Python 3.11',
+   rust: 'Rust 1.74',
+   ts: 'TypeScript 5.2',
+};
 const lang = langTranslate[args.l?.toLowerCase() || ''] || args.l?.toLowerCase() || 'ts';
 
 let yearStart = new Date().getFullYear();
@@ -50,15 +59,16 @@ if (args.m) {
 
 interface Main {
    hasAlternate: boolean;
-   part1: (path: string) => unknown;
-   part2: (path: string) => unknown;
+   part1: (path: string) => string;
+   part2: (path: string) => string;
 }
 
 mainLoop: for (let year = yearStart; year <= yearEnd; year++) {
    console.log(`Advent of Code -- year ${year}`);
    for (let day = dayStart; day <= dayEnd; day++) {
+      console.log(`\n----\\________\n${year} -- day ${day}`);
+      console.log('\nLanguage:', langFullName[lang]);
       try {
-         console.log();
          switch (lang) {
             case 'c':
             case 'c#':
@@ -93,6 +103,5 @@ async function tsRun(y: number, d: number) {
    const main = (await import(path)) as Main;
    if (!main) throw new Error('Main file not found.');
 
-   console.log(`----\\________\n${y} -- day ${d}`);
    run(path, main.part1, main.part2, main.hasAlternate);
 }

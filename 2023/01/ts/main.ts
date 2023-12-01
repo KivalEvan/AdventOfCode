@@ -42,7 +42,7 @@ const strToNum: Record<string, number> = {
 };
 
 // i dont feel like doing single pass
-export function part1(input: string): unknown {
+export function part1(input: string): string {
    let res = 0;
    input.split('\n').forEach((s) => {
       let first = '';
@@ -61,19 +61,19 @@ export function part1(input: string): unknown {
       }
       res += Number(first + last);
    });
-   return res;
+   return res.toString();
 }
 
-export function part2(input: string): unknown {
+export function part2(input: string): string {
    return input
       .split('\n')
-      .filter((s) => s)
       .reduce((pv, s) => {
          const regexd = [
             ...s.matchAll(/(?=(\d|zero|one|two|three|four|five|six|seven|eight|nine))/g),
          ];
          return pv + strToNum[regexd[0][1]] * 10 + strToNum[regexd[regexd.length - 1][1]];
-      }, 0);
+      }, 0)
+      .toString();
 }
 
 if (import.meta.main) {

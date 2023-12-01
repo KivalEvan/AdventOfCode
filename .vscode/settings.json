@@ -9,6 +9,8 @@
       "chrono": "c",
       "functional": "c",
       "compare": "c",
-      "cstdint": "c"
+      "cstdint": "c",
+      "helper.h": "c",
+      "time.h": "c"
    }
 }

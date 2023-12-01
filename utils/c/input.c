@@ -1,5 +1,5 @@
 #include "input.h"
-#include "split.h"
+#include "helper.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -16,6 +16,14 @@ char *getinput(char *path) {
   fclose(f);
 
   string[fsize] = 0;
+  // yeet empty last line that always somehow happen for no reason
+  // i hope this will totally not screw me over
+  if (string[fsize - 1] == '\n') {
+    char *cpy = malloc(fsize);
+    strncpy(cpy, string, fsize - 1);
+    cpy[fsize - 1] = 0;
+    string = cpy;
+  }
 
   return string;
 }

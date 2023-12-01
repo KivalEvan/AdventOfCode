@@ -1,15 +1,11 @@
+#include "main.h"
+#include "helper.h"
 #include "run.h"
-#include "split.h"
 #include <math.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-char *slice(const char *restrict src, char *restrict dest, size_t start,
-            size_t end) {
-  return strncpy(dest, src + start, end - start);
-}
 
 bool isnum(char k) {
   return k == '0' || k == '1' || k == '2' || k == '3' || k == '4' || k == '5' ||
@@ -40,13 +36,12 @@ char getnum(char *str) {
   return '\0';
 }
 
-void *part1(char *input) {
-  long long *result = malloc(sizeof(long long));
-  *result = 0;
+char *part1(char *input) {
+  long long result = 0;
 
   char **splitted = strsplit(input);
-  int line = 0;
-  while (strcmp(splitted[line], "")) {
+  size_t line = 0;
+  while (splitted[line] != NULL) {
     char *s = splitted[line];
     char str[2];
 
@@ -63,20 +58,21 @@ void *part1(char *input) {
       }
     }
 
-    *result += atoll(str);
+    result += atoll(str);
     line++;
   }
 
-  return result;
+  char *str = malloc(MAX_BUFFER_SIZE);
+  sprintf(str, "%lld", result);
+  return str;
 }
 
-void *part2(char *input) {
-  long long *result = malloc(sizeof(long long));
-  *result = 0;
+char *part2(char *input) {
+  long long result = 0;
 
   char **splitted = strsplit(input);
-  int line = 0;
-  while (strcmp(splitted[line], "")) {
+  size_t line = 0;
+  while (splitted[line] != NULL) {
     char *s = splitted[line];
     char str[2];
 
@@ -85,7 +81,7 @@ void *part2(char *input) {
         str[0] = s[i];
         break;
       }
-      char c = getnum(slice(s, (char *)malloc(5), i, i + 5));
+      char c = getnum(strslice(s, (char *)malloc(5), i, i + 5));
       if (c != '\0') {
         str[0] = c;
         break;
@@ -96,18 +92,20 @@ void *part2(char *input) {
         str[1] = s[i];
         break;
       }
-      char c = getnum(slice(s, (char *)malloc(5), i, i + 5));
+      char c = getnum(strslice(s, (char *)malloc(5), i, i + 5));
       if (c != '\0') {
         str[1] = c;
         break;
       }
     }
 
-    *result += atoll(str);
+    result += atoll(str);
     line++;
   }
 
-  return result;
+  char *str = malloc(MAX_BUFFER_SIZE);
+  sprintf(str, "%lld", result);
+  return str;
 }
 
 int main(int argc, char *argv[]) { return run(argc, argv, part1, part2, true); }

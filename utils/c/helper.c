@@ -1,7 +1,12 @@
-#include "split.h"
+#include "helper.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+char *strslice(const char *restrict src, char *restrict dest, size_t start,
+               size_t end) {
+  return strncpy(dest, src + start, end - start);
+}
 
 char **strsplit(char *input) {
   char **ary;
@@ -25,6 +30,7 @@ char **strsplit(char *input) {
     }
     input = nextLine ? (nextLine + 1) : NULL;
   }
+  ary[numLine] = NULL;
 
   return ary;
 }

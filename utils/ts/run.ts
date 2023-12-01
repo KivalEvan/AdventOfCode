@@ -1,14 +1,14 @@
 import { getAnswers, getInput } from 'utils/input.ts';
 import { dirname, fromFileUrl, resolve } from 'utils/deps.ts';
 
-let result: unknown;
+let result: string;
 
 function test(actual: unknown, expected: unknown) {
    if (expected == null) return;
    console.assert(actual == expected, `Expected ${expected}`);
 }
 
-function perform(tag: string, func: (path: string) => unknown, input: string) {
+function perform(tag: string, func: (path: string) => string, input: string) {
    console.log('\n\\', tag);
    let start = 0,
       end = 0;
@@ -23,8 +23,8 @@ function perform(tag: string, func: (path: string) => unknown, input: string) {
 
 export function run(
    path: string,
-   part1: (input: string) => unknown,
-   part2: (input: string) => unknown,
+   part1: (input: string) => string,
+   part2: (input: string) => string,
    hasAlternate: boolean
 ) {
    let isUrl = false;

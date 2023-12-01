@@ -1,7 +1,9 @@
+#define MAX_BUFFER_SIZE 256
+
 #ifndef MAIN_H_
 #define MAIN_H_
 
-void *part1(char *input);
-void *part2(char *input);
+char *part1(char *input);
+char *part2(char *input);
 
 #endif
