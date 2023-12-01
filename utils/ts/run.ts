@@ -27,21 +27,23 @@ export function run(
    part2: (input: string) => unknown,
    hasAlternate: boolean
 ) {
-   const dir = dirname(fromFileUrl(path));
+   let isUrl = false;
+   try {
+      isUrl = new URL(path).protocol.startsWith('file');
+   } catch {
+      //
+   }
+   const dir = dirname(isUrl ? fromFileUrl(path) : path);
    const answers = getAnswers(resolve(dir, '..', 'answers.txt'));
    const inputTest1 = getInput(resolve(dir, '..', 'test1.txt'));
    const inputTest2 = getInput(hasAlternate ? resolve(dir, '..', 'test2.txt') : inputTest1);
    const inputMain = getInput(resolve(dir, '..', 'input.txt'));
 
-   perform('Part 1', part1, inputTest1);
+   perform('Test 1', part1, inputTest1);
    test(result, answers.test1);
 
-   perform('Part 2', part2, inputTest2);
+   perform('Test 2', part2, inputTest2);
    test(result, answers.test2);
-
-   console.log('---\\ TEST /---');
-   console.log('--------------');
-   console.log('---/ MAIN \\---');
 
    perform('Part 1', part1, inputMain);
    test(result, answers.part1);

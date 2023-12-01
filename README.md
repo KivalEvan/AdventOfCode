@@ -16,6 +16,8 @@ This is also the order of priority that I will solve the problem with:
 
 No parallelism or concurrency will be done, IO is not included in measuring performance, having to deal with `\r` is pain and should be separated.
 
+To make challenges for myself, I can only use standard library provided by the language/compiler.
+
 ## Input & Answers
 
 The input is not included in the repository. You should use `fetchInput.ts` to fetch the input from source, it will be saved as `input.txt` in respective `year/day` folder. Grab cookie when logged in AoC through developer tool and paste it in `.env`.
@@ -40,7 +42,7 @@ Will try `bash` when I feel like it.
 
 | Day | TypeScript | Java | Python | C#  | C   | Rust | Go  |
 | --- | ---------- | ---- | ------ | --- | --- | ---- | --- |
-| 1   | ✅         |      |        |     |     |      |     |
+| 1   | ✅         |      |        |     | ✅  |      |     |
 | 2   |            |      |        |     |     |      |     |
 | 3   |            |      |        |     |     |      |     |
 | 4   |            |      |        |     |     |      |     |

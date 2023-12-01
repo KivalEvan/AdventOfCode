@@ -2,6 +2,13 @@
    "files.associations": {
       "run.h": "c",
       "string.h": "c",
-      "cmath": "c"
+      "cmath": "c",
+      "sstream": "c",
+      "source_location": "c",
+      "stdio.h": "c",
+      "chrono": "c",
+      "functional": "c",
+      "compare": "c",
+      "cstdint": "c"
    }
 }

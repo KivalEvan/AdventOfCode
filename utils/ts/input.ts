@@ -8,10 +8,10 @@ export function getInput(path: string): string {
 }
 
 export type Answers = {
-   part1: unknown;
-   part2: unknown;
-   test1: unknown;
-   test2: unknown;
+   part1: string;
+   part2: string;
+   test1: string;
+   test2: string;
 };
 
 /**
@@ -20,33 +20,32 @@ export type Answers = {
  * @returns {Answers} answers object
  */
 export function getAnswers(path: string): Answers {
-   return Deno.readTextFileSync(path)
-      .replaceAll('\r', '')
+   return getInput(path)
       .split('\n')
       .reduce(
          (answers, value, idx) => {
             value = value.trim();
             switch (idx) {
                case 0:
-                  answers.test1 = value || null;
+                  answers.test1 = value;
                   break;
                case 1:
-                  answers.part1 = value || null;
+                  answers.part1 = value;
                   break;
                case 2:
-                  answers.test2 = value || null;
+                  answers.test2 = value;
                   break;
                case 3:
-                  answers.part2 = value || null;
+                  answers.part2 = value;
                   break;
             }
             return answers;
          },
          {
-            part1: null,
-            part2: null,
-            test1: null,
-            test2: null,
-         } as Answers
+            part1: '',
+            part2: '',
+            test1: '',
+            test2: '',
+         } satisfies Answers
       );
 }

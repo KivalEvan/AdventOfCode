@@ -1,13 +1,13 @@
 import { parseArgs } from 'https://deno.land/std@0.208.0/cli/mod.ts';
 import { resolve } from 'utils/deps.ts';
-import { getAnswers, getInput } from 'utils/input.ts';
+import { run } from 'utils/run.ts';
 
 console.log('https://adventofcode.com/');
 
 const args = parseArgs(Deno.args, {
    string: ['d', 'y', 'l'],
-   boolean: ['a', 't', 'j'],
-   alias: { d: 'day', a: 'all', y: 'year', t: 'test', j: 'jump', l: 'lang' },
+   boolean: ['a', 't', 'm'],
+   alias: { d: 'day', a: 'all', y: 'year', m: 'm', l: 'lang' },
 });
 
 const langTranslate: Record<string, string> = {
@@ -15,27 +15,38 @@ const langTranslate: Record<string, string> = {
    rs: 'rust',
    csharp: 'c#',
 };
-const lang = langTranslate[args.l || ''] || args.l || 'ts';
+const lang = langTranslate[args.l?.toLowerCase() || ''] || args.l?.toLowerCase() || 'ts';
 
 let yearStart = new Date().getFullYear();
 let yearEnd = new Date().getFullYear();
-if (args.y) {
-   yearStart = parseInt(args.y);
-   yearEnd = parseInt(args.y);
-}
+let dayStart = new Date().getDate();
+let dayEnd = new Date().getDate();
+
 if (args.a) {
    yearStart = 2015;
    yearEnd = new Date().getFullYear();
+   dayStart = 1;
+   dayEnd = 25;
 }
 
-let dayStart = 1;
-let dayEnd = 25;
+if (args.y) {
+   yearStart = parseInt(args.y);
+   yearEnd = parseInt(args.y);
+   if (yearStart !== new Date().getFullYear()) {
+      dayStart = 1;
+      dayEnd = 25;
+   }
+}
+
 if (args.d) {
    dayStart = parseInt(args.d);
-   if (!args.j) dayEnd = parseInt(args.d);
+   dayEnd = parseInt(args.d);
 }
 
-const doTest = args.t;
+if (args.m) {
+   dayStart = 1;
+   dayEnd = 25;
+}
 
 interface Main {
    hasAlternate: boolean;
@@ -43,7 +54,6 @@ interface Main {
    part2: (path: string) => unknown;
 }
 
-let result: unknown;
 mainLoop: for (let year = yearStart; year <= yearEnd; year++) {
    console.log(`Advent of Code -- year ${year}`);
    for (let day = dayStart; day <= dayEnd; day++) {
@@ -79,49 +89,10 @@ mainLoop: for (let year = yearStart; year <= yearEnd; year++) {
 }
 
 async function tsRun(y: number, d: number) {
-   const path = resolve(`./${y}/${d.toString().padStart(2, '0')}/ts`);
-   const answers = getAnswers(resolve(path, '..', 'answers.txt'));
-   const main = (await import(resolve(path, 'main.ts'))) as Main;
+   const path = resolve(`./${y}/${d.toString().padStart(2, '0')}/ts/main.ts`);
+   const main = (await import(path)) as Main;
    if (!main) throw new Error('Main file not found.');
 
    console.log(`----\\________\n${y} -- day ${d}`);
-
-   if (doTest) {
-      console.log('\nPerforming test:');
-      perform('Part 1', main.part1, getInput(resolve(path, '..', 'test1.txt')));
-      test(result, answers.test1);
-
-      perform(
-         'Part 2',
-         main.part2,
-         getInput(
-            main.hasAlternate ? resolve(path, '..', 'test2.txt') : resolve(path, '..', 'test1.txt')
-         )
-      );
-      test(result, answers.test2);
-
-      console.log('\nTest completed.');
-   }
-   perform('Part 1', main.part1, getInput(resolve(path, '..', 'input.txt')));
-   test(result, answers.part1);
-
-   perform('Part 2', main.part2, getInput(resolve(path, '..', 'input.txt')));
-   test(result, answers.part2);
-}
-
-function test(actual: unknown, expected: unknown) {
-   if (expected == null) return;
-   console.assert(actual == expected, 'Expected', expected, 'got', actual);
-}
-
-function perform(tag: string, func: (input: string) => unknown, input: string) {
-   let perfStart = performance.now();
-   let perfEnd = performance.now();
-
-   console.log('\n\\', tag);
-   perfStart = performance.now();
-   result = func(input);
-   perfEnd = performance.now();
-   console.log(' -- Time taken (ms):', Math.round((perfEnd - perfStart) * 100) / 100);
-   console.log('/ Result:', result);
+   run(path, main.part1, main.part2, main.hasAlternate);
 }
