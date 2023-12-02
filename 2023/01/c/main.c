@@ -39,7 +39,7 @@ char getnum(char *str) {
 }
 
 char *part1(char *input) {
-  long long result = 0;
+  int result = 0;
 
   char **splitted = strsplit(input);
   size_t line = 0;
@@ -60,17 +60,17 @@ char *part1(char *input) {
       }
     }
 
-    result += atoll(str);
+    result += atoi(str);
     line++;
   }
 
   char *str = malloc(MAX_BUFFER_SIZE);
-  sprintf(str, "%lld", result);
+  sprintf(str, "%d", result);
   return str;
 }
 
 char *part2(char *input) {
-  long long result = 0;
+  int result = 0;
 
   char **splitted = strsplit(input);
   size_t line = 0;
@@ -101,12 +101,12 @@ char *part2(char *input) {
       }
     }
 
-    result += atoll(str);
+    result += atoi(str);
     line++;
   }
 
   char *str = malloc(MAX_BUFFER_SIZE);
-  sprintf(str, "%lld", result);
+  sprintf(str, "%d", result);
   return str;
 }
 

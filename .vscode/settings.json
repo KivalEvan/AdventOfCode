@@ -12,6 +12,18 @@
       "cstdint": "c",
       "helper.h": "c",
       "time.h": "c",
-      "stdbool.h": "c"
+      "stdbool.h": "c",
+      "array": "c",
+      "hash_map": "c",
+      "deque": "c",
+      "list": "c",
+      "string": "c",
+      "unordered_map": "c",
+      "vector": "c",
+      "string_view": "c",
+      "format": "c",
+      "initializer_list": "c",
+      "span": "c",
+      "valarray": "c"
    }
 }

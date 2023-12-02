@@ -8,24 +8,23 @@ char *strslice(const char *restrict src, char *restrict dest, size_t start,
   return strncpy(dest, src + start, end - start);
 }
 
-char **strsplitc(char *restrict str, char limiter) {
+char **strsplitc(const char *restrict str, char separator) {
   char **ary;
   int i = 0, numLine = 0;
   while (str[i])
-    if (str[i++] == limiter)
+    if (str[i++] == separator)
       numLine++;
   ary = malloc((numLine + 1) * sizeof(char *));
 
   numLine = 0;
   while (str) {
-    char *nextLine = strchr(str, limiter);
+    char *nextLine = strchr(str, separator);
     int inputLen = nextLine ? (nextLine - str) : strlen(str);
     char *tempStr = (char *)malloc(inputLen + 1);
     if (tempStr) {
       memcpy(tempStr, str, inputLen);
       tempStr[inputLen] = '\0';
-      char *toCopy = strcpy((char *)malloc(inputLen + 1), tempStr);
-      ary[numLine++] = toCopy;
+      ary[numLine++] = tempStr;
     }
     str = nextLine ? (nextLine + 1) : NULL;
   }
@@ -34,7 +33,7 @@ char **strsplitc(char *restrict str, char limiter) {
   return ary;
 }
 
-char **strsplit(char *restrict str) { return strsplitc(str, '\n'); }
+char **strsplit(const char *restrict str) { return strsplitc(str, '\n'); }
 
 int stridxof(const char *restrict str, char c) {
   int i;
@@ -42,6 +41,5 @@ int stridxof(const char *restrict str, char c) {
     if (str[i] == c)
       return i;
   }
-
   return -1;
 }
