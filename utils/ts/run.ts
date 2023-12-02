@@ -4,7 +4,7 @@ import { dirname, fromFileUrl, resolve } from 'utils/deps.ts';
 let result: string;
 
 function test(actual: unknown, expected: unknown) {
-   if (expected == null) return;
+   if (expected == '') return;
    console.assert(actual == expected, `Expected ${expected}`);
 }
 
@@ -36,17 +36,19 @@ export function run(
    const dir = dirname(isUrl ? fromFileUrl(path) : path);
    const answers = getAnswers(resolve(dir, '..', 'answers.txt'));
    const inputTest1 = getInput(resolve(dir, '..', 'test1.txt'));
-   const inputTest2 = getInput(hasAlternate ? resolve(dir, '..', 'test2.txt') : inputTest1);
+   const inputTest2 = getInput(
+      hasAlternate ? resolve(dir, '..', 'test2.txt') : resolve(dir, '..', 'test1.txt')
+   );
    const inputMain = getInput(resolve(dir, '..', 'input.txt'));
 
    perform('Test 1', part1, inputTest1);
    test(result, answers.test1);
 
-   perform('Test 2', part2, inputTest2);
-   test(result, answers.test2);
-
    perform('Part 1', part1, inputMain);
    test(result, answers.part1);
+
+   perform('Test 2', part2, inputTest2);
+   test(result, answers.test2);
 
    perform('Part 2', part2, inputMain);
    test(result, answers.part2);

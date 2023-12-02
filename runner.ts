@@ -1,6 +1,5 @@
 import { parseArgs } from 'https://deno.land/std@0.208.0/cli/mod.ts';
-import { resolve } from 'utils/deps.ts';
-import { run } from 'utils/run.ts';
+import * as run from './run/mod.ts';
 
 console.log('https://adventofcode.com/');
 
@@ -10,30 +9,31 @@ const args = parseArgs(Deno.args, {
    alias: { d: 'day', a: 'all', y: 'year', m: 'm', l: 'lang' },
 });
 
-const langTranslate: Record<string, string> = {
+const langParse: Record<string, string> = {
    typescript: 'ts',
    rs: 'rust',
-   csharp: 'c#',
+   'c#': 'csharp',
 };
-const langFullName: Record<string, string> = {
+const langName: Record<string, string> = {
    c: 'C17',
-   'c#': 'C# 12',
+   csharp: 'C# 12',
    go: 'Go 1.42',
    java: 'Java 21',
    python: 'Python 3.11',
    rust: 'Rust 1.74',
    ts: 'TypeScript 5.2',
 };
-const lang = langTranslate[args.l?.toLowerCase() || ''] || args.l?.toLowerCase() || 'ts';
+const lang = langParse[args.l?.toLowerCase() || ''] || args.l?.toLowerCase() || 'ts';
 
-let yearStart = new Date().getFullYear();
-let yearEnd = new Date().getFullYear();
-let dayStart = new Date().getDate();
-let dayEnd = new Date().getDate();
+const currentDate = new Date();
+let yearStart = currentDate.getFullYear();
+let yearEnd = currentDate.getFullYear();
+let dayStart = currentDate.getDate();
+let dayEnd = currentDate.getDate();
 
 if (args.a) {
    yearStart = 2015;
-   yearEnd = new Date().getFullYear();
+   yearEnd = currentDate.getFullYear();
    dayStart = 1;
    dayEnd = 25;
 }
@@ -41,7 +41,7 @@ if (args.a) {
 if (args.y) {
    yearStart = parseInt(args.y);
    yearEnd = parseInt(args.y);
-   if (yearStart !== new Date().getFullYear()) {
+   if (yearStart !== currentDate.getFullYear()) {
       dayStart = 1;
       dayEnd = 25;
    }
@@ -57,27 +57,33 @@ if (args.m) {
    dayEnd = 25;
 }
 
-interface Main {
-   hasAlternate: boolean;
-   part1: (path: string) => string;
-   part2: (path: string) => string;
-}
-
 mainLoop: for (let year = yearStart; year <= yearEnd; year++) {
    console.log(`Advent of Code -- year ${year}`);
+   console.log('Language:', langName[lang]);
    for (let day = dayStart; day <= dayEnd; day++) {
       console.log(`\n----\\________\n${year} -- day ${day}`);
-      console.log('\nLanguage:', langFullName[lang]);
       try {
          switch (lang) {
             case 'c':
-            case 'c#':
+               await run.c(year, day);
+               break;
+            case 'csharp':
+               await run.csharp(year, day);
+               break;
             case 'go':
+               await run.go(year, day);
+               break;
             case 'java':
+               await run.java(year, day);
+               break;
             case 'python':
+               await run.python(year, day);
+               break;
             case 'rust':
+               await run.rust(year, day);
+               break;
             case 'ts':
-               await tsRun(year, day);
+               await run.ts(year, day);
                break;
             default:
                console.error('Unknown language selected.');
@@ -87,7 +93,7 @@ mainLoop: for (let year = yearStart; year <= yearEnd; year++) {
          console.error(e);
          break;
       }
-      if (new Date(year, 11, day + 1, 13) > new Date()) {
+      if (new Date(year, 11, day + 1, 13) > currentDate) {
          console.log(`\nWait for the next day.`);
          break;
       }
@@ -96,12 +102,4 @@ mainLoop: for (let year = yearStart; year <= yearEnd; year++) {
       }
    }
    console.log();
-}
-
-async function tsRun(y: number, d: number) {
-   const path = resolve(`./${y}/${d.toString().padStart(2, '0')}/ts/main.ts`);
-   const main = (await import(path)) as Main;
-   if (!main) throw new Error('Main file not found.');
-
-   run(path, main.part1, main.part2, main.hasAlternate);
 }

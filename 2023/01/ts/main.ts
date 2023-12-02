@@ -1,7 +1,7 @@
 import { run } from 'utils/run.ts';
 
 /** If part 2 test input has completely different input, set this to `true`. */
-export const hasAlternate = true;
+export const HAS_ALTERNATE = true;
 
 function isNum(str: string) {
    return (
@@ -77,5 +77,5 @@ export function part2(input: string): string {
 }
 
 if (import.meta.main) {
-   run(import.meta.url, part1, part2, hasAlternate);
+   run(import.meta.url, part1, part2, HAS_ALTERNATE);
 }

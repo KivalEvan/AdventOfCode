@@ -8,7 +8,6 @@
    "imports": { "utils/": "./utils/ts/" },
    "tasks": {
       "fetch": "deno run --allow-read=. --allow-write=. --allow-net --allow-env --env ./fetchInput.ts",
-      "aoc": "deno run --watch --allow-read=. --allow-net=deno.land --allow-hrtime ./runner.ts",
-      "aoc:bench": "deno bench --allow-read=. --allow-net=deno.land --allow-hrtime ./runBench.ts --"
+      "aoc": "deno run --watch --allow-read=. --allow-net=deno.land --allow-hrtime --allow-run ./runner.ts"
    }
 }

@@ -7,6 +7,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+const bool HAS_ALTERNATE = true;
+
 bool isnum(char k) {
   return k == '0' || k == '1' || k == '2' || k == '3' || k == '4' || k == '5' ||
          k == '6' || k == '7' || k == '8' || k == '9';
@@ -108,4 +110,6 @@ char *part2(char *input) {
   return str;
 }
 
-int main(int argc, char *argv[]) { return run(argc, argv, part1, part2, true); }
+int main(int argc, char *argv[]) {
+  return run(argc, argv, part1, part2, HAS_ALTERNATE);
+}

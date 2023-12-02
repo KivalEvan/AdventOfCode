@@ -1,4 +1,4 @@
-boolean hasAlternate = false;
+boolean HAS_ALTERNATE = false;
 
 String part1(String input) {
    return "";
