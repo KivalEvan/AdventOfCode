@@ -1,4 +1,5 @@
 #include "run.h"
+#include "helper.h"
 #include "input.h"
 #include <math.h>
 #include <stdbool.h>
@@ -8,11 +9,6 @@
 #include <time.h>
 
 char *result;
-
-char *strdupcat(char *restrict src1, char *restrict src2) {
-  return strcat(strcpy((char *)malloc(strlen(src1) + strlen(src2) + 1), src1),
-                src2);
-}
 
 void _test(char *actual, char *expected) {
   if (strlen(expected) == 0)
@@ -31,7 +27,7 @@ void _perform(char *tag, char *(*fun)(char *), char *input) {
   end = clock();
   double time_taken = ((double)(end - start)) / CLOCKS_PER_SEC;
 
-  printf(" -- Time taken (ms): %.2lf\n", time_taken * 1000);
+  printf(" -- Time taken (ms): %.3lf\n", time_taken * 1000);
   printf("/ Result: %s\n", result);
 }
 

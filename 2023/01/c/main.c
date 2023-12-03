@@ -9,11 +9,6 @@
 
 const bool HAS_ALTERNATE = true;
 
-bool isnum(char k) {
-  return k == '0' || k == '1' || k == '2' || k == '3' || k == '4' || k == '5' ||
-         k == '6' || k == '7' || k == '8' || k == '9';
-}
-
 char getnum(char *str) {
   if (strncmp(str, "zero", 4) == 0)
     return '0';
@@ -41,7 +36,7 @@ char getnum(char *str) {
 char *part1(char *input) {
   int result = 0;
 
-  char **splitted = strsplit(input);
+  char **splitted = strsplit(input, 'n');
   size_t line = 0;
   while (splitted[line] != NULL) {
     char *s = splitted[line];
@@ -72,7 +67,7 @@ char *part1(char *input) {
 char *part2(char *input) {
   int result = 0;
 
-  char **splitted = strsplit(input);
+  char **splitted = strsplit(input, 'n');
   size_t line = 0;
   while (splitted[line] != NULL) {
     char *s = splitted[line];

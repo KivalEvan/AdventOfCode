@@ -29,7 +29,7 @@ char *getinput(char *path) {
 }
 
 Answers getanswers(char *path) {
-  char **input = strsplit(getinput(path));
+  char **input = strsplit(getinput(path), '\n');
   Answers answers;
   int line = 0;
 

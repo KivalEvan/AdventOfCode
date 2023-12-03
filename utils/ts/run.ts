@@ -5,7 +5,7 @@ let result: string;
 
 function test(actual: unknown, expected: unknown) {
    if (expected == '') return;
-   console.assert(actual == expected, `Expected ${expected}`);
+   if (actual != expected) throw new Error(`Expected ${expected} got ${actual}`);
 }
 
 function perform(tag: string, func: (path: string) => string, input: string) {
@@ -17,7 +17,7 @@ function perform(tag: string, func: (path: string) => string, input: string) {
    result = func(input);
    end = performance.now();
 
-   console.log(' -- Time taken (ms):', Math.round((end - start) * 100) / 100);
+   console.log(' -- Time taken (ms):', Math.round((end - start) * 1000) / 1000);
    console.log('/ Result:', result);
 }
 

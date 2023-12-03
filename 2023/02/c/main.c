@@ -9,14 +9,9 @@
 
 const bool HAS_ALTERNATE = false;
 
-bool isnum(char k) {
-  return k == '0' || k == '1' || k == '2' || k == '3' || k == '4' || k == '5' ||
-         k == '6' || k == '7' || k == '8' || k == '9';
-}
-
 char *part1(char *input) {
   int result = 0;
-  char **splitted = strsplit(input);
+  char **splitted = strsplit(input, '\n');
 
   int i = 0;
   while (splitted[i] != NULL) {
@@ -27,12 +22,12 @@ char *part1(char *input) {
     char *real = (char *)malloc(strlen(splt) - stridxof(splt, ':'));
     strncpy(real, sliced, strlen(splt) - stridxof(splt, ':') - 1);
 
-    char **sequence = strsplitc(real, ';');
+    char **sequence = strsplit(real, ';');
     bool valid = true;
     int j = 0;
     while (sequence[j] != NULL) {
       char *seq = sequence[j];
-      char **triples = strsplitc(seq, ',');
+      char **triples = strsplit(seq, ',');
       int k = 0;
       while (triples[k] != NULL) {
         char *val = triples[k];
@@ -82,7 +77,7 @@ char *part1(char *input) {
 
 char *part2(char *input) {
   int result = 0;
-  char **splitted = strsplit(input);
+  char **splitted = strsplit(input, '\n');
 
   int i = 0;
   while (splitted[i] != NULL) {
@@ -93,7 +88,7 @@ char *part2(char *input) {
     char *real = (char *)malloc(strlen(splt) - stridxof(splt, ':'));
     strncpy(real, sliced, strlen(splt) - stridxof(splt, ':') - 1);
 
-    char **sequence = strsplitc(real, ';');
+    char **sequence = strsplit(real, ';');
     bool valid = true;
     int j = 0;
     int red = 0;
@@ -101,7 +96,7 @@ char *part2(char *input) {
     int blue = 0;
     while (sequence[j] != NULL) {
       char *seq = sequence[j];
-      char **triples = strsplitc(seq, ',');
+      char **triples = strsplit(seq, ',');
       int k = 0;
       while (triples[k] != NULL) {
         char *val = triples[k];

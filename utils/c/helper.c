@@ -3,12 +3,26 @@
 #include <stdlib.h>
 #include <string.h>
 
+bool isnum(char k) {
+  return k == '0' || k == '1' || k == '2' || k == '3' || k == '4' || k == '5' ||
+         k == '6' || k == '7' || k == '8' || k == '9';
+}
+
+char *strreplacec(char *restrict str, char replace, char with) {
+  int i;
+  for (i = 0; i < strlen(str); i++) {
+    if (str[i] == replace)
+      str[i] = with;
+  }
+  return str;
+}
+
 char *strslice(const char *restrict src, char *restrict dest, size_t start,
                size_t end) {
   return strncpy(dest, src + start, end - start);
 }
 
-char **strsplitc(const char *restrict str, char separator) {
+char **strsplit(const char *restrict str, char separator) {
   char **ary;
   int i = 0, numLine = 0;
   while (str[i])
@@ -33,7 +47,10 @@ char **strsplitc(const char *restrict str, char separator) {
   return ary;
 }
 
-char **strsplit(const char *restrict str) { return strsplitc(str, '\n'); }
+char *strdupcat(char *restrict src1, char *restrict src2) {
+  return strcat(strcpy((char *)malloc(strlen(src1) + strlen(src2) + 1), src1),
+                src2);
+}
 
 int stridxof(const char *restrict str, char c) {
   int i;
