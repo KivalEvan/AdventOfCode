@@ -9,6 +9,11 @@
 
 const bool HAS_ALTERNATE = false;
 
+bool isSymbol(char c) {
+  return (c == '*' || c == '$' || c == '=' || c == '#' || c == '%' ||
+          c == '/' || c == '&' || c == '+' || c == '-' || c == '@');
+}
+
 char *yeetthenumber(char **grid, int x, int y, const int SZ) {
   char *res = (char *)malloc(2);
   res[0] = 0;
@@ -32,7 +37,7 @@ char *part1(char *input) {
 
   for (int y = 0; y < SZ; y++) {
     for (int x = 0; x < SZ; x++) {
-      if (!isnum(grid[y][x]) && grid[y][x] != '.') {
+      if (isSymbol(grid[y][x])) {
         if (x > 0) {
           if (y < SZ - 1)
             res += atoi(yeetthenumber(grid, x - 1, y + 1, SZ));
