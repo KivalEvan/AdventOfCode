@@ -1,10 +1,7 @@
-#include <stdbool.h>
 #include <stdio.h>
 
 #ifndef HELPER_H_
 #define HELPER_H_
-
-bool isnum(char k);
 
 char *strreplacec(char *restrict str, char replace, char with);
 

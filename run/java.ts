@@ -9,7 +9,7 @@ export default async function c(y: number, d: number) {
       stdout: c_stdout,
       stderr: c_stderr,
    } = await new Deno.Command('make', {
-      args: ['execute', path],
+      args: ['ARGS=' + path, 'java', path],
    }).output();
    console.assert(c_code === 0);
    if (new TextDecoder().decode(c_stderr).trim()) {

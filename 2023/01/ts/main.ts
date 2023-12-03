@@ -43,25 +43,27 @@ const strToNum: Record<string, number> = {
 
 // i dont feel like doing single pass
 export function part1(input: string): string {
-   let res = 0;
-   input.split('\n').forEach((s) => {
-      let first = '';
-      let last = '';
-      for (let i = 0; i < s.length; i++) {
-         if (isNum(s[i])) {
-            first = s[i];
-            break;
+   return input
+      .split('\n')
+      .reduce((res, s) => {
+         let first = '';
+         let last = '';
+         for (let i = 0; i < s.length; i++) {
+            if (isNum(s[i])) {
+               first = s[i];
+               break;
+            }
          }
-      }
-      for (let i = s.length - 1; i >= 0; i--) {
-         if (isNum(s[i])) {
-            last = s[i];
-            break;
+         for (let i = s.length - 1; i >= 0; i--) {
+            if (isNum(s[i])) {
+               last = s[i];
+               break;
+            }
          }
-      }
-      res += Number(first + last);
-   });
-   return res.toString();
+         res += Number(first + last);
+         return res;
+      }, 0)
+      .toString();
 }
 
 export function part2(input: string): string {

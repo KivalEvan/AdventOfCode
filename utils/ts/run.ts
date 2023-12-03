@@ -35,6 +35,7 @@ export function run(
    }
    const dir = dirname(isUrl ? fromFileUrl(path) : path);
    const answers = getAnswers(resolve(dir, '..', 'answers.txt'));
+
    const inputTest1 = getInput(resolve(dir, '..', 'test1.txt'));
    const inputTest2 = getInput(
       hasAlternate ? resolve(dir, '..', 'test2.txt') : resolve(dir, '..', 'test1.txt')

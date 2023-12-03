@@ -1,6 +1,7 @@
 #include "main.h"
 #include "helper.h"
 #include "run.h"
+#include <ctype.h>
 #include <math.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -17,7 +18,7 @@ bool isSymbol(char c) {
 char *yeetthenumber(char **grid, int x, int y, const int SZ) {
   char *res = (char *)malloc(2);
   res[0] = 0;
-  if (isnum(grid[y][x])) {
+  if (isdigit(grid[y][x])) {
     res[0] = grid[y][x];
     res[1] = 0;
     grid[y][x] = '.';

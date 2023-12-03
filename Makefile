@@ -19,7 +19,15 @@ compile:
 	$(LD) $(LDFLAGS) -c utils/c/run.c -o temp/run.o
 	$(LD) $(LDFLAGS) -c -I./utils/c -I./template/c $(ARGS)/main.c -o temp/main.o
 
-execute: compile
+c: compile
 	$(CC) $(CCFLAGS) temp/main.o temp/run.o temp/input.o temp/helper.o -lm -o temp/aoc_c
-	@rm temp/main.o temp/run.o temp/input.o temp/helper.o
 	@temp/aoc_c $(ARGS)
+	@rm -r temp
+
+java:
+	@javac --enable-preview --release 21 -d temp -cp temp\; \
+		utils/java/Input.java \
+		utils/java/Run.java \
+		$(ARGS)/../java/Main.java
+	@java --enable-preview -cp temp kival/aoc/Main $(ARGS)/../java
+	@rm -r temp

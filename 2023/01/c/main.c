@@ -1,6 +1,7 @@
 #include "main.h"
 #include "helper.h"
 #include "run.h"
+#include <ctype.h>
 #include <math.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -34,7 +35,7 @@ char getnum(char *str) {
 }
 
 char *part1(char *input) {
-  int result = 0;
+  int res = 0;
 
   char **splitted = strsplit(input, '\n');
   size_t line = 0;
@@ -43,29 +44,29 @@ char *part1(char *input) {
     char str[2];
 
     for (int i = 0; i < strlen(s); i++) {
-      if (isnum(s[i])) {
+      if (isdigit(s[i])) {
         str[0] = s[i];
         break;
       }
     }
     for (int i = strlen(s) - 1; i >= 0; i--) {
-      if (isnum(s[i])) {
+      if (isdigit(s[i])) {
         str[1] = s[i];
         break;
       }
     }
 
-    result += atoi(str);
+    res += atoi(str);
     line++;
   }
 
   char *str = malloc(MAX_BUFFER_SIZE);
-  sprintf(str, "%d", result);
+  sprintf(str, "%d", res);
   return str;
 }
 
 char *part2(char *input) {
-  int result = 0;
+  int res = 0;
 
   char **splitted = strsplit(input, '\n');
   size_t line = 0;
@@ -74,7 +75,7 @@ char *part2(char *input) {
     char str[2];
 
     for (int i = 0; i < strlen(s); i++) {
-      if (isnum(s[i])) {
+      if (isdigit(s[i])) {
         str[0] = s[i];
         break;
       }
@@ -85,7 +86,7 @@ char *part2(char *input) {
       }
     }
     for (int i, len = i = strlen(s) - 1; i >= 0; i--) {
-      if (isnum(s[i])) {
+      if (isdigit(s[i])) {
         str[1] = s[i];
         break;
       }
@@ -96,12 +97,12 @@ char *part2(char *input) {
       }
     }
 
-    result += atoi(str);
+    res += atoi(str);
     line++;
   }
 
   char *str = malloc(MAX_BUFFER_SIZE);
-  sprintf(str, "%d", result);
+  sprintf(str, "%d", res);
   return str;
 }
 

@@ -13,8 +13,10 @@ char *result;
 void _test(char *actual, char *expected) {
   if (strlen(expected) == 0)
     return;
-  if (strcmp(actual, expected) != 0)
+  if (strcmp(actual, expected) != 0) {
     fprintf(stderr, "Expected %s but received %s\n", expected, actual);
+    exit(-1);
+  }
 }
 
 void _perform(char *tag, char *(*fun)(char *), char *input) {

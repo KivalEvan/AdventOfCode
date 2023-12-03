@@ -1,6 +1,7 @@
 #include "main.h"
 #include "helper.h"
 #include "run.h"
+#include <ctype.h>
 #include <math.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -10,7 +11,7 @@
 const bool HAS_ALTERNATE = false;
 
 char *part1(char *input) {
-  int result = 0;
+  int res = 0;
   char **splitted = strsplit(input, '\n');
 
   int i = 0;
@@ -37,7 +38,7 @@ char *part1(char *input) {
         int l = 0;
         int n = 0;
         while (val[l]) {
-          if (isnum(val[l])) {
+          if (isdigit(val[l])) {
             num[idx++] = val[l];
           } else if (idx != 0) {
             break;
@@ -66,17 +67,17 @@ char *part1(char *input) {
       j++;
     }
     if (valid)
-      result += i + 1;
+      res += i + 1;
     i++;
   }
 
   char *str = malloc(MAX_BUFFER_SIZE);
-  sprintf(str, "%d", result);
+  sprintf(str, "%d", res);
   return str;
 }
 
 char *part2(char *input) {
-  int result = 0;
+  int res = 0;
   char **splitted = strsplit(input, '\n');
 
   int i = 0;
@@ -106,7 +107,7 @@ char *part2(char *input) {
         int l = 0;
         int n = 0;
         while (val[l]) {
-          if (isnum(val[l])) {
+          if (isdigit(val[l])) {
             num[idx++] = val[l];
           } else if (idx != 0) {
             break;
@@ -134,12 +135,12 @@ char *part2(char *input) {
       }
       j++;
     }
-    result += red * green * blue;
+    res += red * green * blue;
     i++;
   }
 
   char *str = malloc(MAX_BUFFER_SIZE);
-  sprintf(str, "%d", result);
+  sprintf(str, "%d", res);
   return str;
 }
 

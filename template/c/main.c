@@ -1,6 +1,7 @@
 #include "main.h"
 #include "helper.h"
 #include "run.h"
+#include <ctype.h>
 #include <math.h>
 #include <stdbool.h>
 #include <stdio.h>
