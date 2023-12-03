@@ -36,7 +36,7 @@ char getnum(char *str) {
 char *part1(char *input) {
   int result = 0;
 
-  char **splitted = strsplit(input, 'n');
+  char **splitted = strsplit(input, '\n');
   size_t line = 0;
   while (splitted[line] != NULL) {
     char *s = splitted[line];
@@ -67,7 +67,7 @@ char *part1(char *input) {
 char *part2(char *input) {
   int result = 0;
 
-  char **splitted = strsplit(input, 'n');
+  char **splitted = strsplit(input, '\n');
   size_t line = 0;
   while (splitted[line] != NULL) {
     char *s = splitted[line];

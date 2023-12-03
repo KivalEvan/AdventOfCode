@@ -14,7 +14,7 @@ void _test(char *actual, char *expected) {
   if (strlen(expected) == 0)
     return;
   if (strcmp(actual, expected) != 0)
-    fprintf(stderr, "Expected %s Got %s", expected, actual);
+    fprintf(stderr, "Expected %s but received %s\n", expected, actual);
 }
 
 void _perform(char *tag, char *(*fun)(char *), char *input) {
