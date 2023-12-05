@@ -2,7 +2,6 @@ package kival.aoc;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 import kival.aoc.utils.*;
 
@@ -15,35 +14,42 @@ public class Main {
    }
 
    private PogCube[] getCubes(String game) {
-      return Stream.of(game.substring(game.indexOf(':') + 1).split(",|;")).map(str -> {
-         String[] val = str.trim().split(" ");
+      String[] str = game.substring(game.indexOf(':') + 1).split(",|;");
+      PogCube[] cubes = new PogCube[str.length];
+      int i = 0;
+      for (String chunk : str) {
+         String[] val = chunk.trim().split(" ");
          PogCube cube = new PogCube();
          cube.type = val[1];
          cube.amount = Integer.parseInt(val[0]);
-         return cube;
-      }).toArray(PogCube[]::new);
+         cubes[i++] = cube;
+      }
+      return cubes;
    }
 
    public String part1(String input) {
-      var wrapper = new Object() {
-         int idx = 0;
-      };
-      return Stream.of(input.split("\n")).map(this::getCubes).reduce(0, (pv, cubes) -> {
-         wrapper.idx++;
+      int res = 0;
+      int idx = 0;
+      main: for (String line : input.split("\n")) {
+         idx++;
+         PogCube[] cubes = getCubes(line);
          for (PogCube cube : cubes) {
             if (cube.type.compareTo("red") == 0 && cube.amount > 12)
-               return pv;
+               continue main;
             if (cube.type.compareTo("green") == 0 && cube.amount > 13)
-               return pv;
+               continue main;
             if (cube.type.compareTo("blue") == 0 && cube.amount > 14)
-               return pv;
+               continue main;
          }
-         return pv + wrapper.idx;
-      }, Integer::sum).toString();
+         res += idx;
+      }
+      return String.valueOf(res);
    }
 
    public String part2(String input) {
-      return Stream.of(input.split("\n")).map(this::getCubes).reduce(0, (pv, cubes) -> {
+      int res = 0;
+      for (String line : input.split("\n")) {
+         PogCube[] cubes = getCubes(line);
          int red = 0;
          int green = 0;
          int blue = 0;
@@ -55,8 +61,9 @@ public class Main {
             if (cube.type.compareTo("blue") == 0 && cube.amount > blue)
                blue = cube.amount;
          }
-         return pv + red * green * blue;
-      }, Integer::sum).toString();
+         res += red * green * blue;
+      }
+      return String.valueOf(res);
    }
 
    public void main(String[] args) {

@@ -1,12 +1,9 @@
 package kival.aoc;
 
-import java.util.stream.Stream;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import kival.aoc.utils.*;
 
@@ -62,34 +59,36 @@ public class Main {
    };
 
    public String part1(String input) {
-      return Stream.of(input.split("\n")).reduce(0, (res, s) -> {
+      Integer res = 0;
+      for (String line : input.split("\n")) {
          char first = '\0';
          char last = '\0';
          char current = '\0';
-         for (int i = 0; i < s.length(); i++) {
-            current = s.charAt(i);
+         for (int i = 0; i < line.length(); i++) {
+            current = line.charAt(i);
             if (Character.isDigit(current)) {
                first = current;
                break;
             }
          }
-         for (int i = s.length() - 1; i >= 0; i--) {
-            current = s.charAt(i);
+         for (int i = line.length() - 1; i >= 0; i--) {
+            current = line.charAt(i);
             if (Character.isDigit(current)) {
                last = current;
                break;
             }
          }
          res += Integer.parseInt(new StringBuilder().append(first).append(last).toString());
-         return res;
-      }, Integer::sum).toString();
+      }
+      return res.toString();
    }
 
    public String part2(String input) {
-      return Stream.of(input.split("\n")).reduce(0, (res, s) -> {
+      int res = 0;
+      for (String line : input.split("\n")) {
          List<String> allMatches = new ArrayList<String>();
-         for (int i = 0; i < s.length(); i++) {
-            String m = s.substring(i);
+         for (int i = 0; i < line.length(); i++) {
+            String m = line.substring(i);
             for (String look : lookFor) {
                if (m.startsWith(look)) {
                   allMatches.add(look);
@@ -97,10 +96,9 @@ public class Main {
                }
             }
          }
-
-         return res + strToNum.get(allMatches.getFirst()) * 10 +
-               strToNum.get(allMatches.getLast());
-      }, Integer::sum).toString();
+         res += strToNum.get(allMatches.getFirst()) * 10 + strToNum.get(allMatches.getLast());
+      }
+      return String.valueOf(res);
    }
 
    public void main(String[] args) {

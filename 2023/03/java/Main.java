@@ -9,7 +9,7 @@ import kival.aoc.utils.*;
 public class Main {
    public final boolean HAS_ALTERNATE = false;
 
-   boolean isSymbol(char c) {
+   private boolean isSymbol(char c) {
       return (c == '*' ||
             c == '$' ||
             c == '=' ||
@@ -31,21 +31,21 @@ public class Main {
    }
 
    private String yeetTheNumber(char[][] grid, int x, int y) {
-      String res = "";
+      StringBuilder res = new StringBuilder();
       if (Character.isDigit(grid[y][x])) {
-         res += grid[y][x];
+         res.append(grid[y][x]);
          grid[y][x] = '.';
 
          if (x > 0)
-            res = yeetTheNumber(grid, x - 1, y) + res;
+            res.insert(0, yeetTheNumber(grid, x - 1, y));
          if (x < grid[y].length - 1)
-            res += yeetTheNumber(grid, x + 1, y);
+            res.append(yeetTheNumber(grid, x + 1, y));
       }
-      return res;
+      return res.toString();
    }
 
    public String part1(String input) {
-      char[][] grid = Stream.of(input.split("\n")).map(s -> s.toCharArray()).toArray(char[][]::new);
+      char[][] grid = input.lines().map(s -> s.toCharArray()).toArray(char[][]::new);
       int SZ = grid.length;
       int res = 0;
 
@@ -78,7 +78,7 @@ public class Main {
    }
 
    public String part2(String input) {
-      char[][] grid = Stream.of(input.split("\n")).map(s -> s.toCharArray()).toArray(char[][]::new);
+      char[][] grid = input.lines().map(s -> s.toCharArray()).toArray(char[][]::new);
       int SZ = grid.length;
       int res = 0;
 

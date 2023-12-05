@@ -8,12 +8,13 @@ CCFLAGS = -std=c17 \
              -Wno-missing-braces -Wempty-body -Wno-error=uninitialized \
              -Wno-error=deprecated-declarations \
              -pedantic-errors -pedantic \
-             -Os
+             -O3
 
 LD = clang -o
 LDFLAGS = -Wall -pedantic
 
 compile:
+	mkdir -p temp
 	$(LD) $(LDFLAGS) -c utils/c/helper.c -o temp/helper.o
 	$(LD) $(LDFLAGS) -c utils/c/input.c -o temp/input.o
 	$(LD) $(LDFLAGS) -c utils/c/run.c -o temp/run.o

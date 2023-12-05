@@ -11,29 +11,30 @@
 const bool HAS_ALTERNATE = false;
 
 char *part1(char *input) {
-  int res = 0;
-  char **splitted = strsplit(input, '\n');
+  int sz, sz_2, sz_3, res = 0;
+  char **splitted = strsplit(input, "\n", &sz);
 
   int i = 0;
-  while (splitted[i] != NULL) {
+  while (i < sz) {
     char *splt = splitted[i];
-    char *sliced = (char *)malloc(strlen(splt));
+    char *sliced = (char *)malloc(strlen(splt) * sizeof(char));
     // something weird with slice ill fix later
     strslice(splt, sliced, stridxof(splt, ':') + 1, strlen(splt));
-    char *real = (char *)malloc(strlen(splt) - stridxof(splt, ':'));
+    char *real =
+        (char *)malloc((strlen(splt) - stridxof(splt, ':')) * sizeof(char));
     strncpy(real, sliced, strlen(splt) - stridxof(splt, ':') - 1);
 
-    char **sequence = strsplit(real, ';');
+    char **sequences = strsplit(real, ";", &sz_2);
     bool valid = true;
     int j = 0;
-    while (sequence[j] != NULL) {
-      char *seq = sequence[j];
-      char **triples = strsplit(seq, ',');
+    while (j < sz_2) {
+      char *seq = sequences[j];
+      char **triples = strsplit(seq, ",", &sz_3);
       int k = 0;
-      while (triples[k] != NULL) {
+      while (k < sz_3) {
         char *val = triples[k];
-        char *num = (char *)malloc(5);
-        char *type = (char *)malloc(6);
+        char *num = (char *)malloc(5 * sizeof(char));
+        char *type = (char *)malloc(6 * sizeof(char));
         int idx = 0;
         int l = 0;
         int n = 0;
@@ -60,49 +61,56 @@ char *part1(char *input) {
           valid = false;
         if (!strncmp(type, "blue", 4) && n > 14)
           valid = false;
-        k++;
         free(num);
         free(type);
+        free(triples[k]);
+        k++;
       }
+      free(triples);
+      free(sequences[j]);
       j++;
     }
     if (valid)
       res += i + 1;
+    free(sequences);
+    free(splitted[i]);
     i++;
   }
+  free(splitted);
 
-  char *str = malloc(MAX_BUFFER_SIZE);
+  char *str = (char *)malloc(MAX_BUFFER_SIZE * sizeof(char));
   sprintf(str, "%d", res);
   return str;
 }
 
 char *part2(char *input) {
-  int res = 0;
-  char **splitted = strsplit(input, '\n');
+  int sz, sz_2, sz_3, idx, res = 0;
+  char **splitted = strsplit(input, "\n", &sz);
 
   int i = 0;
-  while (splitted[i] != NULL) {
+  while (i < sz) {
     char *splt = splitted[i];
-    char *sliced = (char *)malloc(strlen(splt));
+    char *sliced = (char *)malloc(strlen(splt) * sizeof(char));
     // something weird with slice ill fix later
     strslice(splt, sliced, stridxof(splt, ':') + 1, strlen(splt));
-    char *real = (char *)malloc(strlen(splt) - stridxof(splt, ':'));
+    char *real =
+        (char *)malloc((strlen(splt) - stridxof(splt, ':')) * sizeof(char));
     strncpy(real, sliced, strlen(splt) - stridxof(splt, ':') - 1);
 
-    char **sequence = strsplit(real, ';');
+    char **sequences = strsplit(real, ";", &sz_2);
     bool valid = true;
     int j = 0;
     int red = 0;
     int green = 0;
     int blue = 0;
-    while (sequence[j] != NULL) {
-      char *seq = sequence[j];
-      char **triples = strsplit(seq, ',');
+    while (j < sz_2) {
+      char *seq = sequences[j];
+      char **triples = strsplit(seq, ",", &sz_3);
       int k = 0;
-      while (triples[k] != NULL) {
+      while (k < sz_3) {
         char *val = triples[k];
-        char *num = (char *)malloc(5);
-        char *type = (char *)malloc(6);
+        char *num = (char *)malloc(5 * sizeof(char));
+        char *type = (char *)malloc(6 * sizeof(char));
         int idx = 0;
         int l = 0;
         int n = 0;
@@ -129,17 +137,24 @@ char *part2(char *input) {
           green = n;
         if (!strncmp(type, "blue", 4) && n > blue)
           blue = n;
-        k++;
         free(num);
         free(type);
+        free(triples[k]);
+        k++;
       }
+      free(triples);
+      free(sequences[j]);
       j++;
     }
     res += red * green * blue;
+    free(sequences);
     i++;
   }
+  for (idx = 0; idx < sz; idx++)
+    free(splitted[idx]);
+  free(splitted);
 
-  char *str = malloc(MAX_BUFFER_SIZE);
+  char *str = (char *)malloc(MAX_BUFFER_SIZE * sizeof(char));
   sprintf(str, "%d", res);
   return str;
 }

@@ -35,11 +35,10 @@ char getnum(char *str) {
 }
 
 char *part1(char *input) {
-  int res = 0;
+  int sz, line = 0, res = 0;
 
-  char **splitted = strsplit(input, '\n');
-  size_t line = 0;
-  while (splitted[line] != NULL) {
+  char **splitted = strsplit(input, "\n", &sz);
+  while (line < sz) {
     char *s = splitted[line];
     char str[2];
 
@@ -57,20 +56,21 @@ char *part1(char *input) {
     }
 
     res += atoi(str);
+    free(splitted[line]);
     line++;
   }
+  free(splitted);
 
-  char *str = malloc(MAX_BUFFER_SIZE);
+  char *str = (char *)malloc(MAX_BUFFER_SIZE * sizeof(char));
   sprintf(str, "%d", res);
   return str;
 }
 
 char *part2(char *input) {
-  int res = 0;
+  int sz, line = 0, res = 0;
 
-  char **splitted = strsplit(input, '\n');
-  size_t line = 0;
-  while (splitted[line] != NULL) {
+  char **splitted = strsplit(input, "\n", &sz);
+  while (line < sz) {
     char *s = splitted[line];
     char str[2];
 
@@ -79,7 +79,7 @@ char *part2(char *input) {
         str[0] = s[i];
         break;
       }
-      char c = getnum(strslice(s, (char *)malloc(5), i, i + 5));
+      char c = getnum(strslice(s, (char *)malloc(5 * sizeof(char)), i, i + 5));
       if (c != '\0') {
         str[0] = c;
         break;
@@ -90,7 +90,7 @@ char *part2(char *input) {
         str[1] = s[i];
         break;
       }
-      char c = getnum(strslice(s, (char *)malloc(5), i, i + 5));
+      char c = getnum(strslice(s, (char *)malloc(5 * sizeof(char)), i, i + 5));
       if (c != '\0') {
         str[1] = c;
         break;
@@ -98,10 +98,12 @@ char *part2(char *input) {
     }
 
     res += atoi(str);
+    free(splitted[line]);
     line++;
   }
+  free(splitted);
 
-  char *str = malloc(MAX_BUFFER_SIZE);
+  char *str = (char *)malloc(MAX_BUFFER_SIZE * sizeof(char));
   sprintf(str, "%d", res);
   return str;
 }
