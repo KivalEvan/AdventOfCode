@@ -1,4 +1,6 @@
 input.txt
+test1.txt
+test2.txt
 .env
 temp/**
 bin/**
