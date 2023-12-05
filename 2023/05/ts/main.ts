@@ -41,31 +41,32 @@ export function part2(input: string): string {
       .split(' ')
       .filter((str) => str)
       .map(Number);
-   const srcToDestRanges = parsed.slice(1).map(
-      (p) =>
-         p
-            .split('\n')
-            .slice(1)
-            .map((str) => str.split(' ').map(Number)) as [number, number, number][]
-   );
+   const srcToDestRanges = parsed
+      .slice(1)
+      .map(
+         (p) =>
+            p
+               .split('\n')
+               .slice(1)
+               .map((str) => str.split(' ').map(Number)) as [number, number, number][]
+      )
+      .reverse();
 
-   let res = Infinity;
-   for (let i = 0; i < seedRanges.length; i += 2) {
-      for (let j = 0; j < seedRanges[i + 1]; j++) {
-         let destination = j + seedRanges[i];
-         for (const groups of srcToDestRanges) {
-            for (const triplet of groups) {
-               if (triplet[1] <= destination && destination < triplet[1] + triplet[2]) {
-                  destination += triplet[0] - triplet[1];
-                  break;
-               }
+   for (let i = 0; i < Infinity; i++) {
+      let destination = i;
+      for (const groups of srcToDestRanges) {
+         for (const triplet of groups) {
+            if (triplet[0] <= destination && destination < triplet[0] + triplet[2]) {
+               destination += triplet[1] - triplet[0];
+               break;
             }
          }
-         if (destination < res) res = destination;
       }
+      for (let j = 0; j < seedRanges.length; j += 2)
+         if (seedRanges[j] <= destination && destination < seedRanges[j] + seedRanges[j + 1]) return i.toString();
    }
 
-   return res.toString();
+   return '';
 }
 
 if (import.meta.main) {
