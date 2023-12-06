@@ -4,9 +4,9 @@ import { run } from 'utils/run.ts';
 export const HAS_ALTERNATE = false;
 
 function ohnomath(b: number, a: number, pepsilon = 0.001) {
-   const min = Math.ceil((-b + Math.sqrt(b * b - 4 * a)) / -2 + pepsilon);
-   const max = Math.floor((-b - Math.sqrt(b * b - 4 * a)) / -2 - pepsilon);
-   return Math.abs(min - max) + 1;
+   const min = Math.floor((b + Math.sqrt(b * b - 4 * a)) / 2 - pepsilon);
+   const max = Math.ceil((b - Math.sqrt(b * b - 4 * a)) / 2 + pepsilon);
+   return min - max + 1;
 }
 
 export function part1(input: string): string {
