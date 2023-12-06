@@ -3,9 +3,11 @@ import { run } from 'utils/run.ts';
 /** If part 2 test input has completely different input, set this to `true`. */
 export const HAS_ALTERNATE = false;
 
-function ohnomath(b: number, a: number, pepsilon = 0.001) {
-   const min = Math.floor((b + Math.sqrt(b * b - 4 * a)) / 2 - pepsilon);
-   const max = Math.ceil((b - Math.sqrt(b * b - 4 * a)) / 2 + pepsilon);
+// a is 1 so we dont need it
+// (-b +- sqrt(b**2 + 4 * a * c)) / 2 * a 
+function ohnomath(b: number, c: number, pepsilon = 0.001) {
+   const min = Math.floor((b + Math.sqrt(b * b - 4 * c)) / 2 - pepsilon);
+   const max = Math.ceil((b - Math.sqrt(b * b - 4 * c)) / 2 + pepsilon);
    return min - max + 1;
 }
 
