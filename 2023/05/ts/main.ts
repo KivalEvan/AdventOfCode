@@ -15,7 +15,7 @@ export function part1(input: string): string {
          p
             .split('\n')
             .slice(1)
-            .map((str) => str.split(' ').map(Number)) as [number, number, number][]
+            .map((str) => str.split(' ').map(Number)) as [number, number, number][],
    );
 
    let res = Infinity;
@@ -48,7 +48,7 @@ export function part2(input: string): string {
             p
                .split('\n')
                .slice(1)
-               .map((str) => str.split(' ').map(Number)) as [number, number, number][]
+               .map((str) => str.split(' ').map(Number)) as [number, number, number][],
       )
       .reverse();
 
@@ -62,8 +62,11 @@ export function part2(input: string): string {
             }
          }
       }
-      for (let j = 0; j < seedRanges.length; j += 2)
-         if (seedRanges[j] <= destination && destination < seedRanges[j] + seedRanges[j + 1]) return i.toString();
+      for (let j = 0; j < seedRanges.length; j += 2) {
+         if (seedRanges[j] <= destination && destination < seedRanges[j] + seedRanges[j + 1]) {
+            return i.toString();
+         }
+      }
    }
 
    return '';

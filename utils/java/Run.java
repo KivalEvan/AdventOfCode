@@ -22,16 +22,22 @@ public class Run {
       if (!actual.equals(expected)) throw new Error(STR."Expected \{expected} but got \{actual}");
    }
 
-   private static void perform(String tag, Function<String, String> func, String input) {
+   private static void perform(String tag, Function<String, String> func, String path) {
       System.out.println(STR."\n\\ \{tag}");
       long start = 0, end = 0;
       
       start = System.nanoTime();
-      result = func.apply(input);
+      result = func.apply(path);
       end = System.nanoTime();
-      
+      double elapsed = round((double)(end - start) / 1_000_000, 3);
+      System.out.println(STR." -- IO time (ms): \{elapsed}");
+
+      start = System.nanoTime();
+      result = func.apply(path);
+      end = System.nanoTime();
       double elapsed = round((double)(end - start) / 1_000_000, 3);
       System.out.println(STR." -- Time taken (ms): \{elapsed}");
+
       System.out.println(STR."/ Result: \{result}");
    }
 

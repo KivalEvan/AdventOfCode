@@ -46,6 +46,6 @@ export function getAnswers(path: string): Answers {
             part2: '',
             test1: '',
             test2: '',
-         } satisfies Answers
+         } satisfies Answers,
       );
 }
