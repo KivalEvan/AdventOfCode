@@ -16,7 +16,7 @@ bool isSymbol(char c) {
 }
 
 char *yeetthenumber(char **grid, int x, int y, const int sz) {
-  char *res = (char *)malloc(2 * sizeof(char));
+  char *res = malloc(2 * sizeof(char));
   res[0] = 0;
   if (isdigit(grid[y][x])) {
     res[0] = grid[y][x];
@@ -63,9 +63,7 @@ char *part1(char *input) {
     free(grid[i]);
   free(grid);
 
-  char *str = (char *)malloc(MAX_BUFFER_SIZE * sizeof(char));
-  sprintf(str, "%d", res);
-  return str;
+  return numtostr(res);
 }
 
 void checkandadd(int *ary, int *i, int res) {
@@ -80,7 +78,7 @@ char *part2(char *input) {
   for (int y = 0; y < sz; y++) {
     for (int x = 0; x < sz; x++) {
       if (grid[y][x] == '*') {
-        int *ary = (int *)malloc(2 * sizeof(int));
+        int *ary = malloc(2 * sizeof(int));
         int i = 0;
         if (x > 0) {
           if (y < sz - 1)
@@ -109,9 +107,7 @@ char *part2(char *input) {
     free(grid[i]);
   free(grid);
 
-  char *str = (char *)malloc(MAX_BUFFER_SIZE * sizeof(char));
-  sprintf(str, "%d", res);
-  return str;
+  return numtostr(res);
 }
 
 int main(int argc, char *argv[]) {

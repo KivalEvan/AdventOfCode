@@ -18,7 +18,7 @@ int *getSeeds(char *str, int *sz) {
     free(parsed[i]);
   free(parsed);
 
-  int *ary = (int *)malloc(sz_2 * sizeof(int));
+  int *ary = malloc(sz_2 * sizeof(int));
   for (i = 0, *sz = 0; i < sz_2; i++) {
     if (strlen(seeds[i]))
       ary[(*sz)++] = atoi(seeds[i]);
@@ -29,9 +29,7 @@ int *getSeeds(char *str, int *sz) {
   return ary;
 }
 
-int **getMaps(char *str, int *sz) {
-
-}
+int **getMaps(char *str, int *sz) {}
 
 char *part1(char *input) {
   int i, j, k, l, sz_parsed, sz_seeds;
@@ -45,10 +43,10 @@ char *part1(char *input) {
 
   free(seeds);
 
-  return NULL;
+  return numtostr(0);
 }
 
-char *part2(char *input) { return NULL; }
+char *part2(char *input) { return numtostr(0); }
 
 int main(int argc, char *argv[]) {
   return run(argc, argv, part1, part2, HAS_ALTERNATE);

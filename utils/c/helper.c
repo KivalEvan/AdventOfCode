@@ -41,7 +41,7 @@ char **strsplit(const char *restrict string, const char *delimiter,
       *count = *count + 1;
   }
 
-  char **strings = (char **)malloc(*count * sizeof(char *));
+  char **strings = malloc(*count * sizeof(char *));
 
   i = 0;
   char buffer[16384];
@@ -66,7 +66,7 @@ char **strsplit(const char *restrict string, const char *delimiter,
     if (j > 0) {
       buffer[j] = '\0';
       int to_allocate = sizeof(char) * (strlen(buffer) + 1);
-      strings[string_index] = (char *)malloc(to_allocate * sizeof(char));
+      strings[string_index] = malloc(to_allocate * sizeof(char));
       strcpy(strings[string_index], buffer);
       string_index++;
     }
@@ -77,7 +77,7 @@ char **strsplit(const char *restrict string, const char *delimiter,
 
 char *strdupcat(const char *restrict src1, const char *restrict src2) {
   return strcat(
-      strcpy((char *)malloc((strlen(src1) + strlen(src2) + 1) * sizeof(char)),
+      strcpy(malloc((strlen(src1) + strlen(src2) + 1) * sizeof(char)),
              src1),
       src2);
 }
@@ -90,3 +90,19 @@ int stridxof(const char *restrict str, char c) {
   }
   return -1;
 }
+
+char *strltrim(char *s) {
+  while (isspace(*s))
+    s++;
+  return s;
+}
+
+char *strrtrim(char *s) {
+  char *back = s + strlen(s);
+  while (isspace(*--back))
+    ;
+  *(back + 1) = '\0';
+  return s;
+}
+
+char *strtrim(char *s) { return strrtrim(strltrim(s)); }

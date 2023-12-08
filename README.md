@@ -7,13 +7,13 @@ learning purposes because fun.
 
 This is also the order of priority that I will solve the problem with:
 
-- TypeScript 5.2.2 with Deno 1.38.3 for `.ts`
-- Java 21 for `.java`
-- Python 3.11.6 for `.py`
-- C# 12 with .NET 6.0.416 for `.cs`
-- C17 with Clang 16.0.6 for `.c`
-- Rust 1.74.0 for `.rust`
-- Go 1.21.4 for `.go`
+-  TypeScript 5.2.2 with Deno 1.38.3 for `.ts`
+-  Java 21 for `.java`
+-  Python 3.11.6 for `.py`
+-  C# 12 with .NET 6.0.416 for `.cs`
+-  C17 with Clang 16.0.6 for `.c`
+-  Rust 1.74.0 for `.rust`
+-  Go 1.21.4 for `.go`
 
 No parallelism or concurrency will be done, IO is not included in measuring performance, having to
 deal with `\r` is pain and should be separated. Output must always return string.
@@ -49,30 +49,30 @@ it.
 
 ### 2023
 
-| Day | TypeScript | Java | Python | C# | C  | Rust | Go |
-| --- | ---------- | ---- | ------ | -- | -- | ---- | -- |
-| 1   | ✅         | ✅   |        |    | ✅ |      |    |
-| 2   | ✅         | ✅   |        |    | ✅ |      |    |
-| 3   | ✅         | ✅   |        |    | ✅ |      |    |
-| 4   | ✅         | ✅   |        |    | ✅ |      |    |
-| 5   |            |      |        |    |    |      |    |
-| 6   |            |      |        |    |    |      |    |
-| 7   |            |      |        |    |    |      |    |
-| 8   |            |      |        |    |    |      |    |
-| 9   |            |      |        |    |    |      |    |
-| 10  |            |      |        |    |    |      |    |
-| 11  |            |      |        |    |    |      |    |
-| 12  |            |      |        |    |    |      |    |
-| 13  |            |      |        |    |    |      |    |
-| 14  |            |      |        |    |    |      |    |
-| 15  |            |      |        |    |    |      |    |
-| 16  |            |      |        |    |    |      |    |
-| 17  |            |      |        |    |    |      |    |
-| 18  |            |      |        |    |    |      |    |
-| 19  |            |      |        |    |    |      |    |
-| 20  |            |      |        |    |    |      |    |
-| 21  |            |      |        |    |    |      |    |
-| 22  |            |      |        |    |    |      |    |
-| 23  |            |      |        |    |    |      |    |
-| 24  |            |      |        |    |    |      |    |
-| 25  |            |      |        |    |    |      |    |
+| Day | TypeScript | Java | Python | C#  | C   | Rust | Go  |
+| --- | ---------- | ---- | ------ | --- | --- | ---- | --- |
+| 1   | ✅         | ✅   |        |     | ✅  |      |     |
+| 2   | ✅         | ✅   |        |     | ✅  |      |     |
+| 3   | ✅         | ✅   |        |     | ✅  |      |     |
+| 4   | ✅         | ✅   |        |     | ✅  |      |     |
+| 5   | ✅         |      |        |     |     |      |     |
+| 6   | ✅         |      |        |     | ✅  |      |     |
+| 7   | ✅         |      |        |     | ✅  |      |     |
+| 8   | ✅         |      |        |     | ✅  |      |     |
+| 9   |            |      |        |     |     |      |     |
+| 10  |            |      |        |     |     |      |     |
+| 11  |            |      |        |     |     |      |     |
+| 12  |            |      |        |     |     |      |     |
+| 13  |            |      |        |     |     |      |     |
+| 14  |            |      |        |     |     |      |     |
+| 15  |            |      |        |     |     |      |     |
+| 16  |            |      |        |     |     |      |     |
+| 17  |            |      |        |     |     |      |     |
+| 18  |            |      |        |     |     |      |     |
+| 19  |            |      |        |     |     |      |     |
+| 20  |            |      |        |     |     |      |     |
+| 21  |            |      |        |     |     |      |     |
+| 22  |            |      |        |     |     |      |     |
+| 23  |            |      |        |     |     |      |     |
+| 24  |            |      |        |     |     |      |     |
+| 25  |            |      |        |     |     |      |     |

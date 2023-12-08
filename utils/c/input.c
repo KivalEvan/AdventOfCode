@@ -11,7 +11,7 @@ char *getinput(char *path) {
   long fsize = ftell(f);
   fseek(f, 0, SEEK_SET);
 
-  char *string = (char *)malloc((fsize + 1) * sizeof(char));
+  char *string = malloc((fsize + 1) * sizeof(char));
   fread(string, fsize, 1, f);
   fclose(f);
 
@@ -19,7 +19,7 @@ char *getinput(char *path) {
   // yeet empty last line that always somehow happen for no reason
   // i hope this will totally not screw me over
   if (string[fsize - 1] == '\n') {
-    char *cpy = (char *)malloc(fsize * sizeof(char));
+    char *cpy = malloc(fsize * sizeof(char));
     strncpy(cpy, string, fsize - 1);
     cpy[fsize - 1] = 0;
     string = cpy;

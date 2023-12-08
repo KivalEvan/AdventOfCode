@@ -32,7 +32,7 @@ char *part1(char *input) {
       if (strlen(win_c[idx]))
         win_sz++;
     }
-    int *win = (int *)malloc(win_sz * sizeof(int));
+    int *win = malloc(win_sz * sizeof(int));
     for (int idx = 0, addTo = 0; idx < sz_l; idx++) {
       if (idx > 1 && strlen(win_c[idx]))
         win[addTo++] = atoi(win_c[idx]);
@@ -45,7 +45,7 @@ char *part1(char *input) {
       if (strlen(owned_c[idx]))
         owned_sz++;
     }
-    int *owned = (int *)malloc(owned_sz * sizeof(int));
+    int *owned = malloc(owned_sz * sizeof(int));
     for (int idx = 0, addTo = 0; idx < sz_r; idx++) {
       if (strlen(owned_c[idx]))
         owned[addTo++] = atoi(owned_c[idx]);
@@ -69,15 +69,13 @@ char *part1(char *input) {
   }
   free(splitted);
 
-  char *str = (char *)malloc(MAX_BUFFER_SIZE * sizeof(char));
-  sprintf(str, "%d", res);
-  return str;
+  return numtostr(res);
 }
 
 char *part2(char *input) {
   int sz, i = 0, j = 0;
   char **splitted = strsplit(input, "\n", &sz);
-  int *instances = (int *)malloc(sz * sizeof(int));
+  int *instances = malloc(sz * sizeof(int));
   for (i = 0; i < sz; i++)
     instances[i] = 1;
   int res = 0;
@@ -100,7 +98,7 @@ char *part2(char *input) {
       if (strlen(win_c[idx]))
         win_sz++;
     }
-    int *win = (int *)malloc(win_sz * sizeof(int));
+    int *win = malloc(win_sz * sizeof(int));
     for (int idx = 0, addTo = 0; idx < sz_l; idx++) {
       if (idx > 1 && strlen(win_c[idx]))
         win[addTo++] = atoi(win_c[idx]);
@@ -113,7 +111,7 @@ char *part2(char *input) {
       if (strlen(owned_c[idx]))
         owned_sz++;
     }
-    int *owned = (int *)malloc(owned_sz * sizeof(int));
+    int *owned = malloc(owned_sz * sizeof(int));
     for (int idx = 0, addTo = 0; idx < sz_r; idx++) {
       if (strlen(owned_c[idx]))
         owned[addTo++] = atoi(owned_c[idx]);
@@ -143,9 +141,7 @@ char *part2(char *input) {
     res += instances[i];
   free(instances);
 
-  char *str = (char *)malloc(MAX_BUFFER_SIZE * sizeof(char));
-  sprintf(str, "%d", res);
-  return str;
+  return numtostr(res);
 }
 
 int main(int argc, char *argv[]) {

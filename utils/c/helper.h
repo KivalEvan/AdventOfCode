@@ -1,4 +1,6 @@
+#include <ctype.h>
 #include <stdio.h>
+#include <string.h>
 
 #ifndef HELPER_H_
 #define HELPER_H_
@@ -13,5 +15,9 @@ char **strsplit(const char *restrict str, const char *delimiter, int *count);
 char *strdupcat(const char *restrict src1, const char *restrict src2);
 
 int stridxof(const char *restrict str, char c);
+
+char *strltrim(char *s);
+char *strrtrim(char *s);
+char *strtrim(char *s);
 
 #endif

@@ -25,6 +25,9 @@
       "initializer_list": "c",
       "span": "c",
       "valarray": "c",
-      "algorithm": "c"
+      "algorithm": "c",
+      "random": "c",
+      "limits": "c",
+      "semaphore": "c"
    }
 }

@@ -61,9 +61,7 @@ char *part1(char *input) {
   }
   free(splitted);
 
-  char *str = (char *)malloc(MAX_BUFFER_SIZE * sizeof(char));
-  sprintf(str, "%d", res);
-  return str;
+  return numtostr(res);
 }
 
 char *part2(char *input) {
@@ -79,7 +77,7 @@ char *part2(char *input) {
         str[0] = s[i];
         break;
       }
-      char c = getnum(strslice(s, (char *)malloc(5 * sizeof(char)), i, i + 5));
+      char c = getnum(strslice(s, malloc(5 * sizeof(char)), i, i + 5));
       if (c != '\0') {
         str[0] = c;
         break;
@@ -90,7 +88,7 @@ char *part2(char *input) {
         str[1] = s[i];
         break;
       }
-      char c = getnum(strslice(s, (char *)malloc(5 * sizeof(char)), i, i + 5));
+      char c = getnum(strslice(s, malloc(5 * sizeof(char)), i, i + 5));
       if (c != '\0') {
         str[1] = c;
         break;
@@ -103,9 +101,7 @@ char *part2(char *input) {
   }
   free(splitted);
 
-  char *str = (char *)malloc(MAX_BUFFER_SIZE * sizeof(char));
-  sprintf(str, "%d", res);
-  return str;
+  return numtostr(res);
 }
 
 int main(int argc, char *argv[]) {
