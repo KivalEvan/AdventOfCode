@@ -1,7 +1,7 @@
 #ifndef INPUT_H_
 #define INPUT_H_
 
-typedef struct Answers {
+typedef struct answers {
   char *test1;
   char *test2;
   char *part1;
@@ -10,6 +10,6 @@ typedef struct Answers {
 
 char *getinput(char *path);
 
-Answers getanswers(char *path);
+Answers *getanswers(char *path);
 
 #endif

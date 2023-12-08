@@ -28,24 +28,24 @@ char *getinput(char *path) {
   return string;
 }
 
-Answers getanswers(char *path) {
+Answers *getanswers(char *path) {
   int sz, line = 0;
   char **input = strsplit(getinput(path), "\n", &sz);
-  Answers answers;
+  Answers *answers = malloc(sizeof(Answers));
 
   while (line < sz) {
     switch (line) {
     case 0:
-      answers.test1 = input[line];
+      answers->test1 = input[line];
       break;
     case 1:
-      answers.part1 = input[line];
+      answers->part1 = input[line];
       break;
     case 2:
-      answers.test2 = input[line];
+      answers->test2 = input[line];
       break;
     case 3:
-      answers.part2 = input[line];
+      answers->part2 = input[line];
       break;
     }
     line++;

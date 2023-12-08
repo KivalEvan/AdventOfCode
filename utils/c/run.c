@@ -39,21 +39,27 @@ int run(int argc, char *argv[], char *(*fun_part1)(char *),
     fprintf(stderr, "Usage: <path/to/year/day/c>\n");
     return -1;
   }
-  Answers answers = getanswers(strdupcat(argv[1], "/../answers.txt"));
+  Answers *answers = getanswers(strdupcat(argv[1], "/../answers.txt"));
 
   _perform("Test 1", fun_part1, getinput(strdupcat(argv[1], "/../test1.txt")));
-  _test(result, answers.test1);
+  _test(result, answers->test1);
   free(result);
   _perform("Part 1", fun_part1, getinput(strdupcat(argv[1], "/../input.txt")));
-  _test(result, answers.part1);
+  _test(result, answers->part1);
   free(result);
   _perform("Test 2", fun_part2,
            getinput(strdupcat(argv[1], has_alternate ? "/../test2.txt"
                                                      : "/../test1.txt")));
-  _test(result, answers.test2);
+  _test(result, answers->test2);
   free(result);
   _perform("Part 2", fun_part2, getinput(strdupcat(argv[1], "/../input.txt")));
-  _test(result, answers.part2);
+  _test(result, answers->part2);
   free(result);
+
+  free(answers->part1);
+  free(answers->part2);
+  free(answers->test1);
+  free(answers->test2);
+  free(answers);
   return 0;
 }

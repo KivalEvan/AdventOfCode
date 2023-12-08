@@ -10,7 +10,7 @@
 
 const bool HAS_ALTERNATE = false;
 
-typedef struct Hands {
+typedef struct hands {
   char *cards;
   int values;
 } Hands;
@@ -124,12 +124,14 @@ char *part1(char *input) {
     int temp_sz;
     char **temp = strsplit(splt[i], " ", &temp_sz);
     Hands *hands = malloc(sizeof(Hands));
-    hands->cards = temp[0];
+    hands->cards = malloc(strlen(temp[0]) * sizeof(char));
+    strcpy(hands->cards, temp[0]);
     hands->values = atoi(temp[1]);
 
     int type = getType(hands->cards);
     groups[type][group_sz[type]++] = hands;
 
+    free(temp[0]);
     free(temp[1]);
     free(temp);
     free(splt[i]);
@@ -165,12 +167,15 @@ char *part2(char *input) {
     int temp_sz;
     char **temp = strsplit(splt[i], " ", &temp_sz);
     Hands *hands = malloc(sizeof(Hands));
-    hands->cards = strreplacec(temp[0], 'J', '1');
+    hands->cards = malloc(strlen(temp[0]) * sizeof(char));
+    strreplacec(temp[0], 'J', '1');
+    strcpy(hands->cards, temp[0]);
     hands->values = atoi(temp[1]);
 
     int type = getType(hands->cards);
     groups[type][group_sz[type]++] = hands;
 
+    free(temp[0]);
     free(temp[1]);
     free(temp);
     free(splt[i]);

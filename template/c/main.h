@@ -12,9 +12,9 @@ const bool HAS_ALTERNATE;
 char *part1(char *input);
 char *part2(char *input);
 
-char* numtostr(int num) {
+char* numtostr(long long num) {
   char *str = malloc(MAX_BUFFER_SIZE * sizeof(char));
-  sprintf(str, "%d", num);
+  sprintf(str, "%lld", num);
   return str;
 }
 
