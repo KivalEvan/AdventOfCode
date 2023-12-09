@@ -62,7 +62,7 @@ export function part2(input: string): string {
       }
       dists[i] = j;
    }
-   return dists.reduce((pv, v)=> lcm(pv, v), 1);
+   return dists.reduce((pv, v)=> lcm(pv, v), 1).toString();
 }
 
 if (import.meta.main) {

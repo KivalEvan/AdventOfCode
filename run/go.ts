@@ -1,6 +1,6 @@
 import { resolve } from 'utils/deps.ts';
 
-export default async function c(y: number, d: number) {
+export default async function c(y: number, d: number, benchmark = false) {
    const path = resolve(`./${y}/${d.toString().padStart(2, '0')}/go`);
 
    console.log('Compiling...');

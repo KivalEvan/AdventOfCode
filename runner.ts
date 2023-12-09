@@ -5,8 +5,8 @@ console.log('https://adventofcode.com/');
 
 const args = parseArgs(Deno.args, {
    string: ['d', 'y', 'l'],
-   boolean: ['a', 't', 'm'],
-   alias: { d: 'day', a: 'all', y: 'year', m: 'm', l: 'lang' },
+   boolean: ['a', 't', 'm', 'b'],
+   alias: { d: 'day', a: 'all', y: 'year', m: 'm', l: 'lang', b: 'bench' },
 });
 
 const langParse: Record<string, string> = {
@@ -65,25 +65,25 @@ mainLoop: for (let year = yearStart; year <= yearEnd; year++) {
       try {
          switch (lang) {
             case 'c':
-               await run.c(year, day);
+               await run.c(year, day, args.b);
                break;
             case 'csharp':
-               await run.csharp(year, day);
+               await run.csharp(year, day, args.b);
                break;
             case 'go':
-               await run.go(year, day);
+               await run.go(year, day, args.b);
                break;
             case 'java':
-               await run.java(year, day);
+               await run.java(year, day, args.b);
                break;
             case 'python':
-               await run.python(year, day);
+               await run.python(year, day, args.b);
                break;
             case 'rust':
-               await run.rust(year, day);
+               await run.rust(year, day, args.b);
                break;
             case 'ts':
-               await run.ts(year, day);
+               await run.ts(year, day, args.b);
                break;
             default:
                console.error('Unknown language selected.');
