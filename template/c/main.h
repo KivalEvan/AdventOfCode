@@ -9,10 +9,10 @@
 
 const bool HAS_ALTERNATE;
 
-char *part1(char *input);
-char *part2(char *input);
+char *part1(const char *restrict input);
+char *part2(const char *restrict input);
 
-char* numtostr(long long num) {
+char* numtostr(const long long num) {
   char *str = malloc(MAX_BUFFER_SIZE * sizeof(char));
   sprintf(str, "%lld", num);
   return str;

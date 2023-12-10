@@ -10,13 +10,13 @@
 
 const bool HAS_ALTERNATE = false;
 
-int ohnomath(long b, long c) {
+int ohnomath(const long b, const long c) {
   double min = floor((-b - sqrt(b * b - 4 * c)) / -2 - 0.001);
   double max = ceil((-b + sqrt(b * b - 4 * c)) / -2 + 0.001);
   return (int)(min - max + 1);
 }
 
-int *getNum(char *str, int *count) {
+int *getNum(const char *restrict str, int *count) {
   int *ary;
   char **chonk = strsplit(str, " ", count);
 
@@ -30,7 +30,7 @@ int *getNum(char *str, int *count) {
   return ary;
 }
 
-long getNumJoin(char *str) {
+long getNumJoin(const char *restrict str) {
   int count;
   long res = 0;
   char **chonk = strsplit(str, " ", &count);
@@ -46,7 +46,7 @@ long getNumJoin(char *str) {
   return res;
 }
 
-char *part1(char *input) {
+char *part1(const char *restrict input) {
   int sz, c_sz, t_sz, d_sz, i;
   char **chunk;
   char **splitted = strsplit(input, "\n", &sz);
@@ -77,7 +77,7 @@ char *part1(char *input) {
   return numtostr(res);
 }
 
-char *part2(char *input) {
+char *part2(const char *restrict input) {
   int sz, c_sz, t_sz, d_sz, i;
   char **chunk;
   char **splitted = strsplit(input, "\n", &sz);
@@ -97,7 +97,7 @@ char *part2(char *input) {
   free(splitted[0]);
   free(splitted[1]);
   free(splitted);
-  
+
   return numtostr(ohnomath(time, distance));
 }
 

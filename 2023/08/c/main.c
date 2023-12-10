@@ -118,24 +118,25 @@ void hashmap_delete(Hashmap *hashmap) {
   free(hashmap);
 }
 
-long long int gcd(long long int a, long long int b) {
+long long int gcd(const long long int a, const long long int b) {
   return !b ? a : gcd(b, a % b);
 }
 
-long long int lcm(long long int a, long long int b) {
+long long int lcm(const long long int a, const long long int b) {
   return (a * b) / gcd(a, b);
 }
 
-char *part1(char *input) {
-  int i, len, sz;
+void parseInput(const char *restrict input, int **instructions, Hashmap **hashmap,
+                int *len) {
+  int i, sz;
   char **sides = strsplit(input, "\n", &sz);
 
-  len = strlen(sides[0]);
-  int *instructions = malloc(len * sizeof(int));
-  for (i = 0; i < len; i++)
-    instructions[i] = sides[0][i] == 'L' ? 0 : 1;
+  *len = strlen(sides[0]);
+  *instructions = malloc(*len * sizeof(int *));
+  for (i = 0; i < *len; i++)
+    (*instructions)[i] = sides[0][i] == 'L' ? 0 : 1;
 
-  Hashmap *hashmap = hashmap_init();
+  *hashmap = hashmap_init();
   for (i = 1; i < sz; i++) {
     int m;
     char **n = strsplit(sides[i], "=", &m);
@@ -143,7 +144,7 @@ char *part1(char *input) {
     strreplacec(n[1], ')', ' ');
     char **s = strsplit(n[1], ", ", &m);
     n[0][3] = '\0';
-    hashmap_add(hashmap, n[0], s);
+    hashmap_add(*hashmap, n[0], s);
 
     free(n[1]);
     free(n);
@@ -151,6 +152,14 @@ char *part1(char *input) {
   }
   free(sides[0]);
   free(sides);
+}
+
+char *part1(const char *restrict input) {
+  int len;
+  int *instructions;
+  Hashmap *hashmap;
+
+  parseInput(input, &instructions, &hashmap, &len);
 
   long long it = 0;
   char *nav = malloc(4 * sizeof(char));
@@ -169,7 +178,7 @@ char *part1(char *input) {
   return numtostr(it);
 }
 
-char *part2(char *input) {
+char *part2(const char *restrict input) {
   int i, x, len, sz;
   char **sides = strsplit(input, "\n", &sz);
 

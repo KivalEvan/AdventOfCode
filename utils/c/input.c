@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-char *getinput(char *path) {
+char *getinput(const char *restrict path) {
   FILE *f = fopen(path, "rb");
 
   fseek(f, 0, SEEK_END);
@@ -28,7 +28,7 @@ char *getinput(char *path) {
   return string;
 }
 
-Answers *getanswers(char *path) {
+Answers *getanswers(const char *restrict path) {
   int sz, line = 0;
   char **input = strsplit(getinput(path), "\n", &sz);
   Answers *answers = malloc(sizeof(Answers));

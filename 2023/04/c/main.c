@@ -10,7 +10,7 @@
 
 const bool HAS_ALTERNATE = false;
 
-char *part1(char *input) {
+char *part1(const char *restrict input) {
   int sz, i = 0, j = 0;
   char **splitted = strsplit(input, "\n", &sz);
   int res = 0;
@@ -72,7 +72,7 @@ char *part1(char *input) {
   return numtostr(res);
 }
 
-char *part2(char *input) {
+char *part2(const char *restrict input) {
   int sz, i = 0, j = 0;
   char **splitted = strsplit(input, "\n", &sz);
   int *instances = malloc(sz * sizeof(int));

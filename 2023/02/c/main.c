@@ -10,7 +10,7 @@
 
 const bool HAS_ALTERNATE = false;
 
-char *part1(char *input) {
+char *part1(const char *restrict input) {
   int sz, sz_2, sz_3, res = 0;
   char **splitted = strsplit(input, "\n", &sz);
 
@@ -53,7 +53,7 @@ char *part1(char *input) {
   return numtostr(res);
 }
 
-char *part2(char *input) {
+char *part2(const char *restrict input) {
   int sz, sz_2, sz_3, res = 0;
   char **splitted = strsplit(input, "\n", &sz);
 

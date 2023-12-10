@@ -15,7 +15,7 @@ typedef struct hands {
   int values;
 } Hands;
 
-int getRank(char c) {
+int getRank(const char c) {
   switch (c) {
   case 'A':
     return 13;
@@ -60,7 +60,7 @@ int card_comparator(const void *v1, const void *v2) {
   return 0;
 }
 
-int getType(char *str) {
+int getType(const char *restrict str) {
   int *values = malloc(14 * sizeof(int)), i;
   for (i = 0; i < 14; i++)
     values[i] = 0;
@@ -110,7 +110,7 @@ int getType(char *str) {
   return 4;
 }
 
-char *part1(char *input) {
+char *part1(const char *restrict input) {
   int sz, i, j, k = 0, res = 0;
   char **splt = strsplit(input, "\n", &sz);
   Hands ***groups = malloc(7 * sizeof(Hands **));
@@ -153,7 +153,7 @@ char *part1(char *input) {
   return numtostr(res);
 }
 
-char *part2(char *input) {
+char *part2(const char *restrict input) {
   int sz, i, j, k = 0, res = 0;
   char **splt = strsplit(input, "\n", &sz);
   Hands ***groups = malloc(7 * sizeof(Hands **));

@@ -3,29 +3,31 @@ import { run } from 'utils/run.ts';
 /** If part 2 test input has completely different input, set this to `true`. */
 export const HAS_ALTERNATE = false;
 
-function difference(r: number[], sz: number): number[] {
-   for (let i = 0; i < sz; i++) r[i] = r[i + 1] - r[i];
-   return r;
+function difference(ary: number[], sz: number): number[] {
+   for (let i = 0; i < sz; i++) ary[i] = ary[i + 1] - ary[i];
+   return ary;
 }
 
-function extrapolate(r: number[], sz: number): number {
-   const last = r[r.length - 1];
-   let m = 0;
-   for (let i = 0; i < sz; i++) m = m | r[i];
-   if (!m) return 0;
+function extrapolate(ary: number[], sz: number): number {
    sz--;
-   return extrapolate(difference(r, sz), sz) + last;
+   const last = ary[sz];
+   if (!sz) return last;
+   return extrapolate(difference(ary, sz), sz) + last;
+}
+
+function parseInput(input: string): number[][] {
+   return input.split('\n').map((str) => str.split(' ').map(Number));
 }
 
 export function part1(input: string): string {
-   const parsed = input.split('\n').map((str) => str.split(' ').map(Number));
+   const parsed = parseInput(input);
    let res = 0;
    for (const history of parsed) res += extrapolate(history, history.length);
    return res.toString();
 }
 
 export function part2(input: string): string {
-   const parsed = input.split('\n').map((str) => str.split(' ').map(Number));
+   const parsed = parseInput(input);
    let res = 0;
    for (const history of parsed) res += extrapolate(history.reverse(), history.length);
    return res.toString();

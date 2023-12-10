@@ -3,6 +3,7 @@
 #ifndef BENCH_H_
 #define BENCH_H_
 
-void bench(char *tag, char *(*fun)(char *), char *path);
+void bench(const char *restrict tag, char *(*fun)(const char *restrict),
+           char *path);
 
 #endif

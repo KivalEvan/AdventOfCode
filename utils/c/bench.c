@@ -10,7 +10,8 @@
 
 #define ITERATION_BENCH 1000
 
-void bench(char *tag, char *(*fun)(char *), char *path) {
+void bench(const char *restrict tag, char *(*fun)(const char *restrict),
+           char *path) {
   char *_, *input;
   clock_t start, end;
   double elapsed;
@@ -50,7 +51,7 @@ void bench(char *tag, char *(*fun)(char *), char *path) {
   max *= 1000;
   avg *= 1000;
   printf("IO (min..max) %.3f - %.3f (avg) %.3f\n", min, max, avg);
-  
+
   min = 9999999, max = 0, total = 0;
   for (i = 0; i < ITERATION_BENCH; i++) {
     total += timesPart[i];

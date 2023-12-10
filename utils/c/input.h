@@ -8,8 +8,8 @@ typedef struct answers {
   char *part2;
 } Answers;
 
-char *getinput(char *path);
+char *getinput(const char *restrict path);
 
-Answers *getanswers(char *path);
+Answers *getanswers(const char *restrict path);
 
 #endif

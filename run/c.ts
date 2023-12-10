@@ -25,5 +25,6 @@ export default async function c(y: number, d: number, benchmark = false) {
 
    console.assert(code === 0);
    console.log(new TextDecoder().decode(stdout).trim());
-   console.log(new TextDecoder().decode(stderr));
+   const td = new TextDecoder().decode(stderr).trim();
+   if (td) console.log(td);
 }

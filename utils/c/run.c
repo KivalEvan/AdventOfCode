@@ -11,7 +11,7 @@
 
 char *result;
 
-void _test(char *actual, char *expected) {
+void _test(const char *restrict actual, const char *restrict expected) {
   if (strlen(expected) == 0)
     return;
   if (strcmp(actual, expected) != 0) {
@@ -20,7 +20,8 @@ void _test(char *actual, char *expected) {
   }
 }
 
-void _perform(char *tag, char *(*fun)(char *), char *path) {
+void _perform(const char *restrict tag, char *(*fun)(const char *restrict),
+              char *path) {
   clock_t start, end;
   char *input = getinput(path);
   double e_io, e_part;
@@ -45,8 +46,8 @@ void _perform(char *tag, char *(*fun)(char *), char *path) {
   free(path);
 }
 
-int run(int argc, char *argv[], char *(*fun_part1)(char *),
-        char *(*fun_part2)(char *), bool has_alternate) {
+int run(int argc, char *argv[], char *(*fun_part1)(const char *restrict),
+        char *(*fun_part2)(const char *restrict), bool has_alternate) {
   if (argc == 1) {
     fprintf(stderr, "Usage: <path/to/year/day> <any_input_for_bench>\n");
     return -1;
@@ -55,9 +56,8 @@ int run(int argc, char *argv[], char *(*fun_part1)(char *),
   if (argc == 3) {
     bench("Test 1", fun_part1, strdupcat(argv[1], "/test1.txt"));
     bench("Part 1", fun_part1, strdupcat(argv[1], "/input.txt"));
-    bench(
-        "Test 2", fun_part2,
-        strdupcat(argv[1], has_alternate ? "/test2.txt" : "/test1.txt"));
+    bench("Test 2", fun_part2,
+          strdupcat(argv[1], has_alternate ? "/test2.txt" : "/test1.txt"));
     bench("Part 2", fun_part2, strdupcat(argv[1], "/input.txt"));
   } else {
     Answers *answers = getanswers(strdupcat(argv[1], "/answers.txt"));
@@ -68,9 +68,8 @@ int run(int argc, char *argv[], char *(*fun_part1)(char *),
     _perform("Part 1", fun_part1, strdupcat(argv[1], "/input.txt"));
     _test(result, answers->part1);
     free(result);
-    _perform(
-        "Test 2", fun_part2,
-        strdupcat(argv[1], has_alternate ? "/test2.txt" : "/test1.txt"));
+    _perform("Test 2", fun_part2,
+             strdupcat(argv[1], has_alternate ? "/test2.txt" : "/test1.txt"));
     _test(result, answers->test2);
     free(result);
     _perform("Part 2", fun_part2, strdupcat(argv[1], "/input.txt"));

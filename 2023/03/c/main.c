@@ -15,7 +15,7 @@ bool isSymbol(char c) {
           c == '/' || c == '&' || c == '+' || c == '-' || c == '@');
 }
 
-char *yeetthenumber(char **grid, int x, int y, const int sz) {
+char *yeetthenumber(char **restrict grid, const int x, const int y, const int sz) {
   char *res = malloc(2 * sizeof(char));
   res[0] = 0;
   if (isdigit(grid[y][x])) {
@@ -31,7 +31,7 @@ char *yeetthenumber(char **grid, int x, int y, const int sz) {
   return res;
 }
 
-char *part1(char *input) {
+char *part1(const char *restrict input) {
   int sz, res = 0;
   char **grid = strsplit(input, "\n", &sz);
 
@@ -71,7 +71,7 @@ void checkandadd(int *ary, int *i, int res) {
     ary[(*i)++] = res;
 }
 
-char *part2(char *input) {
+char *part2(const char *restrict input) {
   int sz, res = 0;
   char **grid = strsplit(input, "\n", &sz);
 

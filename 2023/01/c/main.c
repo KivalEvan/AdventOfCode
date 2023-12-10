@@ -10,7 +10,7 @@
 
 const bool HAS_ALTERNATE = true;
 
-char getnum(char *str) {
+char getnum(const char *restrict str) {
   if (strncmp(str, "zero", 4) == 0)
     return '0';
   if (strncmp(str, "one", 3) == 0)
@@ -34,7 +34,7 @@ char getnum(char *str) {
   return '\0';
 }
 
-char *part1(char *input) {
+char *part1(const char *restrict input) {
   int sz, line = 0, res = 0;
 
   char **splitted = strsplit(input, "\n", &sz);
@@ -64,7 +64,7 @@ char *part1(char *input) {
   return numtostr(res);
 }
 
-char *part2(char *input) {
+char *part2(const char *restrict input) {
   int sz, line = 0, res = 0;
 
   char **splitted = strsplit(input, "\n", &sz);

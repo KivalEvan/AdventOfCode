@@ -10,7 +10,7 @@
 
 const bool HAS_ALTERNATE = false;
 
-long long **parseInput(char *input, int *sz, int **p_size, bool reverse) {
+long long **parseInput(const char *restrict input, int *sz, int **restrict p_size, const bool reverse) {
   int sz_c, i, j;
   char **splt = strsplit(input, "\n", sz);
   long long **ary = malloc(*sz * sizeof(long long *));
@@ -36,25 +36,20 @@ long long **parseInput(char *input, int *sz, int **p_size, bool reverse) {
   return ary;
 }
 
-long long *difference(long long *ary, int sz) {
+long long *difference(long long *restrict ary, int sz) {
   for (int i = 0; i < sz; i++)
     ary[i] = ary[i + 1] - ary[i];
   return ary;
 }
 
-long long extrapolate(long long *ary, int sz) {
-  long long last = ary[sz - 1];
-  int m = 0;
-  for (int i = 0; i < sz; i++) {
-    m = m | ary[i];
-  }
-  if (!m)
-    return 0;
+long long extrapolate(long long *restrict ary, int sz) {
   sz--;
+  long long last = ary[sz];
+  if (!sz) return last;
   return extrapolate(difference(ary, sz), sz) + last;
 }
 
-char *part1(char *input) {
+char *part1(const char *restrict input) {
   int sz, i, *p_size;
   long long **parsed = parseInput(input, &sz, &p_size, false), res = 0;
 
@@ -68,7 +63,7 @@ char *part1(char *input) {
   return numtostr(res);
 }
 
-char *part2(char *input) {
+char *part2(const char *restrict input) {
   int sz, i, *p_size;
   long long **parsed = parseInput(input, &sz, &p_size, true), res = 0;
 
