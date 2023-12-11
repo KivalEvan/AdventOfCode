@@ -28,6 +28,9 @@
       "algorithm": "c",
       "random": "c",
       "limits": "c",
-      "semaphore": "c"
+      "semaphore": "c",
+      "ctype.h": "c",
+      "main.h": "c",
+      "bench.h": "c"
    }
 }

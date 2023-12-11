@@ -3,6 +3,7 @@
 #include <stdio.h>
 
 #define MAX_BUFFER_SIZE 256
+#define MOD_CP 1000000007
 
 #ifndef MAIN_H_
 #define MAIN_H_

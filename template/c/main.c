@@ -10,9 +10,9 @@
 
 const bool HAS_ALTERNATE = false;
 
-char *part1(char *input) { return numtostr(0); }
+char *part1(const char *restrict input) { return numtostr(0); }
 
-char *part2(char *input) { return numtostr(0); }
+char *part2(const char *restrict input) { return numtostr(0); }
 
 int main(int argc, char *argv[]) {
   return run(argc, argv, part1, part2, HAS_ALTERNATE);
