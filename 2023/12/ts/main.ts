@@ -4,50 +4,40 @@ import { run } from 'utils/run.ts';
 /** If part 2 test input has completely different input, set this to `true`. */
 export const HAS_ALTERNATE = false;
 
-function sum(ary: number[]): number {
-   return ary.reduce((pv, v) => pv + v, 0);
-}
-
-function memoize(fn: (...args: any[]) => any) {
+function solve(field: string, conditions: number[]): number {
    const cache: Record<string, any> = {};
-   return (...args: any[]) => {
-      const key = args.toString();
-      if (key in cache) {
-         return cache[key];
-      } else {
-         const result = fn(...args);
-         cache[key] = result;
-         return result;
-      }
-   };
-}
+   function memoize(fn: (x: number, y: number) => any) {
+      return (x: number, y: number) => {
+         const key = x.toString() + y.toString();
+         if (key in cache) {
+            return cache[key];
+         } else {
+            const result = fn(x, y);
+            cache[key] = result;
+            return result;
+         }
+      };
+   }
 
-const wedoabitofrecursion = memoize((field: string, conditions: number[]) => {
-   if (!field.length) {
-      if (!conditions.length) return 1;
+   function lookahead(fIdx: number, cIdx: number): number {
+      if (cIdx === conditions.length) return 0;
+      if (field.length - fIdx < conditions[cIdx]) return 0;
+      for (let k = fIdx; k < fIdx + conditions[cIdx]; k++) if (field[k] === '.') return 0;
+      if (field.length - 1 === conditions[cIdx]) return wedoabitofrecursion(field.length, cIdx + 1);
+      if (field[fIdx + conditions[cIdx]] !== '#')
+         return wedoabitofrecursion(fIdx + conditions[cIdx] + 1, cIdx + 1);
       return 0;
    }
-   if (!conditions.length) {
-      for (const k of field) if (k === '#') return 0;
-      return 1;
-   }
 
-   // aint no way this fits with condition
-   if (field.length < sum(conditions) + conditions.length - 1) return 0;
+   const wedoabitofrecursion = memoize((fIdx: number, cIdx: number): number => {
+      if (fIdx >= field.length) return cIdx === conditions.length ? 1 : 0;
+      if (field[fIdx] === '.') return wedoabitofrecursion(fIdx + 1, cIdx);
+      if (field[fIdx] === '#') return lookahead(fIdx, cIdx);
+      return wedoabitofrecursion(fIdx + 1, cIdx) + lookahead(fIdx, cIdx);
+   });
 
-   if (field[0] === '.') return wedoabitofrecursion(field.slice(1), conditions);
-   if (field[0] === '#') {
-      const num = conditions[0];
-      for (let i = 0; i < num; i++) if (field[i] === '.') return 0;
-      if (field[num] === '#') return 0;
-      return wedoabitofrecursion(field.slice(num + 1), conditions.slice(1));
-   }
-
-   return (
-      wedoabitofrecursion('#' + field.slice(1), conditions) +
-      wedoabitofrecursion(field.slice(1), conditions)
-   );
-});
+   return wedoabitofrecursion(0, 0);
+}
 
 export function part1(input: string): string {
    const parsed = input.split('\n').map((str) => {
@@ -57,7 +47,7 @@ export function part1(input: string): string {
    });
 
    let res = 0;
-   for (const [field, conditions] of parsed) res += wedoabitofrecursion(field, conditions);
+   for (const [field, conditions] of parsed) res += solve(field, conditions);
 
    return res.toString();
 }
@@ -71,7 +61,7 @@ export function part2(input: string): string {
 
    let res = 0;
    for (const [field, conditions] of parsed)
-      res += wedoabitofrecursion(field + '?' + field + '?' + field + '?' + field + '?' + field, [
+      res += solve(field + '?' + field + '?' + field + '?' + field + '?' + field, [
          ...conditions,
          ...conditions,
          ...conditions,
