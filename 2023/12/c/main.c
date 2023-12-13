@@ -144,29 +144,29 @@ void parseInput(const char *restrict input, int *sz, char ***fields,
   free(parsed);
 }
 
-long long memodrecursion(Hashmap *hashmap, const char *restrict field,
+long long memodrecursion(Hashmap *cache, const char *restrict field,
                          const int *conditions, const int c_sz,
                          const int f_sz, int f_i, int c_i);
-long long lookahead(Hashmap *hashmap, const char *restrict field,
+long long lookahead(Hashmap *cache, const char *restrict field,
                     const int *conditions, const int c_sz,
                     const int f_sz, int f_i, int c_i);
 
-long long wedoabitofrecursion(Hashmap *hashmap, const char *restrict field,
+long long wedoabitofrecursion(Hashmap *cache, const char *restrict field,
                               const int *conditions, const int c_sz,
                               const int f_sz, int f_i, int c_i) {
   if (f_i >= f_sz)
     return c_i == c_sz ? 1 : 0;
   if (field[f_i] == '.')
-    return memodrecursion(hashmap, field, conditions, c_sz, f_sz,
+    return memodrecursion(cache, field, conditions, c_sz, f_sz,
                           f_i + 1, c_i);
   if (field[f_i] == '#')
-    return lookahead(hashmap, field, conditions, c_sz, f_sz, f_i, c_i);
-  return memodrecursion(hashmap, field, conditions, c_sz, f_sz, f_i + 1,
+    return lookahead(cache, field, conditions, c_sz, f_sz, f_i, c_i);
+  return memodrecursion(cache, field, conditions, c_sz, f_sz, f_i + 1,
                         c_i) +
-         lookahead(hashmap, field, conditions, c_sz, f_sz, f_i, c_i);
+         lookahead(cache, field, conditions, c_sz, f_sz, f_i, c_i);
 }
 
-long long lookahead(Hashmap *hashmap, const char *restrict field,
+long long lookahead(Hashmap *cache, const char *restrict field,
                     const int *conditions, const int c_sz,
                     const int f_sz, int f_i, int c_i) {
   if (c_i == c_sz)
@@ -177,38 +177,38 @@ long long lookahead(Hashmap *hashmap, const char *restrict field,
     if (field[k] == '.')
       return 0;
   if (f_sz - 1 == conditions[c_i])
-    return memodrecursion(hashmap, field, conditions, c_sz, f_sz,
+    return memodrecursion(cache, field, conditions, c_sz, f_sz,
                           f_sz, c_i + 1);
   if (field[f_i + conditions[c_i]] != '#')
-    return memodrecursion(hashmap, field, conditions, c_sz, f_sz,
+    return memodrecursion(cache, field, conditions, c_sz, f_sz,
                           f_i + conditions[c_i] + 1, c_i + 1);
   return 0;
 }
 
-long long memodrecursion(Hashmap *hashmap, const char *restrict field,
+long long memodrecursion(Hashmap *cache, const char *restrict field,
                          const int *conditions, const int c_sz,
                          const int f_sz, int f_i, int c_i) {
   char *key = malloc(32 * sizeof(char));
   sprintf(key, "%d,%d", f_i, c_i);
-  Node *n = hashmap_get(hashmap, key);
+  Node *n = hashmap_get(cache, key);
   if (n != NULL) {
     return n->val;
   } else {
-    long long result = wedoabitofrecursion(hashmap, field, conditions, c_sz,
+    long long result = wedoabitofrecursion(cache, field, conditions, c_sz,
                                            f_sz, f_i, c_i);
-    hashmap_set(hashmap, key, result);
+    hashmap_set(cache, key, result);
     return result;
   }
 }
 
 long long solve(const char *restrict field, const int *conditions,
                 const int c_sz) {
-  Hashmap *hashmap = hashmap_init();
+  Hashmap *cache = hashmap_init();
 
   long long res =
-      memodrecursion(hashmap, field, conditions, c_sz, strlen(field), 0, 0);
+      memodrecursion(cache, field, conditions, c_sz, strlen(field), 0, 0);
 
-  hashmap_delete(hashmap);
+  hashmap_delete(cache);
   return res;
 }
 
