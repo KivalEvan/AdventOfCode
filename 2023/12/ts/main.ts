@@ -5,15 +5,15 @@ import { run } from 'utils/run.ts';
 export const HAS_ALTERNATE = false;
 
 function solve(field: string, conditions: number[]): number {
-   const cache: Record<string, any> = {};
+   const cache = new Map<string, number>();
    function memoize(fn: (x: number, y: number) => any) {
       return (x: number, y: number) => {
          const key = x.toString() + y.toString();
-         if (key in cache) {
-            return cache[key];
+         if (cache.has(key)) {
+            return cache.get(key);
          } else {
             const result = fn(x, y);
-            cache[key] = result;
+            cache.set(key, result);
             return result;
          }
       };
