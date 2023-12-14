@@ -26,23 +26,11 @@ export function part1(input: string): string {
    return res.toString();
 }
 
-function solve(input: string): number {
-   // use Map for smol cache and infrequent read, object for very big cache and very very frequent read
-   const cache: Record<string, string> = {};
-   function memoize(fn: (grid: string) => string) {
-      return (grid: string) => {
-         if (grid in cache) {
-            return cache[grid];
-         } else {
-            const result = fn(grid);
-            cache[grid] = result;
-            return result;
-         }
-      };
-   }
+export function part2(input: string): string {
+   // store pattern string here
+   const set = new Set<string>();
 
-   const bigstuff = memoize((input: string): string => {
-      const grid = input.split('\n').map((str) => str.split(''));
+   function bigstuff(grid: string[][]) {
       for (let y = 0; y < grid.length; y++) {
          for (let x = 0; x < grid[0].length; x++) {
             if (grid[y][x] === 'O') {
@@ -100,21 +88,29 @@ function solve(input: string): number {
       }
 
       return grid.map((str) => str.join('')).join('\n');
-   });
+   }
 
+   let grid = input.split('\n').map((str) => str.split(''));
    const CYCLES = 1_000_000_000;
-   // const CYCLES = 200;
-   for (let c = 0; c < CYCLES; c++) input = bigstuff(input)!;
+   for (let c = 0; c < CYCLES; c++) {
+      const temp = bigstuff(grid);
+      // if we got to any prev pattern, then it's loop from here
+      if (set.has(temp)) {
+         const ary = [...set.keys()];
+         const foundIdx = ary.indexOf(temp);
+         // skip to the loop idx, get idx from target cycle - current cycle - this cycle
+         input = ary[foundIdx + ((CYCLES - c - 1) % (ary.length - foundIdx))];
+         break;
+      }
+      set.add(temp);
+   }
 
-   const grid = input.split('\n').map((str) => str.split(''));
+   grid = input.split('\n').map((str) => str.split(''));
    let res = 0;
    for (let i = 0; i < grid.length; i++)
       for (const k of grid[i]) if (k === 'O') res += grid.length - i;
-   return res;
-}
 
-export function part2(input: string): string {
-   return solve(input).toString();
+   return res.toString();
 }
 
 if (import.meta.main) {
