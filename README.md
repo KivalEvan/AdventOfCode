@@ -15,10 +15,9 @@ This is also the order of priority that I will solve the problem with:
 -  Rust 1.74.0 for `.rust`
 -  Go 1.21.4 for `.go`
 
-No parallelism or concurrency will be done, IO is not included in measuring performance, having to
-deal with `\r` is pain and should be separated. Output must always return string.
+No parallelism or concurrency will be done, input parsing is included in part instead of IO. Output must always return string.
 
-To make challenges for myself, I can only use standard library provided by the language/compiler.
+To make challenges for myself, I can only use standard library provided by the language/compiler or use my own library.
 
 ## Input & Answers
 
@@ -64,7 +63,7 @@ it.
 | 11  | ✅         |      |        |     | ✅  |      |     |
 | 12  | ✅         |      |        |     | ✅  |      |     |
 | 13  | ✅         |      |        |     |     |      |     |
-| 14  | ✅         |      |        |     |     |      |     |
+| 14  | ✅         |      |        |     | ✅  |      |     |
 | 15  |            |      |        |     |     |      |     |
 | 16  |            |      |        |     |     |      |     |
 | 17  |            |      |        |     |     |      |     |
