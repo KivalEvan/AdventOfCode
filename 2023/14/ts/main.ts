@@ -9,11 +9,9 @@ export function part1(input: string): string {
       for (let x = 0; x < grid[y].length; x++) {
          if (grid[y][x] === 'O') {
             for (let z = y - 1; z >= 0; z--) {
-               if (grid[z][x] === '#' || grid[z][x] === 'O') break;
-               if (grid[z][x] === '.') {
-                  grid[z][x] = 'O';
-                  grid[z + 1][x] = '.';
-               }
+               if (grid[z][x] !== '.') break;
+               grid[z][x] = 'O';
+               grid[z + 1][x] = '.';
             }
          }
       }
@@ -35,11 +33,9 @@ export function part2(input: string): string {
          for (let x = 0; x < grid[0].length; x++) {
             if (grid[y][x] === 'O') {
                for (let z = y - 1; z >= 0; z--) {
-                  if (grid[z][x] === '#' || grid[z][x] === 'O') break;
-                  if (grid[z][x] === '.') {
-                     grid[z][x] = 'O';
-                     grid[z + 1][x] = '.';
-                  }
+                  if (grid[z][x] !== '.') break;
+                  grid[z][x] = 'O';
+                  grid[z + 1][x] = '.';
                }
             }
          }
@@ -49,11 +45,9 @@ export function part2(input: string): string {
          for (let x = 0; x < grid[0].length; x++) {
             if (grid[y][x] === 'O') {
                for (let z = x - 1; z >= 0; z--) {
-                  if (grid[y][z] === '#' || grid[y][z] === 'O') break;
-                  if (grid[y][z] === '.') {
-                     grid[y][z] = 'O';
-                     grid[y][z + 1] = '.';
-                  }
+                  if (grid[y][z] !== '.') break;
+                  grid[y][z] = 'O';
+                  grid[y][z + 1] = '.';
                }
             }
          }
@@ -63,11 +57,9 @@ export function part2(input: string): string {
          for (let x = 0; x < grid[0].length; x++) {
             if (grid[y][x] === 'O') {
                for (let z = y + 1; z < grid.length; z++) {
-                  if (grid[z][x] === '#' || grid[z][x] === 'O') break;
-                  if (grid[z][x] === '.') {
-                     grid[z][x] = 'O';
-                     grid[z - 1][x] = '.';
-                  }
+                  if (grid[z][x] !== '.') break;
+                  grid[z][x] = 'O';
+                  grid[z - 1][x] = '.';
                }
             }
          }
@@ -77,11 +69,9 @@ export function part2(input: string): string {
          for (let x = grid[y].length - 1; x >= 0; x--) {
             if (grid[y][x] === 'O') {
                for (let z = x + 1; z < grid[0].length; z++) {
-                  if (grid[y][z] === '#' || grid[y][z] === 'O') break;
-                  if (grid[y][z] === '.') {
-                     grid[y][z] = 'O';
-                     grid[y][z - 1] = '.';
-                  }
+                  if (grid[y][z] !== '.') break;
+                  grid[y][z] = 'O';
+                  grid[y][z - 1] = '.';
                }
             }
          }
