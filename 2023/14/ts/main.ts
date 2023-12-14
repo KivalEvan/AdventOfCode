@@ -30,7 +30,7 @@ export function part2(input: string): string {
 
    function bigstuff(grid: string[][]) {
       for (let y = 0; y < grid.length; y++) {
-         for (let x = 0; x < grid[0].length; x++) {
+         for (let x = 0; x < grid[y].length; x++) {
             if (grid[y][x] === 'O') {
                for (let z = y - 1; z >= 0; z--) {
                   if (grid[z][x] !== '.') break;
@@ -42,7 +42,7 @@ export function part2(input: string): string {
       }
 
       for (let y = 0; y < grid.length; y++) {
-         for (let x = 0; x < grid[0].length; x++) {
+         for (let x = 0; x < grid[y].length; x++) {
             if (grid[y][x] === 'O') {
                for (let z = x - 1; z >= 0; z--) {
                   if (grid[y][z] !== '.') break;
@@ -54,7 +54,7 @@ export function part2(input: string): string {
       }
 
       for (let y = grid.length - 1; y >= 0; y--) {
-         for (let x = 0; x < grid[0].length; x++) {
+         for (let x = 0; x < grid[y].length; x++) {
             if (grid[y][x] === 'O') {
                for (let z = y + 1; z < grid.length; z++) {
                   if (grid[z][x] !== '.') break;
@@ -68,7 +68,7 @@ export function part2(input: string): string {
       for (let y = 0; y < grid.length; y++) {
          for (let x = grid[y].length - 1; x >= 0; x--) {
             if (grid[y][x] === 'O') {
-               for (let z = x + 1; z < grid[0].length; z++) {
+               for (let z = x + 1; z < grid[y].length; z++) {
                   if (grid[y][z] !== '.') break;
                   grid[y][z] = 'O';
                   grid[y][z - 1] = '.';
