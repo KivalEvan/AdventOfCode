@@ -38,7 +38,7 @@ function sendhelp(grid: number[][], minTurn: number, maxStep: number): number {
             const nY = h[1] + dY;
             const nS = h[3] === dD ? h[2] + 1 : 1;
 
-            if (minTurn && h[3] !== dD && h[2] < minTurn) continue;
+            if (h[3] !== dD && h[2] < minTurn) continue;
             if (nS > maxStep || nX < 0 || nX >= maxX || nY < 0 || nY >= maxY) continue;
 
             const key = JSON.stringify([nX, nY, dX, dY, nS]);
