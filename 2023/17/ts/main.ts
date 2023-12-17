@@ -22,7 +22,7 @@ function sendhelp(grid: number[][], minTurn: number, maxStep: number): number {
    } as const;
 
    const seen = new Set();
-   const heatAry: [x: number, y: number, s: number, d?: 'U' | 'D' | 'L' | 'R'][][] = [
+   const heatAry: [x: number, y: number, s: number, d: 'U' | 'D' | 'L' | 'R'][][] = [
       [
          [0, 0, 0, 'D'],
          [0, 0, 0, 'R'],
@@ -32,22 +32,22 @@ function sendhelp(grid: number[][], minTurn: number, maxStep: number): number {
    xdd: while (true) {
       for (const h of heatAry[cH] ?? []) {
          if (h[0] === maxX - 1 && h[1] === maxY - 1) break xdd;
-         for (const [dX, dY, dD] of directions) {
-            if (skippo[h[3]!] === dD) continue;
-            const nX = h[0] + dX;
-            const nY = h[1] + dY;
-            const nS = h[3] === dD ? h[2] + 1 : 1;
+         for (const d of directions) {
+            if (skippo[h[3]!] === d[2]) continue;
+            const nX = h[0] + d[0];
+            const nY = h[1] + d[1];
+            const nS = h[3] === d[2] ? h[2] + 1 : 1;
 
-            if (h[3] !== dD && h[2] < minTurn) continue;
+            if (h[3] !== d[2] && h[2] < minTurn) continue;
             if (nS > maxStep || nX < 0 || nX >= maxX || nY < 0 || nY >= maxY) continue;
 
-            const key = JSON.stringify([nX, nY, dX, dY, nS]);
+            const key = nX.toString() + d[2] + nY.toString() + nS.toString();
             if (seen.has(key)) continue;
             seen.add(key);
 
             const nH = cH + grid[nY][nX];
             heatAry[nH] ??= [];
-            heatAry[nH].push([nX, nY, nS, dD]);
+            heatAry[nH].push([nX, nY, nS, d[2]]);
          }
       }
       cH++;
