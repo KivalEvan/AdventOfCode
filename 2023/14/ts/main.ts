@@ -1,4 +1,4 @@
-import { run } from 'utils/run.ts';
+import { run } from '../../../src/ts/run.ts';
 
 /** If part 2 test input has completely different input, set this to `true`. */
 export const HAS_ALTERNATE = false;
@@ -17,8 +17,9 @@ export function part1(input: string): string {
    }
 
    let res = 0;
-   for (let i = 0; i < grid.length; i++)
+   for (let i = 0; i < grid.length; i++) {
       for (const k of grid[i]) if (k === 'O') res += grid.length - i;
+   }
 
    return res.toString();
 }
@@ -88,8 +89,9 @@ export function part2(input: string): string {
 
    grid = input.split('\n').map((str) => str.split(''));
    let res = 0;
-   for (let i = 0; i < grid.length; i++)
+   for (let i = 0; i < grid.length; i++) {
       for (const k of grid[i]) if (k === 'O') res += grid.length - i;
+   }
 
    return res.toString();
 }

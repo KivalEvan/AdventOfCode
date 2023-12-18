@@ -1,5 +1,5 @@
-import { getAnswers, getInput } from 'utils/input.ts';
-import { dirname, fromFileUrl, resolve } from 'utils/deps.ts';
+import { getAnswers, getInput } from './input.ts';
+import { dirname, fromFileUrl, resolve } from './deps.ts';
 
 let result: string;
 const itBench = 1000;
@@ -35,7 +35,7 @@ function perform(tag: string, func: (path: string) => string, path: string) {
       '>',
       Math.round(elapsedPart * 1000) / 1000,
       '>',
-      Math.round((elapsedIo + elapsedPart) * 1000) / 1000
+      Math.round((elapsedIo + elapsedPart) * 1000) / 1000,
    );
 
    console.log('/ Result:', result);
@@ -90,7 +90,7 @@ export function run(
    part1: (input: string) => string,
    part2: (input: string) => string,
    hasAlternate: boolean,
-   benchmark = false
+   benchmark = false,
 ) {
    let isUrl = false;
    try {
@@ -99,13 +99,11 @@ export function run(
       //
    }
    let dir = dirname(isUrl ? fromFileUrl(path) : path);
-   if (dir.endsWith('ts')) dir += '/..'
+   if (dir.endsWith('ts')) dir += '/..';
    const answers = getAnswers(resolve(dir, 'answers.txt'));
 
    const pathInputTest1 = resolve(dir, 'test1.txt');
-   const pathInputTest2 = hasAlternate
-      ? resolve(dir, 'test2.txt')
-      : resolve(dir, 'test1.txt');
+   const pathInputTest2 = hasAlternate ? resolve(dir, 'test2.txt') : resolve(dir, 'test1.txt');
    const pathInputMain = resolve(dir, 'input.txt');
 
    if (benchmark) {

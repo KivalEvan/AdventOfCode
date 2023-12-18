@@ -31,6 +31,8 @@
       "semaphore": "c",
       "ctype.h": "c",
       "main.h": "c",
-      "bench.h": "c"
+      "bench.h": "c",
+      "stdlib.h": "c",
+      "input.h": "c"
    }
 }

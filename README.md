@@ -7,17 +7,19 @@ learning purposes because fun.
 
 This is also the order of priority that I will solve the problem with:
 
--  TypeScript 5.2.2 with Deno 1.38.3 for `.ts`
--  Java 21 for `.java`
--  Python 3.11.6 for `.py`
--  C# 12 with .NET 6.0.416 for `.cs`
--  C17 with Clang 16.0.6 for `.c`
--  Rust 1.74.0 for `.rust`
--  Go 1.21.4 for `.go`
+- TypeScript 5.2.2 with Deno 1.38.3 for `.ts`
+- Java 21 for `.java`
+- Python 3.11.6 for `.py`
+- C# 12 with .NET 6.0.416 for `.cs`
+- C17 with Clang 16.0.6 for `.c`
+- Rust 1.74.0 for `.rust`
+- Go 1.21.4 for `.go`
 
-No parallelism or concurrency will be done, input parsing is included in part instead of IO. Output must always return string.
+No parallelism or concurrency will be done, input parsing is included in part instead of IO. Output
+must always return string.
 
-To make challenges for myself, I can only use standard library provided by the language/compiler or use my own library.
+To make challenges for myself, I can only use standard library provided by the language/compiler or
+use my own library.
 
 ## Input & Answers
 
@@ -33,7 +35,7 @@ answers with multiple lines. Unfortunately, you may need to manually paste these
 
 ## Utils & Others
 
-Redundant code that gets reused such as get input and generic run are placed in `utils/<lang>`
+Redundant code that gets reused such as get input and generic run are placed in `src/<lang>`
 respectively. Getting input must always return string, the main code in day should handle the
 parsing. For consistency reason, the function process and output must be identical whenever
 possible. `path` must be absolute towards `year/day/lang` as it has to traverse back to obtain the
@@ -48,30 +50,30 @@ it.
 
 ### 2023
 
-| Day | TypeScript | Java | Python | C#  | C   | Rust | Go  |
-| --- | ---------- | ---- | ------ | --- | --- | ---- | --- |
-| 1   | ✅         | ✅   |        |     | ✅  |      |     |
-| 2   | ✅         | ✅   |        |     | ✅  |      |     |
-| 3   | ✅         | ✅   |        |     | ✅  |      |     |
-| 4   | ✅         | ✅   |        |     | ✅  |      |     |
-| 5   | ✅         |      |        |     |     |      |     |
-| 6   | ✅         |      |        |     | ✅  |      |     |
-| 7   | ✅         |      |        |     | ✅  |      |     |
-| 8   | ✅         |      |        |     | ✅  |      |     |
-| 9   | ✅         |      |        |     | ✅  |      |     |
-| 10  | ✅         |      |        |     |     |      |     |
-| 11  | ✅         |      |        |     | ✅  |      |     |
-| 12  | ✅         |      |        |     | ✅  |      |     |
-| 13  | ✅         |      |        |     |     |      |     |
-| 14  | ✅         |      |        |     | ✅  |      |     |
-| 15  |            |      |        |     |     |      |     |
-| 16  |            |      |        |     |     |      |     |
-| 17  |            |      |        |     |     |      |     |
-| 18  |            |      |        |     |     |      |     |
-| 19  |            |      |        |     |     |      |     |
-| 20  |            |      |        |     |     |      |     |
-| 21  |            |      |        |     |     |      |     |
-| 22  |            |      |        |     |     |      |     |
-| 23  |            |      |        |     |     |      |     |
-| 24  |            |      |        |     |     |      |     |
-| 25  |            |      |        |     |     |      |     |
+| Day | TypeScript | Java | Python | C# | C  | Rust | Go |
+| --- | ---------- | ---- | ------ | -- | -- | ---- | -- |
+| 1   | ✅         | ✅   |        |    | ✅ |      |    |
+| 2   | ✅         | ✅   |        |    | ✅ |      |    |
+| 3   | ✅         | ✅   |        |    | ✅ |      |    |
+| 4   | ✅         | ✅   |        |    | ✅ |      |    |
+| 5   | ✅         |      |        |    |    |      |    |
+| 6   | ✅         |      |        |    | ✅ |      |    |
+| 7   | ✅         |      |        |    | ✅ |      |    |
+| 8   | ✅         |      |        |    | ✅ |      |    |
+| 9   | ✅         |      |        |    | ✅ |      |    |
+| 10  | ✅         |      |        |    |    |      |    |
+| 11  | ✅         |      |        |    | ✅ |      |    |
+| 12  | ✅         |      |        |    | ✅ |      |    |
+| 13  | ✅         |      |        |    |    |      |    |
+| 14  | ✅         |      |        |    | ✅ |      |    |
+| 15  | ✅         |      |        |    |    |      |    |
+| 16  | ✅         |      |        |    |    |      |    |
+| 17  | ✅         |      |        |    |    |      |    |
+| 18  |            |      |        |    |    |      |    |
+| 19  |            |      |        |    |    |      |    |
+| 20  |            |      |        |    |    |      |    |
+| 21  |            |      |        |    |    |      |    |
+| 22  |            |      |        |    |    |      |    |
+| 23  |            |      |        |    |    |      |    |
+| 24  |            |      |        |    |    |      |    |
+| 25  |            |      |        |    |    |      |    |

@@ -1,4 +1,4 @@
-import { run } from 'utils/run.ts';
+import { run } from 'src/run.ts';
 
 const ranking: Record<string, number> = {
    A: 13,

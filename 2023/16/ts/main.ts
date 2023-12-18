@@ -5,7 +5,7 @@ export const HAS_ALTERNATE = false;
 
 function dothething(
    grid: string[],
-   start: [x: number, y: number, direction: 'U' | 'D' | 'L' | 'R']
+   start: [x: number, y: number, direction: 'U' | 'D' | 'L' | 'R'],
 ) {
    const visited: Set<string>[][] = new Array(grid.length);
    for (let i = 0; i < grid.length; i++) {
@@ -78,25 +78,20 @@ export function part1(input: string): string {
 
 export function part2(input: string): string {
    const grid = input.split('\n');
-   const direction = ['U', 'D', 'L', 'R'] as const;
    let max = 0;
-   for (let y = 1; y < grid.length - 1; y++) {
-      for (let d = 0; d < 4; d++) {
-         max = Math.max(
-            dothething(grid, [0, y, direction[d]]),
-            dothething(grid, [grid[y].length - 1, y, direction[d]]),
-            max
-         );
-      }
+   for (let y = 0; y < grid.length; y++) {
+      max = Math.max(
+         dothething(grid, [0, y, 'R']),
+         dothething(grid, [grid[y].length - 1, y, 'L']),
+         max,
+      );
    }
    for (let x = 0; x < grid[0].length; x++) {
-      for (let d = 0; d < 4; d++) {
-         max = Math.max(
-            dothething(grid, [x, 0, direction[d]]),
-            dothething(grid, [x, grid.length - 1, direction[d]]),
-            max
-         );
-      }
+      max = Math.max(
+         dothething(grid, [x, 0, 'D']),
+         dothething(grid, [x, grid.length - 1, 'U']),
+         max,
+      );
    }
 
    return max.toString();

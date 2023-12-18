@@ -1,5 +1,5 @@
-import { resolve } from 'utils/deps.ts';
-import { run } from 'utils/run.ts';
+import { resolve } from '../src/ts/deps.ts';
+import { run } from '../src/ts/run.ts';
 
 interface Main {
    HAS_ALTERNATE: boolean;

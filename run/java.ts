@@ -1,4 +1,4 @@
-import { resolve } from 'utils/deps.ts';
+import { resolve } from '../src/ts/deps.ts';
 
 export default async function c(y: number, d: number, benchmark = false) {
    const path = resolve(`./${y}/${d.toString().padStart(2, '0')}/java`);

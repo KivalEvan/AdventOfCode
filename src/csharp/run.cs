@@ -25,7 +25,7 @@ public static class Run
       Console.WriteLine($"/ Result: {result}");
    }
 
-   public static void Execute(string[] args, Func<string, string> part1, Func<string, string> part2, bool hasAlternate)
+   public static void Execute(string[] args, Func<string, string> part1, Func<string, string> part2, int hasAlternate)
    {
       Input.Answers answers = Input.GetAnswers("");
 

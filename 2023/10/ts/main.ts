@@ -1,4 +1,4 @@
-import { run } from 'utils/run.ts';
+import { run } from 'src/run.ts';
 
 /** If part 2 test input has completely different input, set this to `true`. */
 export const HAS_ALTERNATE = true;
@@ -32,7 +32,7 @@ function lookUp(
    grid: string[] | string[][],
    x: number,
    y: number,
-   criteria?: string
+   criteria?: string,
 ): [number, number][] {
    const char = grid[y][x];
    const res: [number, number][] = [];
@@ -142,8 +142,9 @@ export function part2(input: string): string {
 
    // check result
    let res = 0;
-   for (let y = 0; y < grid.length; y++)
+   for (let y = 0; y < grid.length; y++) {
       for (let x = 0; x < grid[0].length; x++) if (!visited[1 + y * 3][1 + x * 3]) res++;
+   }
 
    return res.toString();
 }

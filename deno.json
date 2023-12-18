@@ -5,7 +5,7 @@
       "lineWidth": 100,
       "singleQuote": true
    },
-   "imports": { "utils/": "./utils/ts/" },
+   "imports": { "src/": "./src/ts/" },
    "tasks": {
       "fetch": "deno run --allow-read=. --allow-write=. --allow-net --allow-env --env ./fetchInput.ts",
       "aoc": "deno run --allow-read=. --allow-net=deno.land --allow-hrtime --allow-run ./runner.ts",

@@ -1,4 +1,4 @@
-import { run } from 'utils/run.ts';
+import { run } from 'src/run.ts';
 
 /** If part 2 test input has completely different input, set this to `true`. */
 export const HAS_ALTERNATE = true;
@@ -62,7 +62,7 @@ export function part2(input: string): string {
       }
       dists[i] = j;
    }
-   return dists.reduce((pv, v)=> lcm(pv, v), 1).toString();
+   return dists.reduce((pv, v) => lcm(pv, v), 1).toString();
 }
 
 if (import.meta.main) {

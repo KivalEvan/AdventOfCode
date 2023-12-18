@@ -1,4 +1,4 @@
-import { run } from 'utils/run.ts';
+import { run } from 'src/run.ts';
 
 /** If part 2 test input has completely different input, set this to `true`. */
 export const HAS_ALTERNATE = false;
@@ -31,8 +31,7 @@ export function part1(input: string): string {
       for (let n = m + 1; n < sz; n++) {
          const loc1 = galaxies[m];
          const loc2 = galaxies[n];
-         const add =
-            xRowAdd.filter((x) => isBetween(x, loc1[0], loc2[0])).length +
+         const add = xRowAdd.filter((x) => isBetween(x, loc1[0], loc2[0])).length +
             yRowAdd.filter((y) => isBetween(y, loc1[1], loc2[1])).length;
          res += Math.abs(loc1[0] - loc2[0]) + Math.abs(loc1[1] - loc2[1]) + add;
       }
@@ -65,8 +64,7 @@ export function part2(input: string): string {
       for (let n = m + 1; n < sz; n++) {
          const loc1 = galaxies[m];
          const loc2 = galaxies[n];
-         const add =
-            xRowAdd.filter((x) => isBetween(x, loc1[0], loc2[0])).length +
+         const add = xRowAdd.filter((x) => isBetween(x, loc1[0], loc2[0])).length +
             yRowAdd.filter((y) => isBetween(y, loc1[1], loc2[1])).length;
          res += Math.abs(loc1[0] - loc2[0]) + Math.abs(loc1[1] - loc2[1]) + add * 1_000_000 - add;
       }

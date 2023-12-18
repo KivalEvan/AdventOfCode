@@ -1,4 +1,4 @@
-import { run } from 'utils/run.ts';
+import { run } from '../../../src/ts/run.ts';
 
 /** If part 2 test input has completely different input, set this to `true`. */
 export const HAS_ALTERNATE = false;
@@ -36,8 +36,9 @@ export function part2(input: string): string {
    }
 
    let res = 0;
-   for (let i = 0; i < 256; i++)
+   for (let i = 0; i < 256; i++) {
       res += boxes[i].reduce((pv, v, j) => pv + (i + 1) * (j + 1) * v[1], 0);
+   }
    return res.toString();
 }
 

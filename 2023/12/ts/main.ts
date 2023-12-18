@@ -1,5 +1,5 @@
 // deno-lint-ignore-file no-explicit-any
-import { run } from 'utils/run.ts';
+import { run } from 'src/run.ts';
 
 /** If part 2 test input has completely different input, set this to `true`. */
 export const HAS_ALTERNATE = false;
@@ -24,8 +24,9 @@ function solve(field: string, conditions: number[]): number {
       if (field.length - fIdx < conditions[cIdx]) return 0;
       for (let k = fIdx; k < fIdx + conditions[cIdx]; k++) if (field[k] === '.') return 0;
       if (field.length - 1 === conditions[cIdx]) return wedoabitofrecursion(field.length, cIdx + 1);
-      if (field[fIdx + conditions[cIdx]] !== '#')
+      if (field[fIdx + conditions[cIdx]] !== '#') {
          return wedoabitofrecursion(fIdx + conditions[cIdx] + 1, cIdx + 1);
+      }
       return 0;
    }
 
@@ -60,7 +61,7 @@ export function part2(input: string): string {
    });
 
    let res = 0;
-   for (const [field, conditions] of parsed)
+   for (const [field, conditions] of parsed) {
       res += solve(field + '?' + field + '?' + field + '?' + field + '?' + field, [
          ...conditions,
          ...conditions,
@@ -68,6 +69,7 @@ export function part2(input: string): string {
          ...conditions,
          ...conditions,
       ]);
+   }
 
    return res.toString();
 }

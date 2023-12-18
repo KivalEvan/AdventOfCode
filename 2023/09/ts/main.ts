@@ -1,4 +1,4 @@
-import { run } from 'utils/run.ts';
+import { run } from 'src/run.ts';
 
 /** If part 2 test input has completely different input, set this to `true`. */
 export const HAS_ALTERNATE = false;
