@@ -2,7 +2,7 @@ using Utils;
 
 public static class AdventOfCode
 {
-   const int HAS_ALTERNATE = 0;
+   static const int HAS_ALTERNATE = 0;
 
    static string Part1(string input)
    {

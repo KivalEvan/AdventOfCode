@@ -33,6 +33,19 @@
       "main.h": "c",
       "bench.h": "c",
       "stdlib.h": "c",
-      "input.h": "c"
+      "input.h": "c",
+      "utils_str.h": "c",
+      "utils_num.h": "c",
+      "utils_ary.h": "c",
+      "stdint.h": "c",
+      "utils_hmap.h": "c",
+      "utils_list.h": "c",
+      "variant": "c",
+      "utils_hashmap.h": "c",
+      "bitset": "c",
+      "hash_set": "c",
+      "utils_vec.h": "c",
+      "complex": "c",
+      "tuple": "c"
    }
 }

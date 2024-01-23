@@ -42,7 +42,7 @@ const strToNum: Record<string, number> = {
 };
 
 // i dont feel like doing single pass
-export function part1(input: string): string {
+export function part1(input: string, _isTest: boolean): string {
    return input
       .split('\n')
       .reduce((res, s) => {
@@ -66,7 +66,7 @@ export function part1(input: string): string {
       .toString();
 }
 
-export function part2(input: string): string {
+export function part2(input: string, _isTest: boolean): string {
    return input
       .split('\n')
       .reduce((pv, s) => {

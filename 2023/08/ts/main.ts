@@ -3,7 +3,7 @@ import { run } from 'src/run.ts';
 /** If part 2 test input has completely different input, set this to `true`. */
 export const HAS_ALTERNATE = true;
 
-export function part1(input: string): string {
+export function part1(input: string, _isTest: boolean): string {
    const sides = input.split('\n\n');
    const instructions = sides[0].replaceAll('L', '0').replaceAll('R', '1');
    const maps = sides[1]
@@ -36,7 +36,7 @@ function lcm(a: number, b: number): number {
    return (a * b) / gcd(a, b);
 }
 
-export function part2(input: string): string {
+export function part2(input: string, _isTest: boolean): string {
    const sides = input.split('\n\n');
    const instructions = sides[0].replaceAll('L', '0').replaceAll('R', '1');
    const maps = sides[1]

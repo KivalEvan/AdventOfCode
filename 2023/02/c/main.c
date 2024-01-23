@@ -1,98 +1,106 @@
-#include <ctype.h>
-#include <helper.h>
-#include <main.h>
-#include <math.h>
-#include <run.h>
-#include <stdio.h>
+#include "main.h"
+#include "run.h"
+#include "utils_num.h"
+#include "utils_str.h"
 #include <stdlib.h>
 #include <string.h>
 
-const int HAS_ALTERNATE = 0;
+static const int32_t HAS_ALTERNATE = 0;
 
-char *part1(const char *restrict input) {
-   int sz, sz_2, sz_3, res = 0;
-   char **splitted = strsplit(input, "\n", &sz);
+static void parse_input(const char *restrict input, char ****types,
+                        int32_t ***qtys, size_t **qtySz, size_t *sz) {
+   size_t i, j, count, countTemp;
+   char **lines, *line, **temp, **sequences, **val;
 
-   int i, j;
-   for (i = 0; i < sz; i++) {
-      char *splt = splitted[i];
-      char **temp = strsplit(splt, ":", &sz_2);
+   lines = str_splitc(input, '\n', sz);
+   *types = malloc((*sz) * sizeof(***types));
+   *qtys = malloc((*sz) * sizeof(**qtys));
+   *qtySz = malloc((*sz) * sizeof(*qtySz));
+   for (i = 0; i < *sz; i++) {
+      line = lines[i];
+      temp = str_splitc(line, ':', &count);
+      str_replacec(temp[1], ';', ',');
+      sequences = str_splitc(temp[1], ',', &count);
 
-      char **sequences = strsplit(temp[1], ";,", &sz_2);
-      int valid = true;
-      for (j = 0; j < sz_2; j++) {
-         char **val = strsplit(sequences[j], " ", &sz_3);
-         char *num = val[0];
-         char *type = val[1];
+      (*qtySz)[i] = count;
+      (*types)[i] = malloc(count * sizeof(**types));
+      (*qtys)[i] = malloc(count * sizeof(*qtys));
+      for (j = 0; j < count; j++) {
+         val = str_splitc(sequences[j], ' ', &countTemp);
+         (*types)[i][j] = val[2];
+         (*qtys)[i][j] = atoi(val[1]);
 
-         int n = atoi(num);
-         if (!strncmp(type, "red", 3) && n > 12)
-            valid = false;
-         if (!strncmp(type, "green", 5) && n > 13)
-            valid = false;
-         if (!strncmp(type, "blue", 4) && n > 14)
-            valid = false;
-
-         free(num);
-         free(type);
+         free(val[0]);
+         free(val[1]);
          free(val);
          free(sequences[j]);
+      }
+      free(sequences);
+      free(temp[0]);
+      free(temp[1]);
+      free(temp);
+      free(lines[i]);
+   }
+   free(lines);
+}
+
+static char *part1(const char *restrict input, const int32_t isTest) {
+   int32_t **qtys, valid, res = 0;
+   size_t i, j, sz, *qtySz;
+   char ***types;
+   parse_input(input, &types, &qtys, &qtySz, &sz);
+
+   for (i = 0; i < sz; i++) {
+      valid = 1;
+      for (j = 0; j < qtySz[i]; j++) {
+         if (!strcmp(types[i][j], "red") && qtys[i][j] > 12)
+            valid = 0;
+         if (!strcmp(types[i][j], "green") && qtys[i][j] > 13)
+            valid = 0;
+         if (!strcmp(types[i][j], "blue") && qtys[i][j] > 14)
+            valid = 0;
+         free(types[i][j]);
       }
       if (valid)
          res += i + 1;
 
-      free(sequences);
-      free(temp[0]);
-      free(temp[1]);
-      free(temp);
-      free(splitted[i]);
+      free(types[i]);
+      free(qtys[i]);
    }
-   free(splitted);
+   free(types);
+   free(qtys);
+   free(qtySz);
 
-   return numtostr(res);
+   return num_tostr(res);
 }
 
-char *part2(const char *restrict input) {
-   int sz, sz_2, sz_3, res = 0;
-   char **splitted = strsplit(input, "\n", &sz);
+static char *part2(const char *restrict input, const int32_t isTest) {
+   int32_t **qtys, red, green, blue, res = 0;
+   size_t i, j, sz, *qtySz;
+   char ***types;
+   parse_input(input, &types, &qtys, &qtySz, &sz);
 
-   int i, j;
    for (i = 0; i < sz; i++) {
-      char *splt = splitted[i];
-      char **temp = strsplit(splt, ":", &sz_2);
-
-      char **sequences = strsplit(temp[1], ";,", &sz_2);
-      int red, green, blue;
       red = green = blue = 0;
-      for (j = 0; j < sz_2; j++) {
-         char **val = strsplit(sequences[j], " ", &sz_3);
-         char *num = val[0];
-         char *type = val[1];
-
-         int n = atoi(num);
-         if (!strncmp(type, "red", 3) && n > red)
-            red = n;
-         if (!strncmp(type, "green", 5) && n > green)
-            green = n;
-         if (!strncmp(type, "blue", 4) && n > blue)
-            blue = n;
-
-         free(num);
-         free(type);
-         free(val);
-         free(sequences[j]);
+      for (j = 0; j < qtySz[i]; j++) {
+         if (!strcmp(types[i][j], "red") && qtys[i][j] > red)
+            red = qtys[i][j];
+         if (!strcmp(types[i][j], "green") && qtys[i][j] > green)
+            green = qtys[i][j];
+         if (!strcmp(types[i][j], "blue") && qtys[i][j] > blue)
+            blue = qtys[i][j];
+         free(types[i][j]);
       }
       res += red * green * blue;
 
-      free(sequences);
-      free(temp[0]);
-      free(temp[1]);
-      free(temp);
-      free(splitted[i]);
+      free(types[i]);
+      free(qtys[i]);
    }
-   free(splitted);
+   free(types);
+   free(qtys);
+   free(qtySz);
 
-   return numtostr(res);
+   return num_tostr(res);
 }
 
 int main(int argc, char *argv[]) {

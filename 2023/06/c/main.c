@@ -1,27 +1,34 @@
-#include <ctype.h>
-#include <helper.h>
-#include <main.h>
+#include "main.h"
+#include "run.h"
+#include "utils_num.h"
+#include "utils_str.h"
 #include <math.h>
-#include <run.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-const int HAS_ALTERNATE = 0;
+static const int32_t HAS_ALTERNATE = 0;
 
-int ohnomath(const long b, const long c) {
+static int64_t ohnomath(const int64_t b, const int64_t c) {
    double min = floor((-b - sqrt(b * b - 4 * c)) / -2 - 0.001);
    double max = ceil((-b + sqrt(b * b - 4 * c)) / -2 + 0.001);
-   return (int)(min - max + 1);
+   return min - max + 1;
 }
 
-int *getNum(const char *restrict str, int *count) {
-   int *ary;
-   char **chonk = strsplit(str, " ", count);
+static int64_t *getnum(const char *restrict str, size_t *count) {
+   size_t chonkSz, i, j;
+   int64_t *ary;
+   char **chonk;
 
-   ary = malloc(*count * sizeof(int));
-   for (int i = 0; i < *count; i++) {
-      ary[i] = atoi(chonk[i]);
+   *count = 0;
+   chonk = str_splitc(str, ' ', &chonkSz);
+   for (i = 0; i < chonkSz; i++)
+      if (strlen(chonk[i]))
+         (*count)++;
+
+   ary = malloc(*count * sizeof(*ary));
+   for (i = 0, j = 0; i < chonkSz; i++) {
+      if (strlen(chonk[i]))
+         ary[j++] = atoll(chonk[i]);
       free(chonk[i]);
    }
    free(chonk);
@@ -29,15 +36,17 @@ int *getNum(const char *restrict str, int *count) {
    return ary;
 }
 
-long getNumJoin(const char *restrict str) {
-   int count;
-   long res = 0;
-   char **chonk = strsplit(str, " ", &count);
+static int64_t getnumjoin(const char *restrict str) {
+   size_t chonkSz, i;
+   int64_t res;
+   char **chonk;
 
-   for (int i = 0; i < count; i++) {
+   chonk = str_splitc(str, ' ', &chonkSz);
+   res = 0;
+   for (i = 0; i < chonkSz; i++) {
       if (i)
-         res *= pow(10, (long)strlen(chonk[i]));
-      res += atol(chonk[i]);
+         res *= pow(10, (int64_t)strlen(chonk[i]));
+      res += atoll(chonk[i]);
       free(chonk[i]);
    }
    free(chonk);
@@ -45,59 +54,61 @@ long getNumJoin(const char *restrict str) {
    return res;
 }
 
-char *part1(const char *restrict input) {
-   int sz, c_sz, t_sz, d_sz, i;
-   char **chunk;
-   char **splitted = strsplit(input, "\n", &sz);
+static char *part1(const char *restrict input, const int32_t isTest) {
+   size_t chunksSz, linesSz, timesSz, distancesSz, i;
+   int64_t *times, *distances, res;
+   char **chunks, **lines;
 
-   chunk = strsplit(splitted[0], ":", &c_sz);
-   int *times = getNum(chunk[1], &t_sz);
-   free(chunk[0]);
-   free(chunk[1]);
-   free(chunk);
+   lines = str_splitc(input, '\n', &linesSz);
+   chunks = str_splitc(lines[0], ':', &chunksSz);
+   times = getnum(chunks[1], &timesSz);
+   free(chunks[0]);
+   free(chunks[1]);
+   free(chunks);
 
-   chunk = strsplit(splitted[1], ":", &c_sz);
-   int *distances = getNum(chunk[1], &d_sz);
-   free(chunk[0]);
-   free(chunk[1]);
-   free(chunk);
+   chunks = str_splitc(lines[1], ':', &chunksSz);
+   distances = getnum(chunks[1], &distancesSz);
+   free(chunks[0]);
+   free(chunks[1]);
+   free(chunks);
 
-   free(splitted[0]);
-   free(splitted[1]);
-   free(splitted);
+   free(lines[0]);
+   free(lines[1]);
+   free(lines);
 
-   int res = 1;
-   for (int i = 0; i < t_sz; i++)
+   res = 1;
+   for (i = 0; i < timesSz; i++)
       res *= ohnomath(times[i], distances[i]);
 
    free(times);
    free(distances);
 
-   return numtostr(res);
+   return num_tostr(res);
 }
 
-char *part2(const char *restrict input) {
-   int sz, c_sz, t_sz, d_sz, i;
-   char **chunk;
-   char **splitted = strsplit(input, "\n", &sz);
+static char *part2(const char *restrict input, const int32_t isTest) {
+   size_t chunksSz, linesSz;
+   int64_t time, distance;
+   char **chunks, **lines;
 
-   chunk = strsplit(splitted[0], ":", &c_sz);
-   long time = getNumJoin(chunk[1]);
-   free(chunk[0]);
-   free(chunk[1]);
-   free(chunk);
+   lines = str_splitc(input, '\n', &linesSz);
+   chunks = str_splitc(lines[0], ':', &chunksSz);
+   time = getnumjoin(chunks[1]);
+   free(chunks[0]);
+   free(chunks[1]);
+   free(chunks);
 
-   chunk = strsplit(splitted[1], ":", &c_sz);
-   long distance = getNumJoin(chunk[1]);
-   free(chunk[0]);
-   free(chunk[1]);
-   free(chunk);
+   chunks = str_splitc(lines[1], ':', &chunksSz);
+   distance = getnumjoin(chunks[1]);
+   free(chunks[0]);
+   free(chunks[1]);
+   free(chunks);
 
-   free(splitted[0]);
-   free(splitted[1]);
-   free(splitted);
+   free(lines[0]);
+   free(lines[1]);
+   free(lines);
 
-   return numtostr(ohnomath(time, distance));
+   return num_tostr(ohnomath(time, distance));
 }
 
 int main(int argc, char *argv[]) {

@@ -1,81 +1,88 @@
+#include "main.h"
+#include "run.h"
+#include "utils_num.h"
+#include "utils_str.h"
 #include <ctype.h>
-#include <helper.h>
-#include <main.h>
 #include <math.h>
-#include <run.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-const int HAS_ALTERNATE = 0;
+static const int32_t HAS_ALTERNATE = 0;
 
-long long **parseInput(const char *restrict input, int *sz,
-                       int **restrict p_size, const int reverse) {
-   int sz_c, i, j;
-   char **splt = strsplit(input, "\n", sz);
-   long long **ary = malloc(*sz * sizeof(long long *));
-   *p_size = malloc(*sz * sizeof(int *));
+static int64_t **parse_input(const char *restrict input, size_t *sz,
+                     size_t **restrict parsedSz, const int32_t reverse) {
+   size_t chunksSz, i, j;
+   char **lines, **chunks;
+   int64_t **ary, *aryParsed;
 
+   lines = str_splitc(input, '\n', sz);
+   ary = malloc(*sz * sizeof(*ary));
+   *parsedSz = malloc(*sz * sizeof(*parsedSz));
    for (i = 0; i < *sz; i++) {
-      char **chunks = strsplit(splt[i], " ", &sz_c);
-      long long *ary_ll = malloc(sz_c * sizeof(long long));
-      for (j = 0; j < sz_c; j++) {
+      chunks = str_splitc(lines[i], ' ', &chunksSz);
+      aryParsed = malloc(chunksSz * sizeof(*aryParsed));
+      for (j = 0; j < chunksSz; j++) {
          if (reverse)
-            ary_ll[sz_c - 1 - j] = atoll(chunks[j]);
+            aryParsed[chunksSz - 1 - j] = atoll(chunks[j]);
          else
-            ary_ll[j] = atoll(chunks[j]);
+            aryParsed[j] = atoll(chunks[j]);
          free(chunks[j]);
       }
-      ary[i] = ary_ll;
-      (*p_size)[i] = sz_c;
+      ary[i] = aryParsed;
+      (*parsedSz)[i] = chunksSz;
       free(chunks);
-      free(splt[i]);
+      free(lines[i]);
    }
-   free(splt);
+   free(lines);
 
    return ary;
 }
 
-long long *difference(long long *restrict ary, int sz) {
-   for (int i = 0; i < sz; i++)
+static int64_t *difference(int64_t *restrict ary, int32_t sz) {
+   for (int32_t i = 0; i < sz; i++)
       ary[i] = ary[i + 1] - ary[i];
    return ary;
 }
 
-long long extrapolate(long long *restrict ary, int sz) {
+static int64_t extrapolate(int64_t *restrict ary, int32_t sz) {
    sz--;
-   long long last = ary[sz];
+   int64_t last = ary[sz];
    if (!sz)
       return last;
    return extrapolate(difference(ary, sz), sz) + last;
 }
 
-char *part1(const char *restrict input) {
-   int sz, i, *p_size;
-   long long **parsed = parseInput(input, &sz, &p_size, false), res = 0;
+static char *part1(const char *restrict input, const int32_t isTest) {
+   size_t sz, i, *parsedSz;
+   int64_t **parsed, res;
+   parsed = parse_input(input, &sz, &parsedSz, false);
 
+   res = 0;
    for (i = 0; i < sz; i++) {
-      res += extrapolate(parsed[i], p_size[i]);
+      res += extrapolate(parsed[i], parsedSz[i]);
       free(parsed[i]);
    }
    free(parsed);
-   free(p_size);
+   free(parsedSz);
 
-   return numtostr(res);
+   return num_tostr(res);
 }
 
-char *part2(const char *restrict input) {
-   int sz, i, *p_size;
-   long long **parsed = parseInput(input, &sz, &p_size, true), res = 0;
+static char *part2(const char *restrict input, const int32_t isTest) {
+   size_t sz, i, *parsedSz;
+   int64_t **parsed, res;
+   parsed = parse_input(input, &sz, &parsedSz, true);
 
+   res = 0;
    for (i = 0; i < sz; i++) {
-      res += extrapolate(parsed[i], p_size[i]);
+      res += extrapolate(parsed[i], parsedSz[i]);
       free(parsed[i]);
    }
    free(parsed);
-   free(p_size);
+   free(parsedSz);
 
-   return numtostr(res);
+   return num_tostr(res);
 }
 
 int main(int argc, char *argv[]) {

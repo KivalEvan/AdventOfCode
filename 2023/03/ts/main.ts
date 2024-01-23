@@ -45,7 +45,7 @@ function yeetTheNumber(grid: string[][], x: number, y: number): string {
    return res;
 }
 
-export function part1(input: string): string {
+export function part1(input: string, _isTest: boolean): string {
    const grid = input.split('\n').map((s) => s.split(''));
    const SZ = grid.length;
 
@@ -73,7 +73,7 @@ export function part1(input: string): string {
    return res.toString();
 }
 
-export function part2(input: string): string {
+export function part2(input: string, _isTest: boolean): string {
    const grid = input.split('\n').map((s) => s.split(''));
    const SZ = grid.length;
 

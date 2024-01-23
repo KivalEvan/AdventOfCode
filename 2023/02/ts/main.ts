@@ -13,7 +13,7 @@ function getSequences(game: string): [number, 'red' | 'green' | 'blue'][] {
       });
 }
 
-export function part1(input: string): string {
+export function part1(input: string, _isTest: boolean): string {
    return input
       .split('\n')
       .map(getSequences)
@@ -28,7 +28,7 @@ export function part1(input: string): string {
       .toString();
 }
 
-export function part2(input: string): string {
+export function part2(input: string, _isTest: boolean): string {
    return input
       .split('\n')
       .map(getSequences)

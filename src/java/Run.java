@@ -35,7 +35,7 @@ public class Run {
       start = System.nanoTime();
       result = func.apply(path);
       end = System.nanoTime();
-      double elapsed = round((double)(end - start) / 1_000_000, 3);
+      elapsed = round((double)(end - start) / 1_000_000, 3);
       System.out.println(STR." -- Time taken (ms): \{elapsed}");
 
       System.out.println(STR."/ Result: \{result}");

@@ -9,14 +9,14 @@ function elfHash(str: string) {
    return val;
 }
 
-export function part1(input: string): string {
+export function part1(input: string, _isTest: boolean): string {
    const parsed = input.split(',');
    let res = 0;
    for (const h of parsed) res += elfHash(h);
    return res.toString();
 }
 
-export function part2(input: string): string {
+export function part2(input: string, _isTest: boolean): string {
    const parsed = input.split(',');
    const boxes: [string, number][][] = new Array(256);
    for (let i = 0; i < 256; i++) boxes[i] = [];

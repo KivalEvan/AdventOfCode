@@ -71,12 +71,12 @@ function dothething(
    return visited.reduce((pv, v) => pv + v.filter((e) => e.size).length, 0);
 }
 
-export function part1(input: string): string {
+export function part1(input: string, _isTest: boolean): string {
    const grid = input.split('\n');
    return dothething(grid, [0, 0, 'R']).toString();
 }
 
-export function part2(input: string): string {
+export function part2(input: string, _isTest: boolean): string {
    const grid = input.split('\n');
    let max = 0;
    for (let y = 0; y < grid.length; y++) {

@@ -1,15 +1,14 @@
+#include "main.h"
+#include "run.h"
+#include "utils_num.h"
+#include "utils_str.h"
 #include <ctype.h>
-#include <helper.h>
-#include <main.h>
-#include <math.h>
-#include <run.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-const int HAS_ALTERNATE = 1;
+static const int32_t HAS_ALTERNATE = 1;
 
-char getnum(const char *restrict str) {
+static char getnum(const char *restrict str) {
    if (strncmp(str, "zero", 4) == 0)
       return '0';
    if (strncmp(str, "one", 3) == 0)
@@ -33,61 +32,61 @@ char getnum(const char *restrict str) {
    return '\0';
 }
 
-char *part1(const char *restrict input) {
-   int sz, line = 0, res = 0;
+static char *part1(const char *restrict input, const int32_t isTest) {
+   size_t linesSz, i, j;
+   int32_t res = 0;
+   char *s, str[2], **lines;
 
-   char **splitted = strsplit(input, "\n", &sz);
-   while (line < sz) {
-      char *s = splitted[line];
-      char str[2];
-
-      for (int i = 0; i < strlen(s); i++) {
-         if (isdigit(s[i])) {
-            str[0] = s[i];
+   lines = str_splitc(input, '\n', &linesSz);
+   for (i = 0; i < linesSz; i++) {
+      s = lines[i];
+      for (j = 0; j < strlen(s); j++) {
+         if (isdigit(s[j])) {
+            str[0] = s[j];
             break;
          }
       }
-      for (int i = strlen(s) - 1; i >= 0; i--) {
-         if (isdigit(s[i])) {
-            str[1] = s[i];
+      for (j = strlen(s) - 1; j >= 0; j--) {
+         if (isdigit(s[j])) {
+            str[1] = s[j];
             break;
          }
       }
 
       res += atoi(str);
-      free(splitted[line]);
-      line++;
+      free(lines[i]);
    }
-   free(splitted);
+   free(lines);
 
-   return numtostr(res);
+   return num_tostr(res);
 }
 
-char *part2(const char *restrict input) {
-   int sz, line = 0, res = 0;
+static char *part2(const char *restrict input, const int32_t isTest) {
+   size_t linesSz, i, j;
+   int32_t res = 0;
+   char c, *s, str[2], temp[6], **lines;
 
-   char **splitted = strsplit(input, "\n", &sz);
-   while (line < sz) {
-      char *s = splitted[line];
-      char str[2];
+   lines = str_splitc(input, '\n', &linesSz);
+   for (i = 0; i < linesSz; i++) {
+      s = lines[i];
 
-      for (int i = 0; i < strlen(s); i++) {
-         if (isdigit(s[i])) {
-            str[0] = s[i];
+      for (j = 0; j < strlen(s); j++) {
+         if (isdigit(s[j])) {
+            str[0] = s[j];
             break;
          }
-         char c = getnum(strslice(s, malloc(5 * sizeof(char)), i, i + 5));
+         c = getnum(str_slice(s, temp, j, j + 5));
          if (c != '\0') {
             str[0] = c;
             break;
          }
       }
-      for (int i, len = i = strlen(s) - 1; i >= 0; i--) {
-         if (isdigit(s[i])) {
-            str[1] = s[i];
+      for (j = strlen(s) - 1; j >= 0; j--) {
+         if (isdigit(s[j])) {
+            str[1] = s[j];
             break;
          }
-         char c = getnum(strslice(s, malloc(5 * sizeof(char)), i, i + 5));
+         c = getnum(str_slice(s, temp, j, j + 5));
          if (c != '\0') {
             str[1] = c;
             break;
@@ -95,12 +94,11 @@ char *part2(const char *restrict input) {
       }
 
       res += atoi(str);
-      free(splitted[line]);
-      line++;
+      free(lines[i]);
    }
-   free(splitted);
+   free(lines);
 
-   return numtostr(res);
+   return num_tostr(res);
 }
 
 int main(int argc, char *argv[]) {

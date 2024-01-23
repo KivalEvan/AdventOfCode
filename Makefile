@@ -13,13 +13,15 @@ OBJS = $(patsubst $(SRC_DIR)/c/%.c, $(TEMP_DIR)/%.o, $(SRCS))
 HDRS = $(wildcard $(SRC_DIR)/c/includes/*.h)
 
 CC = clang
-CFLAGS = -std=c17 \
-             -Weverything -Wall -Wextra -Werror -Wpointer-arith -Wcast-qual \
-             -Wno-missing-braces -Wempty-body -Wno-error=uninitialized \
-             -Wno-error=deprecated-declarations \
-             -pedantic-errors -pedantic \
-             -O3 -I $(SRC_DIR)/c/includes/
-LDFLAGS = -Wall -pedantic -I $(SRC_DIR)/c/includes/
+# TODO: remove the -Wno-gnu-statement-expression-from-macro-expansion once C23 is supported as it officially supports typeof
+CFLAGS = -std=c2x \
+      	-Wall -Wextra -pedantic \
+         -O3 -I $(SRC_DIR)/c/includes/
+LDFLAGS = -std=c2x \
+			 -Wall -Wextra -pedantic \
+			 -Wno-language-extension-token -Wno-gnu-statement-expression-from-macro-expansion \
+			 -Wno-unused-parameter \
+			 -I $(SRC_DIR)/c/includes/
 
 all:
 	@echo -e "You must specify which to run:"
@@ -31,6 +33,7 @@ c: $(OBJS) $(TEMP_DIR)
 	$(CC) $(LDFLAGS) -c $(AOC_PATH)/c/main.c -o $(TEMP_DIR)/main.o
 	$(CC) $(CFLAGS) $(OBJS) $(TEMP_DIR)/main.o -lm -o $(TEMP_DIR)/aoc_c
 	temp/aoc_c $(AOC_PATH) $(BENCH) $(ARGS)
+	@valgrind temp/aoc_c $(AOC_PATH) $(ARGS) > /dev/null
 
 $(TEMP_DIR)/%.o: $(SRC_DIR)/c/%.c $(SRC_DIR)/c/includes/%.h $(TEMP_DIR)
 	$(CC) $(LDFLAGS) -c $< -o $@

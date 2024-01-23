@@ -40,7 +40,7 @@ function solve(field: string, conditions: number[]): number {
    return wedoabitofrecursion(0, 0);
 }
 
-export function part1(input: string): string {
+export function part1(input: string, _isTest: boolean): string {
    const parsed = input.split('\n').map((str) => {
       const temp: any[] = str.split(' ');
       temp[1] = temp[1].split(',').map(Number);
@@ -53,7 +53,7 @@ export function part1(input: string): string {
    return res.toString();
 }
 
-export function part2(input: string): string {
+export function part2(input: string, _isTest: boolean): string {
    const parsed = input.split('\n').map((str) => {
       const temp: any[] = str.split(' ');
       temp[1] = temp[1].split(',').map(Number);

@@ -6,10 +6,10 @@ typedef struct answers {
    char *test2;
    char *part1;
    char *part2;
-} Answers;
+} answers_t;
 
-char *getinput(const char *restrict path);
+char *get_input(const char *restrict path);
 
-Answers getanswers(const char *restrict path);
+answers_t get_answers(const char *restrict path);
 
 #endif

@@ -7,7 +7,7 @@ function isBetween(val: number, n1: number, n2: number) {
    return (n1 > val && val > n2) || (n2 > val && val > n1);
 }
 
-export function part1(input: string): string {
+export function part1(input: string, _isTest: boolean): string {
    const grid: string[] = input.split('\n');
    const galaxies = [];
    const xRowAdd = [];
@@ -40,7 +40,7 @@ export function part1(input: string): string {
    return res.toString();
 }
 
-export function part2(input: string): string {
+export function part2(input: string, _isTest: boolean): string {
    const grid: string[] = input.split('\n');
    const galaxies = [];
    const xRowAdd = [];

@@ -73,7 +73,7 @@ function lookUp(
    return res;
 }
 
-export function part1(input: string): string {
+export function part1(input: string, _isTest: boolean): string {
    const grid = input.split('\n');
    const visited = new Array(grid.length).fill(0).map((_) => new Array(grid.length).fill(false));
 
@@ -95,7 +95,7 @@ export function part1(input: string): string {
    return (i / 2).toString();
 }
 
-export function part2(input: string): string {
+export function part2(input: string, _isTest: boolean): string {
    const grid = input.split('\n').map((str) => str.split(''));
    const visited: boolean[][] = new Array(grid.length * 3)
       .fill(0)

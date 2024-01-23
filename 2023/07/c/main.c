@@ -1,20 +1,18 @@
-#include <ctype.h>
-#include <helper.h>
-#include <main.h>
-#include <math.h>
-#include <run.h>
-#include <stdio.h>
+#include "main.h"
+#include "run.h"
+#include "utils_num.h"
+#include "utils_str.h"
 #include <stdlib.h>
 #include <string.h>
 
-const int HAS_ALTERNATE = 0;
+static const int32_t HAS_ALTERNATE = 0;
 
-typedef struct hands {
-   char *cards;
-   int values;
-} Hands;
+static struct hands {
+   char cards[6];
+   int32_t values;
+};
 
-int getRank(const char c) {
+static int32_t get_rank(const char c) {
    switch (c) {
    case 'A':
       return 13;
@@ -49,38 +47,44 @@ int getRank(const char c) {
    }
 }
 
-int card_comparator(const void *v1, const void *v2) {
-   const Hands *p1, *p2;
-   p1 = *(const Hands **)v1;
-   p2 = *(const Hands **)v2;
-   for (int i = 0; i < 5; i++)
+static int32_t card_comparator(const void *v1, const void *v2) {
+   size_t i;
+   const struct hands *p1, *p2;
+   p1 = *(const struct hands **)v1;
+   p2 = *(const struct hands **)v2;
+   for (i = 0; i < 5; i++)
       if (p1->cards[i] != p2->cards[i])
-         return getRank(p1->cards[i]) - getRank(p2->cards[i]);
+         return get_rank(p1->cards[i]) - get_rank(p2->cards[i]);
    return 0;
 }
 
-int getType(const char *restrict str) {
-   int *values = malloc(14 * sizeof(int)), i;
+static int32_t get_type(const char *restrict str) {
+   size_t i, j;
+   int32_t *values, temp, min, max, sz;
+   values = malloc(14 * sizeof(*values));
    for (i = 0; i < 14; i++)
       values[i] = 0;
 
    for (i = 0; i < 5; i++)
-      values[getRank(str[i])]++;
+      values[get_rank(str[i])]++;
 
    if (values[0]) {
-      int temp = values[0];
+      temp = values[0];
       values[0] = 0;
-      int idx = 0, max = 0;
+      j = 0;
+      max = 0;
       for (i = 0; i < 14; i++) {
          if (values[i] > max) {
             max = values[i];
-            idx = i;
+            j = i;
          }
       }
-      values[idx] += temp;
+      values[j] += temp;
    }
 
-   int min = 5, max = 0, sz = 0;
+   min = 5;
+   max = 0;
+   sz = 0;
    for (i = 0; i < 14; i++) {
       if (values[i] > 0) {
          sz++;
@@ -109,91 +113,67 @@ int getType(const char *restrict str) {
    return 4;
 }
 
-char *part1(const char *restrict input) {
-   int sz, i, j, k = 0, res = 0;
-   char **splt = strsplit(input, "\n", &sz);
-   Hands ***groups = malloc(7 * sizeof(Hands **));
-   int *group_sz = malloc(7 * sizeof(int));
+static void parse_input(const char *restrict input, struct hands ****groups,
+                        size_t **groupsSz, const int32_t joker) {
+   size_t linesSz, tempSz, i;
+   int32_t type;
+   struct hands *hands;
+   char **lines, **temp;
+
+   lines = str_splitc(input, '\n', &linesSz);
+   *groups = malloc(7 * sizeof(***groups));
+   *groupsSz = malloc(7 * sizeof(*groupsSz));
    for (i = 0; i < 7; i++) {
-      groups[i] = malloc(sz * sizeof(Hands *));
-      group_sz[i] = 0;
+      (*groups)[i] = malloc(linesSz * sizeof(**groups));
+      (*groupsSz)[i] = 0;
    }
 
-   for (i = 0; i < sz; i++) {
-      int temp_sz;
-      char **temp = strsplit(splt[i], " ", &temp_sz);
-      Hands *hands = malloc(sizeof(Hands));
-      hands->cards = malloc(strlen(temp[0]) * sizeof(char));
+   for (i = 0; i < linesSz; i++) {
+      temp = str_splitc(lines[i], ' ', &tempSz);
+      hands = malloc(sizeof(*hands));
+      if (joker)
+         str_replacec(temp[0], 'J', '1');
       strcpy(hands->cards, temp[0]);
       hands->values = atoi(temp[1]);
 
-      int type = getType(hands->cards);
-      groups[type][group_sz[type]++] = hands;
+      type = get_type(hands->cards);
+      (*groups)[type][(*groupsSz)[type]++] = hands;
 
       free(temp[0]);
       free(temp[1]);
       free(temp);
-      free(splt[i]);
+      free(lines[i]);
    }
-   free(splt);
-
-   for (i = 0; i < 7; i++) {
-      qsort(groups[i], group_sz[i], sizeof(Hands *), card_comparator);
-      for (j = 0; j < group_sz[i]; j++) {
-         res += groups[i][j]->values * ++k;
-         free(groups[i][j]->cards);
-         free(groups[i][j]);
-      }
-      free(groups[i]);
-   }
-   free(groups);
-   free(group_sz);
-
-   return numtostr(res);
+   free(lines);
 }
 
-char *part2(const char *restrict input) {
-   int sz, i, j, k = 0, res = 0;
-   char **splt = strsplit(input, "\n", &sz);
-   Hands ***groups = malloc(7 * sizeof(Hands **));
-   int *group_sz = malloc(7 * sizeof(int));
+static char *solve(const char *restrict input, int32_t joker) {
+   size_t i, j, *groupsSz;
+   struct hands ***groups;
+   int32_t res, k;
+   parse_input(input, &groups, &groupsSz, joker);
+
+   res = k = 0;
    for (i = 0; i < 7; i++) {
-      groups[i] = malloc(sz * sizeof(Hands *));
-      group_sz[i] = 0;
-   }
-
-   for (i = 0; i < sz; i++) {
-      int temp_sz;
-      char **temp = strsplit(splt[i], " ", &temp_sz);
-      Hands *hands = malloc(sizeof(Hands));
-      hands->cards = malloc(strlen(temp[0]) * sizeof(char));
-      strreplacec(temp[0], 'J', '1');
-      strcpy(hands->cards, temp[0]);
-      hands->values = atoi(temp[1]);
-
-      int type = getType(hands->cards);
-      groups[type][group_sz[type]++] = hands;
-
-      free(temp[0]);
-      free(temp[1]);
-      free(temp);
-      free(splt[i]);
-   }
-   free(splt);
-
-   for (i = 0; i < 7; i++) {
-      qsort(groups[i], group_sz[i], sizeof(Hands *), card_comparator);
-      for (j = 0; j < group_sz[i]; j++) {
+      qsort(groups[i], groupsSz[i], sizeof(**groups), card_comparator);
+      for (j = 0; j < groupsSz[i]; j++) {
          res += groups[i][j]->values * ++k;
-         free(groups[i][j]->cards);
          free(groups[i][j]);
       }
       free(groups[i]);
    }
    free(groups);
-   free(group_sz);
+   free(groupsSz);
 
-   return numtostr(res);
+   return num_tostr(res);
+}
+
+static char *part1(const char *restrict input, const int32_t isTest) {
+   return solve(input, 0);
+}
+
+static char *part2(const char *restrict input, const int32_t isTest) {
+   return solve(input, 1);
 }
 
 int main(int argc, char *argv[]) {

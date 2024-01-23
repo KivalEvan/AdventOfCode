@@ -28,13 +28,13 @@ public class Main {
    }
 
    public String part2(String input) {
-      String[] splitted = input.split("\n");
-      int[] instances = new int[splitted.length];
+      String[] lines = input.split("\n");
+      int[] instances = new int[lines.length];
       for (int i = 0; i < instances.length; i++)
          instances[i] = 1;
       
       int idx = 0;
-      for (String line : splitted) {
+      for (String line : lines) {
          List<List<Integer>> sides = new ArrayList<List<Integer>>();
          for (String scratch : line.substring(line.indexOf(":") + 1).split("\\|")) {
             List<Integer> l = new ArrayList<Integer>();

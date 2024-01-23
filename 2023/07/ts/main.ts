@@ -64,7 +64,7 @@ function getType(str: string): number {
    return Type.FULL_HOUSE;
 }
 
-export function part1(input: string): string {
+export function part1(input: string, _isTest: boolean): string {
    const groups: [string, number][][] = [];
    for (let i = 0; i < 7; i++) groups.push([]);
    input
@@ -85,7 +85,7 @@ export function part1(input: string): string {
    return res.toString();
 }
 
-export function part2(input: string): string {
+export function part2(input: string, _isTest: boolean): string {
    const groups: [string, number][][] = [];
    for (let i = 0; i < 7; i++) groups.push([]);
    input

@@ -3,7 +3,7 @@ import { run } from 'src/run.ts';
 /** If part 2 test input has completely different input, set this to `true`. */
 export const HAS_ALTERNATE = false;
 
-export function part1(input: string): string {
+export function part1(input: string, _isTest: boolean): string {
    const max = input.split('\n\n').map((s) =>
       s
          .split('\n')
@@ -13,7 +13,7 @@ export function part1(input: string): string {
    return Math.max(...max).toString();
 }
 
-export function part2(input: string): string {
+export function part2(input: string, _isTest: boolean): string {
    const max = input.split('\n\n').map((s) =>
       s
          .split('\n')

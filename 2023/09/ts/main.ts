@@ -19,14 +19,14 @@ function parseInput(input: string): number[][] {
    return input.split('\n').map((str) => str.split(' ').map(Number));
 }
 
-export function part1(input: string): string {
+export function part1(input: string, _isTest: boolean): string {
    const parsed = parseInput(input);
    let res = 0;
    for (const history of parsed) res += extrapolate(history, history.length);
    return res.toString();
 }
 
-export function part2(input: string): string {
+export function part2(input: string, _isTest: boolean): string {
    const parsed = parseInput(input);
    let res = 0;
    for (const history of parsed) res += extrapolate(history.reverse(), history.length);
