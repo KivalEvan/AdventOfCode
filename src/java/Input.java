@@ -1,4 +1,4 @@
-package kival.aoc.utils;
+package kival.aoc.core;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;

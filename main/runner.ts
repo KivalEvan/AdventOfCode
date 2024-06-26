@@ -1,29 +1,12 @@
-import { parseArgs } from 'https://deno.land/std@0.208.0/cli/mod.ts';
-import * as run from './run/mod.ts';
+import * as run from '../run/mod.ts';
+import { getLang, langName } from '../main/lang.ts';
+import { fetchArgs } from './args.ts';
 
 console.log('https://adventofcode.com/');
 
-const args = parseArgs(Deno.args, {
-   string: ['d', 'y', 'l'],
-   boolean: ['a', 't', 'm', 'b'],
-   alias: { d: 'day', a: 'all', y: 'year', m: 'm', l: 'lang', b: 'bench' },
-});
+const args = fetchArgs();
 
-const langParse: Record<string, string> = {
-   typescript: 'ts',
-   rs: 'rust',
-   'c#': 'csharp',
-};
-const langName: Record<string, string> = {
-   c: 'C17',
-   csharp: 'C# 12',
-   go: 'Go 1.42',
-   java: 'Java 21',
-   python: 'Python 3.11',
-   rust: 'Rust 1.74',
-   ts: 'TypeScript 5.2',
-};
-const lang = langParse[args.l?.toLowerCase() || ''] || args.l?.toLowerCase() || 'ts';
+const lang = getLang(args.l || 'ts');
 
 const currentDate = new Date();
 let yearStart = currentDate.getFullYear();
@@ -57,6 +40,8 @@ if (args.m) {
    dayEnd = 25;
 }
 
+const itBench = typeof args.b === 'string' ? +args.b : args.b ? 1_000 : 0;
+
 mainLoop: for (let year = yearStart; year <= yearEnd; year++) {
    console.log(`Advent of Code -- year ${year}`);
    console.log('Language:', langName[lang]);
@@ -65,25 +50,25 @@ mainLoop: for (let year = yearStart; year <= yearEnd; year++) {
       try {
          switch (lang) {
             case 'c':
-               await run.c(year, day, args.b);
+               await run.c(year, day, itBench);
                break;
             case 'csharp':
-               await run.csharp(year, day, args.b);
+               await run.csharp(year, day, itBench);
                break;
             case 'go':
-               await run.go(year, day, args.b);
+               await run.go(year, day, itBench);
                break;
             case 'java':
-               await run.java(year, day, args.b);
+               await run.java(year, day, itBench);
                break;
             case 'python':
-               await run.python(year, day, args.b);
+               await run.python(year, day, itBench);
                break;
             case 'rust':
-               await run.rust(year, day, args.b);
+               await run.rust(year, day, itBench);
                break;
             case 'ts':
-               await run.ts(year, day, args.b);
+               await run.ts(year, day, itBench);
                break;
             default:
                console.error('Unknown language selected.');

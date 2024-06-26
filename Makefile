@@ -33,6 +33,8 @@ c: $(OBJS) $(TEMP_DIR)
 	$(CC) $(LDFLAGS) -c $(AOC_PATH)/c/main.c -o $(TEMP_DIR)/main.o
 	$(CC) $(CFLAGS) $(OBJS) $(TEMP_DIR)/main.o -lm -o $(TEMP_DIR)/aoc_c
 	temp/aoc_c $(AOC_PATH) $(BENCH) $(ARGS)
+
+c_debug:
 	@valgrind temp/aoc_c $(AOC_PATH) $(ARGS) > /dev/null
 
 $(TEMP_DIR)/%.o: $(SRC_DIR)/c/%.c $(SRC_DIR)/c/includes/%.h $(TEMP_DIR)
@@ -41,19 +43,35 @@ $(TEMP_DIR)/%.o: $(SRC_DIR)/c/%.c $(SRC_DIR)/c/includes/%.h $(TEMP_DIR)
 $(TEMP_DIR):
 	mkdir -p $@
 
-java:
-	@javac --enable-preview --release 21 -d $(TEMP_DIR) -cp $(TEMP_DIR)\; \
-		$(UTILS_DIR)/java/Input.java \
-		$(UTILS_DIR)/java/Run.java \
+# imagine "compiling" these with makefile lmao
+java: $(AOC_PATH)/java/Main.java
+	@javac --enable-preview --release 22 -d $(TEMP_DIR) -cp $(TEMP_DIR)\; \
+		$(SRC_DIR)/java/Input.java \
+		$(SRC_DIR)/java/Run.java \
 		$(AOC_PATH)/java/Main.java
 	java --enable-preview -cp $(TEMP_DIR) kival/aoc/Main $(AOC_PATH) $(BENCH) $(ARGS)
 
+csharp: $(AOC_PATH)/csharp/Main.cs
+	@dotnet clean aoc.csproj --nologo -v=q
+	@dotnet build aoc.csproj -v=q \
+		--nologo \
+		--no-incremental \
+		--configuration Release \
+		-p:StartupObject=Year$(YEAR).Day$(DAY) \
+		-o temp/csharp
+	@temp/csharp/aoc $(AOC_PATH) $(BENCH) $(ARGS)
+
 ts: $(AOC_PATH)/ts/main.ts
-	@deno run --allow-read=. --allow-hrtime $(AOC_PATH)/ts/main.ts
+	@deno run --allow-read=. --allow-hrtime $(AOC_PATH)/ts/main.ts $(AOC_PATH) $(BENCH) $(ARGS)
+
+python: $(AOC_PATH)/python/main.py
+	@python3 $(AOC_PATH)/python/main.py $(AOC_PATH) $(BENCH) $(ARGS)
 
 .PHONY: clean
 clean:
-	rm -r temp/*
+	rm -rf ./temp
+	rm -rf ./bin
+	rm -rf ./obj
 
 format:
 	find $(SRC_DIR)/c/*.c | xargs clang-format -i

@@ -44,8 +44,7 @@ void hashmap_destroy(struct Hashmap *hm) {
    free(hm);
 }
 
-struct Node *hashmap_get(const struct Hashmap *hm,
-                                const char *restrict key) {
+struct Node *hashmap_get(const struct Hashmap *hm, const char *restrict key) {
    size_t index;
    struct Node *tmp;
 
@@ -57,7 +56,7 @@ struct Node *hashmap_get(const struct Hashmap *hm,
 }
 
 void hashmap_set(const struct Hashmap *hm, const char *restrict key,
-                        void *data) {
+                 void *data) {
    size_t index;
    struct Node *tmp, *n;
    n = hashmap_get(hm, key);

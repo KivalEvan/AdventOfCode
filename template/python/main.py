@@ -1,8 +1,22 @@
-def part_one(input: str) -> object:
-   return
+import sys
+import os
+import typing
 
-def part_two(input: str) -> object:
-   return
+sys.path.append(os.getcwd())
+from src.python.run import run
+
+def main() -> None:
+   options = {
+      'has_alternate': False,
+      'has_io': False
+   }
+   run(sys.argv, part_one, part_two, options)
+
+def part_one(input: str, is_test: bool) -> str:
+   return ''
+
+def part_two(input: str, is_test: bool) -> str:
+   return ''
 
 if __name__ == '__main__':
-   print(__file__)
+   main()

@@ -1,6 +1,6 @@
 import { resolve } from '../src/ts/deps.ts';
 
-export default async function c(y: number, d: number, benchmark = false) {
+export default async function c(y: number, d: number, benchmark: number) {
    const path = resolve(`./${y}/${d.toString().padStart(2, '0')}`);
 
    console.log('Compiling...');
@@ -20,7 +20,7 @@ export default async function c(y: number, d: number, benchmark = false) {
 
    console.log('Running...');
    const { code, stdout, stderr } = await new Deno.Command('./temp/aoc_c', {
-      args: benchmark ? [path, 'b'] : [path],
+      args: [path, benchmark.toString()],
    }).output();
 
    console.assert(code === 0);

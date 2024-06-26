@@ -5,15 +5,16 @@
 #include <stdlib.h>
 #include <string.h>
 
+static const int32_t HAS_IO = 0;
 static const int32_t HAS_ALTERNATE = 0;
 
-static void parse_input(const char *restrict input, char ****types,
+static void parse_input(const char *restrict input, char ***types,
                         int32_t ***qtys, size_t **qtySz, size_t *sz) {
    size_t i, j, count, countTemp;
    char **lines, *line, **temp, **sequences, **val;
 
    lines = str_splitc(input, '\n', sz);
-   *types = malloc((*sz) * sizeof(***types));
+   *types = malloc((*sz) * sizeof(**types));
    *qtys = malloc((*sz) * sizeof(**qtys));
    *qtySz = malloc((*sz) * sizeof(*qtySz));
    for (i = 0; i < *sz; i++) {
@@ -27,11 +28,12 @@ static void parse_input(const char *restrict input, char ****types,
       (*qtys)[i] = malloc(count * sizeof(*qtys));
       for (j = 0; j < count; j++) {
          val = str_splitc(sequences[j], ' ', &countTemp);
-         (*types)[i][j] = val[2];
+         (*types)[i][j] = val[2][0];
          (*qtys)[i][j] = atoi(val[1]);
 
          free(val[0]);
          free(val[1]);
+         free(val[2]);
          free(val);
          free(sequences[j]);
       }
@@ -45,21 +47,17 @@ static void parse_input(const char *restrict input, char ****types,
 }
 
 static char *part1(const char *restrict input, const int32_t isTest) {
-   int32_t **qtys, valid, res = 0;
+   int32_t **qtys, valid, rgb[3] = { 12, 13, 14 }, res = 0;
    size_t i, j, sz, *qtySz;
-   char ***types;
+   char **types;
    parse_input(input, &types, &qtys, &qtySz, &sz);
 
    for (i = 0; i < sz; i++) {
       valid = 1;
       for (j = 0; j < qtySz[i]; j++) {
-         if (!strcmp(types[i][j], "red") && qtys[i][j] > 12)
+         size_t idx = types[i][j] % 3;
+         if (qtys[i][j] > rgb[idx])
             valid = 0;
-         if (!strcmp(types[i][j], "green") && qtys[i][j] > 13)
-            valid = 0;
-         if (!strcmp(types[i][j], "blue") && qtys[i][j] > 14)
-            valid = 0;
-         free(types[i][j]);
       }
       if (valid)
          res += i + 1;
@@ -75,23 +73,19 @@ static char *part1(const char *restrict input, const int32_t isTest) {
 }
 
 static char *part2(const char *restrict input, const int32_t isTest) {
-   int32_t **qtys, red, green, blue, res = 0;
+   int32_t **qtys, rgb[3], res = 0;
    size_t i, j, sz, *qtySz;
-   char ***types;
+   char **types;
    parse_input(input, &types, &qtys, &qtySz, &sz);
 
    for (i = 0; i < sz; i++) {
-      red = green = blue = 0;
+      rgb[0] = rgb[1] = rgb[2] = 0;
       for (j = 0; j < qtySz[i]; j++) {
-         if (!strcmp(types[i][j], "red") && qtys[i][j] > red)
-            red = qtys[i][j];
-         if (!strcmp(types[i][j], "green") && qtys[i][j] > green)
-            green = qtys[i][j];
-         if (!strcmp(types[i][j], "blue") && qtys[i][j] > blue)
-            blue = qtys[i][j];
-         free(types[i][j]);
+         size_t idx = types[i][j] % 3;
+         if (qtys[i][j] > rgb[idx])
+            rgb[idx] = qtys[i][j];
       }
-      res += red * green * blue;
+      res += rgb[0] * rgb[1] * rgb[2];
 
       free(types[i]);
       free(qtys[i]);
@@ -104,5 +98,5 @@ static char *part2(const char *restrict input, const int32_t isTest) {
 }
 
 int main(int argc, char *argv[]) {
-   return run(argc, argv, part1, part2, HAS_ALTERNATE);
+   return run(argc, argv, part1, part2, HAS_ALTERNATE, HAS_IO);
 }

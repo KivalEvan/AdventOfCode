@@ -25,10 +25,10 @@ int64_t math_i64lcm(const int64_t a, const int64_t b);
 uint64_t math_ui64lcm(const uint64_t a, const uint64_t b);
 float math_flcm(const float a, const float b);
 double math_dlcm(const double a, const double b);
-#define math_lcm(a, b)                                                      \
+#define math_lcm(a, b)                                                         \
    _Generic((a),                                                               \
        int32_t: math_i32lcm,                                                   \
-       uint32_t: math_ui32lcm,                                                    \
+       uint32_t: math_ui32lcm,                                                 \
        int64_t: math_i64lcm,                                                   \
        uint64_t: math_ui64lcm,                                                 \
        float: math_flcm,                                                       \

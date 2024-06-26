@@ -1,8 +1,11 @@
 // deno-lint-ignore-file no-explicit-any
+import type { SolutionOptions } from 'src/options.ts';
 import { run } from 'src/run.ts';
 
-/** If part 2 test input has completely different input, set this to `true`. */
-export const HAS_ALTERNATE = false;
+export const options: SolutionOptions = {
+   hasAlternate: false,
+   hasIo: false,
+};
 
 function solve(field: string, conditions: number[]): number {
    const cache = new Map<string, number>();
@@ -75,5 +78,5 @@ export function part2(input: string, _isTest: boolean): string {
 }
 
 if (import.meta.main) {
-   run(import.meta.url, part1, part2, HAS_ALTERNATE);
+   run(Deno.args, part1, part2, options);
 }

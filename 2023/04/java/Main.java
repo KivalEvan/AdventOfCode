@@ -3,12 +3,13 @@ package kival.aoc;
 import java.util.ArrayList;
 import java.util.List;
 
-import kival.aoc.utils.*;
+import kival.aoc.core.*;
 
 public class Main {
-   public final boolean HAS_ALTERNATE = false;
+   public final boolean HAS_IO = false;
+public final boolean HAS_ALTERNATE = false;
 
-   public String part1(String input) {
+   public String part1(String input,boolean isTest) {
       int res = 0;
       for (String line : input.split("\n")) {
          List<List<Integer>> sides = new ArrayList<List<Integer>>();
@@ -27,7 +28,7 @@ public class Main {
       return String.valueOf(res);
    }
 
-   public String part2(String input) {
+   public String part2(String input,boolean isTest) {
       String[] lines = input.split("\n");
       int[] instances = new int[lines.length];
       for (int i = 0; i < instances.length; i++)
@@ -60,6 +61,6 @@ public class Main {
    }
 
    public void main(String[] args) {
-      Run.execute(args, this::part1, this::part2, HAS_ALTERNATE);
+      Run.execute(args, this::part1, this::part2, HAS_ALTERNATE, HAS_IO);
    }
 }

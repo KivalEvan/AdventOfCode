@@ -7,20 +7,20 @@ learning purposes because fun.
 
 This is also the order of priority that I will solve the problem with:
 
-- TypeScript 5.2.2 with Deno 1.38.3 for `.ts`
-- Java 21 for `.java`
-- Python 3.11.6 for `.py`
-- C# 12 with .NET 6.0.416 for `.cs`
-- C23 with Clang 16.0.6 for `.c`
-- Rust 1.74.0 for `.rust`
-- Go 1.21.4 for `.go`
+- TypeScript 5.4.5 with Deno 1.38.3 for `.ts`
+- Java 22 for `.java`
+- Python 3.12.4 for `.py`
+- C# 12 with .NET 8.0.106 for `.cs`
+- C23 with Clang 17.0.6 for `.c`
+- Rust 1.79.0 for `.rust`
+- Go 1.22.4 for `.go`
 
 No parallelism or concurrency will be done, input parsing is included in part. Output must always
 return string. The performance metric is evaluated only on each part of the day and does not include
-program execution time.
+program execution/start time.
 
 To make challenges for myself, I can only use standard library provided by the language/compiler and
-create my own library for use in AoC or related coding challenges.
+write my own library for use in AoC or related coding challenges.
 
 ## Input & Answers
 
@@ -58,8 +58,8 @@ Will try `bash` when I feel like it.
 
 | Day | TypeScript | Java | Python | C# | C  | Rust | Go |
 | --- | ---------- | ---- | ------ | -- | -- | ---- | -- |
-| 1   | ✅         | ✅   |        |    | ✅ |      |    |
-| 2   | ✅         | ✅   |        |    | ✅ |      |    |
+| 1   | ✅         | ✅   | ✅     | ✅ | ✅ |      |    |
+| 2   | ✅         | ✅   | ✅     | ✅ | ✅ |      |    |
 | 3   | ✅         | ✅   |        |    | ✅ |      |    |
 | 4   | ✅         | ✅   |        |    | ✅ |      |    |
 | 5   | ✅         |      |        |    | ✅ |      |    |

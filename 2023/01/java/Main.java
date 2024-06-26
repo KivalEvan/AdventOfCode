@@ -5,9 +5,10 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
 
-import kival.aoc.utils.*;
+import kival.aoc.core.*;
 
 public class Main {
+   public final boolean HAS_IO = false;
    public final boolean HAS_ALTERNATE = true;
 
    private Map<String, Integer> strToNum = new HashMap<String, Integer>() {
@@ -58,7 +59,7 @@ public class Main {
          "9"
    };
 
-   public String part1(String input) {
+   public String part1(String input, boolean isTest) {
       Integer res = 0;
       for (String line : input.split("\n")) {
          char first = '\0';
@@ -83,7 +84,7 @@ public class Main {
       return res.toString();
    }
 
-   public String part2(String input) {
+   public String part2(String input, boolean isTest) {
       int res = 0;
       for (String line : input.split("\n")) {
          List<String> allMatches = new ArrayList<String>();
@@ -102,6 +103,6 @@ public class Main {
    }
 
    public void main(String[] args) {
-      Run.execute(args, this::part1, this::part2, HAS_ALTERNATE);
+      Run.execute(args, this::part1, this::part2, HAS_ALTERNATE, HAS_IO);
    }
 }

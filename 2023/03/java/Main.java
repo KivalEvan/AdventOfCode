@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-import kival.aoc.utils.*;
+import kival.aoc.core.*;
 
 public class Main {
-   public final boolean HAS_ALTERNATE = false;
+   public final boolean HAS_IO = false;
+public final boolean HAS_ALTERNATE = false;
 
    private boolean isSymbol(char c) {
       return (c == '*' ||
@@ -44,7 +45,7 @@ public class Main {
       return res.toString();
    }
 
-   public String part1(String input) {
+   public String part1(String input, boolean isTest) {
       char[][] grid = input.lines().map(s -> s.toCharArray()).toArray(char[][]::new);
       int SZ = grid.length;
       int res = 0;
@@ -77,7 +78,7 @@ public class Main {
       return String.valueOf(res);
    }
 
-   public String part2(String input) {
+   public String part2(String input, boolean isTest) {
       char[][] grid = input.lines().map(s -> s.toCharArray()).toArray(char[][]::new);
       int SZ = grid.length;
       int res = 0;
@@ -116,6 +117,6 @@ public class Main {
    }
 
    public void main(String[] args) {
-      Run.execute(args, this::part1, this::part2, HAS_ALTERNATE);
+      Run.execute(args, this::part1, this::part2, HAS_ALTERNATE, HAS_IO);
    }
 }

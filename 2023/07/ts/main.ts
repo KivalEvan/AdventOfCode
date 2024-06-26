@@ -1,3 +1,4 @@
+import type { SolutionOptions } from 'src/options.ts';
 import { run } from 'src/run.ts';
 
 const ranking: Record<string, number> = {
@@ -17,8 +18,10 @@ const ranking: Record<string, number> = {
    '1': 0,
 };
 
-/** If part 2 test input has completely different input, set this to `true`. */
-export const HAS_ALTERNATE = false;
+export const options: SolutionOptions = {
+   hasAlternate: false,
+   hasIo: false,
+};
 
 const enum Type {
    HIGH_CARD,
@@ -108,5 +111,5 @@ export function part2(input: string, _isTest: boolean): string {
 }
 
 if (import.meta.main) {
-   run(import.meta.url, part1, part2, HAS_ALTERNATE);
+   run(Deno.args, part1, part2, options);
 }

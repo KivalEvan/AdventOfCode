@@ -1,7 +1,10 @@
+import type { SolutionOptions } from 'src/options.ts';
 import { run } from 'src/run.ts';
 
-/** If part 2 test input has completely different input, set this to `true`. */
-export const HAS_ALTERNATE = false;
+export const options: SolutionOptions = {
+   hasAlternate: false,
+   hasIo: false,
+};
 
 const direction = [
    [1, 0],
@@ -87,7 +90,6 @@ export function part2(input: string, _isTest: boolean): string {
    const stack = [startPos];
    let step;
    for (step = 0; step < 26501365; step++) {
-      if (step % 1000 == 0) console.log('step', step + 1);
       const newSpot = new Set<string>();
       const prevSpot = step % 2 ? prevOdds : prevEvens;
 
@@ -127,5 +129,5 @@ export function part2(input: string, _isTest: boolean): string {
 }
 
 if (import.meta.main) {
-   run(import.meta.url, part1, part2, HAS_ALTERNATE);
+   run(Deno.args, part1, part2, options);
 }

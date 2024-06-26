@@ -1,19 +1,16 @@
-import { parseArgs } from 'https://deno.land/std@0.208.0/cli/mod.ts';
+import { fetchArgs } from './args.ts';
 
-const args = parseArgs(Deno.args, {
-   string: ['d', 'y'],
-   boolean: ['a'],
-   alias: { d: 'day', a: 'all', y: 'year' },
-});
+const args = fetchArgs();
 
-let yearStart = new Date().getFullYear();
-let yearEnd = new Date().getFullYear();
-let dayStart = new Date().getDate();
-let dayEnd = new Date().getDate();
+const currDate = new Date();
+let yearStart = currDate.getFullYear();
+let yearEnd = currDate.getFullYear();
+let dayStart = currDate.getDate();
+let dayEnd = currDate.getDate();
 
 if (args.a) {
    yearStart = 2015;
-   yearEnd = new Date().getFullYear();
+   yearEnd = currDate.getFullYear();
    dayStart = 1;
    dayEnd = 25;
 }

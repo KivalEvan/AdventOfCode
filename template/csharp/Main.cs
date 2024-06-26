@@ -1,21 +1,28 @@
-using Utils;
 
-public static class AdventOfCode
+using Core;
+
+namespace Year
 {
-   static const int HAS_ALTERNATE = 0;
-
-   static string Part1(string input)
+   public static class Day
    {
-      return "";
-   }
+      static SolutionOptions OPTIONS = new () {
+         HasIO = false,
+         HasAlternate = false,
+      };
 
-   static string Part2(string input)
-   {
-      return "";
-   }
+      static string Part1(string input, bool isTest = false)
+      {
+         return "";
+      }
 
-   static void Main(string[] args)
-   {
-      Utils.Run.Execute(args, Part1, Part2, HAS_ALTERNATE);
+      static string Part2(string input, bool isTest = false)
+      {
+         return "";
+      }
+
+      static void Main(string[] args)
+      {
+         Run.Execute(args, Part1, Part2, OPTIONS);
+      }
    }
 }

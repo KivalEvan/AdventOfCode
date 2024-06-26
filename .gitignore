@@ -1,8 +1,9 @@
 *.txt
 .env
-temp/**
-bin/**
-obj/**
+temp/
+bin/
+obj/
+__pycache__
 
 # Created by https://www.toptal.com/developers/gitignore/api/rust,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=rust,visualstudiocode

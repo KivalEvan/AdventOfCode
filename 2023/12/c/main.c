@@ -11,6 +11,7 @@
 
 #define BUCKET_SIZE 1024
 
+static const int32_t HAS_IO = 0;
 static const int32_t HAS_ALTERNATE = 0;
 
 static void parse_input(const char *restrict input, size_t *sz,
@@ -195,5 +196,5 @@ static char *part2(const char *restrict input, const int32_t isTest) {
 }
 
 int main(int argc, char *argv[]) {
-   return run(argc, argv, part1, part2, HAS_ALTERNATE);
+   return run(argc, argv, part1, part2, HAS_ALTERNATE, HAS_IO);
 }

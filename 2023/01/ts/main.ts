@@ -1,7 +1,10 @@
+import type { SolutionOptions } from 'src/options.ts';
 import { run } from 'src/run.ts';
 
-/** If part 2 test input has completely different input, set this to `true`. */
-export const HAS_ALTERNATE = true;
+export const options: SolutionOptions = {
+   hasAlternate: true,
+   hasIo: false,
+};
 
 function isNum(str: string) {
    return (
@@ -18,28 +21,19 @@ function isNum(str: string) {
    );
 }
 
-const strToNum: Record<string, number> = {
-   zero: 0,
-   one: 1,
-   two: 2,
-   three: 3,
-   four: 4,
-   five: 5,
-   six: 6,
-   seven: 7,
-   eight: 8,
-   nine: 9,
-   '0': 0,
-   '1': 1,
-   '2': 2,
-   '3': 3,
-   '4': 4,
-   '5': 5,
-   '6': 6,
-   '7': 7,
-   '8': 8,
-   '9': 9,
-};
+function getNum(str: string): string {
+   if (str.startsWith('zero')) return '0';
+   if (str.startsWith('one')) return '1';
+   if (str.startsWith('two')) return '2';
+   if (str.startsWith('three')) return '3';
+   if (str.startsWith('four')) return '4';
+   if (str.startsWith('five')) return '5';
+   if (str.startsWith('six')) return '6';
+   if (str.startsWith('seven')) return '7';
+   if (str.startsWith('eight')) return '8';
+   if (str.startsWith('nine')) return '9';
+   return '';
+}
 
 // i dont feel like doing single pass
 export function part1(input: string, _isTest: boolean): string {
@@ -69,15 +63,37 @@ export function part1(input: string, _isTest: boolean): string {
 export function part2(input: string, _isTest: boolean): string {
    return input
       .split('\n')
-      .reduce((pv, s) => {
-         const regexd = [
-            ...s.matchAll(/(?=(\d|zero|one|two|three|four|five|six|seven|eight|nine))/g),
-         ];
-         return pv + strToNum[regexd[0][1]] * 10 + strToNum[regexd[regexd.length - 1][1]];
+      .reduce((res, s) => {
+         let first = '';
+         let last = '';
+         for (let i = 0; i < s.length; i++) {
+            if (isNum(s[i])) {
+               first = s[i];
+               break;
+            }
+            const c = getNum(s.substring(i));
+            if (c) {
+               first = c;
+               break;
+            }
+         }
+         for (let i = s.length - 1; i >= 0; i--) {
+            if (isNum(s[i])) {
+               last = s[i];
+               break;
+            }
+            const c = getNum(s.substring(i));
+            if (c) {
+               last = c;
+               break;
+            }
+         }
+         res += Number(first + last);
+         return res;
       }, 0)
       .toString();
 }
 
 if (import.meta.main) {
-   run(import.meta.url, part1, part2, HAS_ALTERNATE);
+   run(Deno.args, part1, part2, options);
 }

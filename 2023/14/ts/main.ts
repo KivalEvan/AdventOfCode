@@ -1,7 +1,9 @@
 import { run } from '../../../src/ts/run.ts';
 
-/** If part 2 test input has completely different input, set this to `true`. */
-export const HAS_ALTERNATE = false;
+export const options: SolutionOptions = {
+   hasAlternate: false,
+   hasIo: false,
+};
 
 export function part1(input: string, _isTest: boolean): string {
    const grid = input.split('\n').map((str) => str.split(''));
@@ -97,5 +99,5 @@ export function part2(input: string, _isTest: boolean): string {
 }
 
 if (import.meta.main) {
-   run(import.meta.url, part1, part2, HAS_ALTERNATE);
+   run(Deno.args, part1, part2, options);
 }

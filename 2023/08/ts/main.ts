@@ -1,7 +1,10 @@
+import type { SolutionOptions } from 'src/options.ts';
 import { run } from 'src/run.ts';
 
-/** If part 2 test input has completely different input, set this to `true`. */
-export const HAS_ALTERNATE = true;
+export const options: SolutionOptions = {
+   hasAlternate: true,
+   hasIo: false,
+};
 
 export function part1(input: string, _isTest: boolean): string {
    const sides = input.split('\n\n');
@@ -66,5 +69,5 @@ export function part2(input: string, _isTest: boolean): string {
 }
 
 if (import.meta.main) {
-   run(import.meta.url, part1, part2, HAS_ALTERNATE);
+   run(Deno.args, part1, part2, options);
 }
