@@ -5,7 +5,7 @@ import { getLang, langName } from './lang.ts';
 const args = fetchArgs();
 
 const langList: string[] = Object.keys(langName).filter(
-   (l) => l === getLang(l) || l
+   (l) => l === getLang(l) || l,
 );
 
 const currentDate = new Date();
@@ -58,7 +58,7 @@ for (let year = yearStart; year <= yearEnd; year++) {
    for (let day = dayStart; day <= dayEnd; day++) {
       const results: Record<string, number[]> = Object.keys(langName).reduce(
          (p, v) => ({ ...p, [langName[v]]: [] }),
-         {}
+         {},
       );
       console.log('\n', year, '--', day);
       for (const lang of langList) {
@@ -87,8 +87,7 @@ for (let year = yearStart; year <= yearEnd; year++) {
          const benchmarks = output.slice(idx);
          results[langName[lang]][0] = obtainTime(benchmarks.at(8)!)[2];
          results[langName[lang]][1] = obtainTime(benchmarks.at(-1)!)[2];
-         results[langName[lang]][2] =
-            results[langName[lang]][0] + results[langName[lang]][1];
+         results[langName[lang]][2] = results[langName[lang]][0] + results[langName[lang]][1];
       }
 
       const min = [
@@ -107,7 +106,7 @@ for (let year = yearStart; year <= yearEnd; year++) {
          1,
          '    Part',
          2,
-         '     Total'
+         '     Total',
       );
       for (const lang in results) {
          console.log(
@@ -124,7 +123,7 @@ for (let year = yearStart; year <= yearEnd; year++) {
                .join('   '),
             results[lang][2] === min[2]
                ? ''
-               : ((results[lang][2] / min[2]).toFixed(2) + 'x').padStart(8, ' ')
+               : ((results[lang][2] / min[2]).toFixed(2) + 'x').padStart(8, ' '),
          );
       }
    }

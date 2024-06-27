@@ -2,8 +2,10 @@
 #include "run.h"
 #include "utils_num.h"
 #include "utils_str.h"
+#include <ctype.h>
 #include <math.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 
 static const int32_t HAS_IO = 0;
@@ -16,69 +18,71 @@ static int64_t ohnomath(const int64_t b, const int64_t c) {
 }
 
 static int64_t *getnum(const char *restrict str, size_t *count) {
-   size_t chonkSz, i, j;
-   int64_t *ary;
-   char **chonk;
+   size_t i, j, std = 0, len, onnum;
+   int64_t *ary, digits;
 
    *count = 0;
-   chonk = str_splitc(str, ' ', &chonkSz);
-   for (i = 0; i < chonkSz; i++)
-      if (strlen(chonk[i]))
-         (*count)++;
+   len = strlen(str) + 1;
+   for (i = len; i >= 0; i--) {
+      if (str[i] == ':') {
+         std = i + 1;
+         break;
+      }
+      if (isdigit(str[i])) {
+         if (!onnum) {
+            *count = *count + 1;
+            onnum = 1;
+         }
+      } else {
+         onnum = 0;
+      }
+   }
 
    ary = malloc(*count * sizeof(*ary));
-   for (i = 0, j = 0; i < chonkSz; i++) {
-      if (strlen(chonk[i]))
-         ary[j++] = atoll(chonk[i]);
-      free(chonk[i]);
+   for (j = digits = 0, i = std; i < len; i++) {
+      if (isdigit(str[i])) {
+         digits *= 10;
+         digits += str[i] - '0';
+      } else if(digits) {
+         ary[j++] = digits;
+         digits = 0;
+      }
+      if (str[i] == '\0') break;
    }
-   free(chonk);
 
    return ary;
 }
 
 static int64_t getnumjoin(const char *restrict str) {
-   size_t chonkSz, i;
+   size_t len, i;
    int64_t res;
-   char **chonk;
 
-   chonk = str_splitc(str, ' ', &chonkSz);
+   len = strlen(str);
    res = 0;
-   for (i = 0; i < chonkSz; i++) {
-      if (i)
-         res *= pow(10, (int64_t)strlen(chonk[i]));
-      res += atoll(chonk[i]);
-      free(chonk[i]);
+   for (i = 0; i < len; i++) {
+      if (isdigit(str[i])) {
+         res *= 10;
+         res += str[i] - '0';
+      }
    }
-   free(chonk);
 
    return res;
 }
 
 static char *part1(const char *restrict input, const int32_t isTest) {
-   size_t chunksSz, linesSz, timesSz, distancesSz, i;
+   size_t linesSz, arySz, i;
    int64_t *times, *distances, res;
-   char **chunks, **lines;
+   char **lines;
 
    lines = str_splitc(input, '\n', &linesSz);
-   chunks = str_splitc(lines[0], ':', &chunksSz);
-   times = getnum(chunks[1], &timesSz);
-   free(chunks[0]);
-   free(chunks[1]);
-   free(chunks);
-
-   chunks = str_splitc(lines[1], ':', &chunksSz);
-   distances = getnum(chunks[1], &distancesSz);
-   free(chunks[0]);
-   free(chunks[1]);
-   free(chunks);
-
+   times = getnum(lines[0], &arySz);
+   distances = getnum(lines[1], &arySz);
    free(lines[0]);
    free(lines[1]);
    free(lines);
 
    res = 1;
-   for (i = 0; i < timesSz; i++)
+   for (i = 0; i < arySz; i++)
       res *= ohnomath(times[i], distances[i]);
 
    free(times);
@@ -88,22 +92,13 @@ static char *part1(const char *restrict input, const int32_t isTest) {
 }
 
 static char *part2(const char *restrict input, const int32_t isTest) {
-   size_t chunksSz, linesSz;
+   size_t linesSz;
    int64_t time, distance;
-   char **chunks, **lines;
+   char **lines;
 
    lines = str_splitc(input, '\n', &linesSz);
-   chunks = str_splitc(lines[0], ':', &chunksSz);
-   time = getnumjoin(chunks[1]);
-   free(chunks[0]);
-   free(chunks[1]);
-   free(chunks);
-
-   chunks = str_splitc(lines[1], ':', &chunksSz);
-   distance = getnumjoin(chunks[1]);
-   free(chunks[0]);
-   free(chunks[1]);
-   free(chunks);
+   time = getnumjoin(lines[0]);
+   distance = getnumjoin(lines[1]);
 
    free(lines[0]);
    free(lines[1]);

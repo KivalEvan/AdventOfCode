@@ -2,6 +2,7 @@ package kival.aoc.core;
 
 import static java.lang.StringTemplate.STR;
 
+import java.util.stream.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.concurrent.TimeUnit;

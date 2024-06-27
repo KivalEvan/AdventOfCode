@@ -12,7 +12,7 @@ namespace Year2023
          HasIO = false,
       };
 
-      static char GetNum(string str)
+      private static char GetNum(string str)
       {
          if (str.StartsWith("zero"))
             return '0';

@@ -8,7 +8,7 @@
 static const int32_t HAS_IO = 0;
 static const int32_t HAS_ALTERNATE = 0;
 
-static struct hands {
+struct hands {
    char cards[6];
    int32_t values;
 };

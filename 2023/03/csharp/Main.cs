@@ -12,7 +12,7 @@ namespace Year2023
          HasIO = false,
       };
 
-      static bool IsSymbol(char c)
+      private static bool IsSymbol(char c)
       {
          return (
             c == '*' ||
@@ -28,7 +28,7 @@ namespace Year2023
          );
       }
 
-      static int TryOrDefault(string s)
+      private static int TryOrDefault(string s)
       {
          return int.TryParse(s, out int res) ? res : 0;
       }

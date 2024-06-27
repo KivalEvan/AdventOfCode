@@ -11,7 +11,7 @@ export type Answers = {
  * @returns
  */
 export function getInput(path: string): string {
-   return Deno.readTextFileSync(path).replaceAll('\r', '').replace(/\n$/, '');
+   return Deno.readTextFileSync(path).replace(/\n$/, '');
 }
 
 /**

@@ -15,7 +15,7 @@ namespace Core
 
       public static string GetInput(string path)
       {
-         return File.ReadAllText(path).Trim();
+         return File.ReadAllText(path).TrimEnd();
       }
 
       public static Answers GetAnswers(string path)

@@ -4,7 +4,7 @@ import os.path
 import time
 
 def test(result: str, expected: str):
-   if result == '':
+   if expected == '':
       return
    if result != expected:
       print(f'Expected {expected}, got {result}')

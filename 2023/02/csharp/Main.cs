@@ -12,7 +12,7 @@ namespace Year2023
          HasIO = false,
       };
 
-      static public (int, IEnumerable<(int, string)>) GetSequences(string game, int idx)
+      private static (int, IEnumerable<(int, string)>) GetSequences(string game, int idx)
       {
          return (idx, game.Substring(game.IndexOf(':') + 1).Split([',', ';']).Select(x =>
          {
@@ -21,7 +21,7 @@ namespace Year2023
          }));
       }
 
-      static readonly int[] RGB = [12, 13, 14];
+      private static readonly int[] RGB = [12, 13, 14];
       static string Part1(string input, bool isTest = false)
       {
          return input.Split('\n').Select(GetSequences).Sum(cubes =>

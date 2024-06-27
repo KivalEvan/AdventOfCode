@@ -7,7 +7,7 @@ import kival.aoc.core.*;
 
 public class Main {
    public final boolean HAS_IO = false;
-public final boolean HAS_ALTERNATE = false;
+   public final boolean HAS_ALTERNATE = false;
 
    public String part1(String input,boolean isTest) {
       int res = 0;
