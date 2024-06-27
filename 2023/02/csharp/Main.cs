@@ -42,7 +42,7 @@ namespace Year2023
             foreach (var cube in cubes.Item2)
             {
                int idx = cube.Item2[0] % 3;
-               if (cube.Item2[0] == 'r' && cube.Item1 > rgb[idx]) rgb[idx] = cube.Item1;
+               if (cube.Item1 > rgb[idx]) rgb[idx] = cube.Item1;
             }
             return rgb[0] * rgb[1] * rgb[2];
          }).ToString();

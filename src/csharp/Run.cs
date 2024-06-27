@@ -13,7 +13,7 @@ namespace Core
       private static void Test(string actual, string expected)
       {
          if (expected == "") return;
-         if (expected != actual) Console.WriteLine("Expected " + expected + " but received " + actual);
+         if (expected != actual) { Console.WriteLine("Expected " + expected + " but received " + actual); throw new Exception("Test failed"); }
       }
 
       private static void Perform(string tag, SolutionPart fn, string path, bool hasIo)
