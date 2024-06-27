@@ -45,11 +45,11 @@ $(TEMP_DIR):
 
 # imagine "compiling" these with makefile lmao
 java: $(AOC_PATH)/java/Main.java
-	@javac --enable-preview --release 22 -d $(TEMP_DIR) -cp $(TEMP_DIR)\; \
+	@javac --enable-preview --release 22 -Xlint:unchecked -d $(TEMP_DIR) -cp $(TEMP_DIR)\; \
 		$(SRC_DIR)/java/Input.java \
 		$(SRC_DIR)/java/Run.java \
 		$(AOC_PATH)/java/Main.java
-	java --enable-preview -cp $(TEMP_DIR) kival/aoc/Main $(AOC_PATH) $(BENCH) $(ARGS)
+	java --enable-preview -cp $(TEMP_DIR) kival/aoc/year${YEAR}/day${DAY}/Main $(AOC_PATH) $(BENCH) $(ARGS)
 
 csharp: $(AOC_PATH)/csharp/Main.cs
 	@dotnet clean aoc.csproj --nologo -v=q

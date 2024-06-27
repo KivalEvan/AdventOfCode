@@ -1,6 +1,11 @@
 import type { SolutionOptions } from 'src/options.ts';
 import { run } from 'src/run.ts';
 
+export const options: SolutionOptions = {
+   hasAlternate: false,
+   hasIo: false,
+};
+
 const ranking: Record<string, number> = {
    A: 13,
    K: 12,
@@ -18,11 +23,6 @@ const ranking: Record<string, number> = {
    '1': 0,
 };
 
-export const options: SolutionOptions = {
-   hasAlternate: false,
-   hasIo: false,
-};
-
 const enum Type {
    HIGH_CARD,
    ONE_PAIR,
@@ -34,7 +34,9 @@ const enum Type {
 }
 
 function sortCard(a: [string, number], b: [string, number]): number {
-   for (let i = 0; i < 5; i++) if (a[0][i] !== b[0][i]) return ranking[a[0][i]] - ranking[b[0][i]];
+   for (let i = 0; i < 5; i++) {
+      if (a[0][i] !== b[0][i]) return ranking[a[0][i]] - ranking[b[0][i]];
+   }
    return 0;
 }
 
@@ -67,47 +69,41 @@ function getType(str: string): number {
    return Type.FULL_HOUSE;
 }
 
-export function part1(input: string, _isTest: boolean): string {
-   const groups: [string, number][][] = [];
-   for (let i = 0; i < 7; i++) groups.push([]);
-   input
+function parseInput(input: string, joker: boolean): [string, number][][] {
+   return input
       .split('\n')
       .map((str) => {
          const temp: unknown[] = str.split(' ');
          temp[1] = Number(temp[1]);
+         if (joker) temp[0] = (temp[0] as string).replaceAll('J', '1');
          return temp as [string, number];
       })
-      .forEach((set) => groups[getType(set[0])].push(set));
+      .reduce((p, set) => {
+         const t = getType(set[0]);
+         p[t] ||= [];
+         p[getType(set[0])].push(set);
+         return p;
+      }, [] as [string, number][][]);
+}
+
+function solve(input: string, joker: boolean): string {
+   const groups: [string, number][][] = parseInput(input, joker);
 
    let res = 0;
    let i = 1;
-   for (const group of groups) {
-      group.sort(sortCard);
+   for (let group of groups) {
+      group = (group || []).sort(sortCard);
       for (const set of group) res += set[1] * i++;
    }
    return res.toString();
 }
 
-export function part2(input: string, _isTest: boolean): string {
-   const groups: [string, number][][] = [];
-   for (let i = 0; i < 7; i++) groups.push([]);
-   input
-      .split('\n')
-      .map((str) => {
-         const temp: unknown[] = str.split(' ');
-         temp[0] = (temp[0] as string).replaceAll('J', '1');
-         temp[1] = Number(temp[1]);
-         return temp as [string, number];
-      })
-      .forEach((set) => groups[getType(set[0])].push(set));
+export function part1(input: string, _isTest: boolean): string {
+   return solve(input, false);
+}
 
-   let res = 0;
-   let i = 1;
-   for (const group of groups) {
-      group.sort(sortCard);
-      for (const set of group) res += set[1] * i++;
-   }
-   return res.toString();
+export function part2(input: string, _isTest: boolean): string {
+   return solve(input, true);
 }
 
 if (import.meta.main) {

@@ -1,4 +1,4 @@
-package kival.aoc;
+package kival.aoc.year2023.day03;
 
 import java.util.ArrayList;
 import java.util.List;
