@@ -7,9 +7,9 @@
    },
    "imports": { "src/": "./src/ts/" },
    "tasks": {
-      "fetch": "deno run --allow-read=. --allow-write=. --allow-net --allow-env --env ./main/fetchInput.ts",
-      "aoc": "deno run --allow-read=. --allow-net=deno.land --allow-hrtime --allow-run ./main/runner.ts",
-      "aoc:watch": "deno run --watch --allow-read=. --allow-net=deno.land --allow-hrtime --allow-run ./main/runner.ts",
+      "fetch": "deno run --allow-read=. --allow-write=. --allow-net --allow-env --env ./main/main.ts",
+      "aoc": "deno run --allow-read=. --allow-net=deno.land --allow-hrtime --allow-run ./main/main.ts",
+      "aoc:watch": "deno run --watch --allow-read=. --allow-net=deno.land --allow-hrtime --allow-run ./main/main.ts",
       "aoc:bench": "deno run --allow-read=. --allow-net=deno.land --allow-hrtime --allow-run ./main/bench.ts"
    }
 }

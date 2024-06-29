@@ -5,7 +5,8 @@ namespace Year
 {
    public static class Day
    {
-      static SolutionOptions OPTIONS = new () {
+      static SolutionOptions OPTIONS = new()
+      {
          HasIO = false,
          HasAlternate = false,
       };

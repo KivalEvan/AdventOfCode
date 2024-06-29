@@ -33,16 +33,16 @@ namespace Year2023
          return int.TryParse(s, out int res) ? res : 0;
       }
 
-      static string yeetTheNumber(string[][] grid, int x, int y)
+      static string YeetTheNumber(string[][] grid, int x, int y)
       {
          string res = "";
-         if (Char.IsNumber(grid[y][x][0]))
+         if (char.IsNumber(grid[y][x][0]))
          {
             res += grid[y][x];
             grid[y][x] = ".";
 
-            if (x > 0) res = yeetTheNumber(grid, x - 1, y) + res;
-            if (x < grid[y].Length - 1) res += yeetTheNumber(grid, x + 1, y);
+            if (x > 0) res = YeetTheNumber(grid, x - 1, y) + res;
+            if (x < grid[y].Length - 1) res += YeetTheNumber(grid, x + 1, y);
          }
          return res;
       }
@@ -62,18 +62,18 @@ namespace Year2023
                {
                   if (x > 0)
                   {
-                     if (y < SZ - 1) res += TryOrDefault(yeetTheNumber(grid, x - 1, y + 1));
-                     if (y > 0) res += TryOrDefault(yeetTheNumber(grid, x - 1, y - 1));
-                     res += TryOrDefault(yeetTheNumber(grid, x - 1, y));
+                     if (y < SZ - 1) res += TryOrDefault(YeetTheNumber(grid, x - 1, y + 1));
+                     if (y > 0) res += TryOrDefault(YeetTheNumber(grid, x - 1, y - 1));
+                     res += TryOrDefault(YeetTheNumber(grid, x - 1, y));
                   }
                   if (x < SZ - 1)
                   {
-                     if (y < SZ - 1) res += TryOrDefault(yeetTheNumber(grid, x + 1, y + 1));
-                     if (y > 0) res += TryOrDefault(yeetTheNumber(grid, x + 1, y - 1));
-                     res += TryOrDefault(yeetTheNumber(grid, x + 1, y));
+                     if (y < SZ - 1) res += TryOrDefault(YeetTheNumber(grid, x + 1, y + 1));
+                     if (y > 0) res += TryOrDefault(YeetTheNumber(grid, x + 1, y - 1));
+                     res += TryOrDefault(YeetTheNumber(grid, x + 1, y));
                   }
-                  if (y > 0) res += TryOrDefault(yeetTheNumber(grid, x, y - 1));
-                  if (y < SZ - 1) res += TryOrDefault(yeetTheNumber(grid, x, y + 1));
+                  if (y > 0) res += TryOrDefault(YeetTheNumber(grid, x, y - 1));
+                  if (y < SZ - 1) res += TryOrDefault(YeetTheNumber(grid, x, y + 1));
                }
             }
          }
@@ -97,18 +97,18 @@ namespace Year2023
                   List<int> ary = new List<int>();
                   if (x > 0)
                   {
-                     if (y < SZ - 1) ary.Add(TryOrDefault(yeetTheNumber(grid, x - 1, y + 1)));
-                     if (y > 0) ary.Add(TryOrDefault(yeetTheNumber(grid, x - 1, y - 1)));
-                     ary.Add(TryOrDefault(yeetTheNumber(grid, x - 1, y)));
+                     if (y < SZ - 1) ary.Add(TryOrDefault(YeetTheNumber(grid, x - 1, y + 1)));
+                     if (y > 0) ary.Add(TryOrDefault(YeetTheNumber(grid, x - 1, y - 1)));
+                     ary.Add(TryOrDefault(YeetTheNumber(grid, x - 1, y)));
                   }
                   if (x < SZ - 1)
                   {
-                     if (y < SZ - 1) ary.Add(TryOrDefault(yeetTheNumber(grid, x + 1, y + 1)));
-                     if (y > 0) ary.Add(TryOrDefault(yeetTheNumber(grid, x + 1, y - 1)));
-                     ary.Add(TryOrDefault(yeetTheNumber(grid, x + 1, y)));
+                     if (y < SZ - 1) ary.Add(TryOrDefault(YeetTheNumber(grid, x + 1, y + 1)));
+                     if (y > 0) ary.Add(TryOrDefault(YeetTheNumber(grid, x + 1, y - 1)));
+                     ary.Add(TryOrDefault(YeetTheNumber(grid, x + 1, y)));
                   }
-                  if (y > 0) ary.Add(TryOrDefault(yeetTheNumber(grid, x, y - 1)));
-                  if (y < SZ - 1) ary.Add(TryOrDefault(yeetTheNumber(grid, x, y + 1)));
+                  if (y > 0) ary.Add(TryOrDefault(YeetTheNumber(grid, x, y - 1)));
+                  if (y < SZ - 1) ary.Add(TryOrDefault(YeetTheNumber(grid, x, y + 1)));
                   int[] fi = ary.Where(e => e > 0).ToArray();
                   if (fi.Length == 2) res += fi[0] * fi[1];
                }

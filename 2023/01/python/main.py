@@ -14,25 +14,25 @@ def main() -> None:
 
 def get_num(str: str) -> str:
    if str.startswith("zero"):
-      return '0';
+      return '0'
    if str.startswith("one"):
-      return '1';
+      return '1'
    if str.startswith("two"):
-      return '2';
+      return '2'
    if str.startswith("three"):
-      return '3';
+      return '3'
    if str.startswith("four"):
-      return '4';
+      return '4'
    if str.startswith("five"):
-      return '5';
+      return '5'
    if str.startswith("six"):
-      return '6';
+      return '6'
    if str.startswith("seven"):
-      return '7';
+      return '7'
    if str.startswith("eight"):
-      return '8';
+      return '8'
    if str.startswith("nine"):
-      return '9';
+      return '9'
    return None;
 
 def get_num2(str: str) -> str:

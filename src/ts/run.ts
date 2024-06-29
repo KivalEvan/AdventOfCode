@@ -1,5 +1,5 @@
 import { getAnswers, getInput } from './input.ts';
-import { dirname, fromFileUrl, resolve } from './deps.ts';
+import { resolve } from './deps.ts';
 import { SolutionOptions } from './options.ts';
 
 let result: string;
@@ -11,6 +11,13 @@ function test(actual: unknown, expected: unknown) {
    }
 }
 
+function timer(fn: () => string): [string, number] {
+   const start = performance.now();
+   const result = fn();
+   const end = performance.now();
+   return [result, end - start];
+}
+
 function round(num: number, r = 3): number {
    return Math.round(num * Math.pow(10, r)) / Math.pow(10, r);
 }
@@ -20,23 +27,18 @@ function perform(
    func: (path: string, _isTest: boolean) => string,
    path: string,
    hasIo: boolean = false,
-) {
+): string {
    console.log('\n\\', tag);
    const isTest = tag.startsWith('Test');
-   let start = 0,
-      end = 0,
-      elapsedIo = 0,
-      elapsedPart = 0;
 
-   start = performance.now();
-   const input = hasIo ? path : getInput(path);
-   end = performance.now();
-   elapsedIo = end - start;
+   const [input, elapsedIo] = timer(() => {
+      return hasIo ? path : getInput(path);
+   });
 
-   start = performance.now();
-   result = func(input, isTest);
-   end = performance.now();
-   elapsedPart = end - start;
+   const [result, elapsedPart] = timer(() => {
+      return func(input, isTest);
+   });
+
    console.log(
       ' -- Time Taken (ms):\n | IO > PART > ALL\n |',
       Math.round(elapsedIo * 1000) / 1000,
@@ -47,6 +49,8 @@ function perform(
    );
 
    console.log('/ Result:', result);
+
+   return result;
 }
 
 function bench(
@@ -55,30 +59,24 @@ function bench(
    path: string,
    itBench: number,
    hasIo: boolean = false,
-) {
+): void {
    const isTest = tag.startsWith('Test');
-   let _ = '';
-   let start = 0,
-      end = 0,
-      elapsed = 0;
 
    const timesIo = new Array(itBench).fill(0);
    const timesPart = new Array(itBench).fill(0);
    const timesOverall = new Array(itBench).fill(0);
 
    for (let i = 0; i < itBench; i++) {
-      start = performance.now();
-      const input = hasIo ? path : getInput(path);
-      end = performance.now();
-      elapsed = end - start;
-      timesIo[i] = elapsed;
+      const [input, elapsedIo] = timer(() => {
+         return hasIo ? path : getInput(path);
+      });
 
-      start = performance.now();
-      _ = func(input, isTest);
-      end = performance.now();
-      elapsed = end - start;
-      timesPart[i] = elapsed;
+      const [_, elapsedPart] = timer(() => {
+         return func(input, isTest);
+      });
 
+      timesIo[i] = elapsedIo;
+      timesPart[i] = elapsedPart;
       timesOverall[i] = timesPart[i] + timesIo[i];
    }
    let min, max, avg;

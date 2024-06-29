@@ -1,12 +1,22 @@
-export const langParse: Record<string, string> = {
+export type LangName = 'c' | 'csharp' | 'go' | 'java' | 'python' | 'rust' | 'ts';
+
+export const langParse: Record<string, LangName> = {
    typescript: 'ts',
    py: 'python',
    rs: 'rust',
-   'cs': 'csharp',
+   cs: 'csharp',
    'c#': 'csharp',
 };
 
-export const langName: Record<string, string> = {
+export const langCompile: LangName[] = [
+   'c',
+   'csharp',
+   'go',
+   'java',
+   'rust',
+];
+
+export const langName: Record<LangName, string> = {
    c: 'C23',
    csharp: 'C# 12',
    go: 'Go 1.22.4',
@@ -16,6 +26,6 @@ export const langName: Record<string, string> = {
    ts: 'TypeScript 5.4',
 };
 
-export function getLang(str?: string): string {
+export function getLang(str?: string): LangName {
    return langParse[str?.toLowerCase() || ''] || str?.toLowerCase() || '';
 }

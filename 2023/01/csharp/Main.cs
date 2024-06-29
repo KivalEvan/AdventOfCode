@@ -49,7 +49,7 @@ namespace Year2023
 
             for (int j = 0; j < lines[i].Length; j++)
             {
-               if (Char.IsNumber(lines[i][j]))
+               if (char.IsNumber(lines[i][j]))
                {
                   first = lines[i][j];
                   break;
@@ -57,7 +57,7 @@ namespace Year2023
             }
             for (int j = lines[i].Length - 1; j >= 0; j--)
             {
-               if (Char.IsNumber(lines[i][j]))
+               if (char.IsNumber(lines[i][j]))
                {
                   last = lines[i][j];
                   break;
@@ -83,7 +83,7 @@ namespace Year2023
 
             for (int j = 0; j < lines[i].Length; j++)
             {
-               if (Char.IsNumber(lines[i][j]))
+               if (char.IsNumber(lines[i][j]))
                {
                   first = lines[i][j];
                   break;
@@ -97,7 +97,7 @@ namespace Year2023
             }
             for (int j = lines[i].Length - 1; j >= 0; j--)
             {
-               if (Char.IsNumber(lines[i][j]))
+               if (char.IsNumber(lines[i][j]))
                {
                   last = lines[i][j];
                   break;

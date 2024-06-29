@@ -8,7 +8,13 @@ namespace Core
    {
       public delegate string SolutionPart(string input, bool isTest);
 
-      private static string result = "";
+      private static (string output, double elapsed) Timer(Func<string> fn)
+      {
+         Stopwatch stopwatch = Stopwatch.StartNew();
+         string output = fn();
+         stopwatch.Stop();
+         return (output, stopwatch.Elapsed.Microseconds / 1000d);
+      }
 
       private static void Test(string actual, string expected)
       {
@@ -16,35 +22,25 @@ namespace Core
          if (expected != actual) { Console.WriteLine("Expected " + expected + " but received " + actual); throw new Exception("Test failed"); }
       }
 
-      private static void Perform(string tag, SolutionPart fn, string path, bool hasIo)
+      private static string Perform(string tag, SolutionPart fn, string path, bool hasIo)
       {
          Console.WriteLine($"\n\\ {tag}");
          bool isTest = tag.StartsWith("Test");
-         Stopwatch stopwatch;
-         double elapsedIo, elapsedPart;
 
-         stopwatch = Stopwatch.StartNew();
-         string input = hasIo ? path : Input.GetInput(path);
-         stopwatch.Stop();
-         elapsedIo = stopwatch.Elapsed.Microseconds / 1000d;
-
-         stopwatch = Stopwatch.StartNew();
-         result = fn(input, isTest);
-         stopwatch.Stop();
-         elapsedPart = stopwatch.Elapsed.Microseconds / 1000d;
+         (string input, double elapsedIo) = Timer(() => { return hasIo ? path : Input.GetInput(path); });
+         (string output, double elapsedPart) = Timer(() => { return fn(input, isTest); });
 
          Console.WriteLine($" -- Time taken (ms):");
          Console.WriteLine($" | IO > PART > ALL");
          Console.WriteLine($" | {elapsedIo} > {elapsedPart} > {elapsedIo + elapsedPart}");
-         Console.WriteLine($"/ Result: {result}");
+         Console.WriteLine($"/ Result: {output}");
+
+         return output;
       }
 
       private static void Bench(string tag, SolutionPart fn, string path, int itBench, bool hasIo)
       {
          bool isTest = tag.StartsWith("Test");
-         string _ = "";
-         double elapsed;
-         Stopwatch stopwatch;
 
          double[] timesIo = new double[itBench];
          double[] timesPart = new double[itBench];
@@ -52,18 +48,11 @@ namespace Core
 
          for (int i = 0; i < itBench; i++)
          {
-            stopwatch = Stopwatch.StartNew();
-            string input = hasIo ? path : Input.GetInput(path);
-            stopwatch.Stop();
-            elapsed = stopwatch.Elapsed.Microseconds / 1000d;
-            timesIo[i] = elapsed;
+            (string input, double elapsedIo) = Timer(() => { return hasIo ? path : Input.GetInput(path); });
+            (string _, double elapsedPart) = Timer(() => { return fn(input, isTest); });
 
-            stopwatch = Stopwatch.StartNew();
-            _ = fn(input, isTest);
-            stopwatch.Stop();
-            elapsed = stopwatch.Elapsed.Microseconds / 1000d;
-            timesPart[i] = elapsed;
-
+            timesIo[i] = elapsedIo;
+            timesPart[i] = elapsedPart;
             timesOverall[i] = timesPart[i] + timesIo[i];
          }
          double min, max, avg;
@@ -91,6 +80,7 @@ namespace Core
          string pathTest1 = Path.Combine(args[0], "test1.txt");
          string pathTest2 = Path.Combine(args[0], options.HasAlternate ? "test2.txt" : "test1.txt");
          string pathInput = Path.Combine(args[0], "input.txt");
+         string result;
 
          int itBench = args.Length > 1 ? int.Parse(args[1]) : 0;
          if (itBench > 0)
@@ -103,13 +93,13 @@ namespace Core
          }
 
          Input.Answers answers = Input.GetAnswers(pathAnswers);
-         Perform("Test 1", part1, pathTest1, options.HasIO);
+         result = Perform("Test 1", part1, pathTest1, options.HasIO);
          Test(result, answers.Test1);
-         Perform("Part 1", part1, pathInput, options.HasIO);
+         result = Perform("Part 1", part1, pathInput, options.HasIO);
          Test(result, answers.Part1);
-         Perform("Test 2", part2, pathTest2, options.HasIO);
+         result = Perform("Test 2", part2, pathTest2, options.HasIO);
          Test(result, answers.Test2);
-         Perform("Part 2", part2, pathInput, options.HasIO);
+         result = Perform("Part 2", part2, pathInput, options.HasIO);
          Test(result, answers.Part2);
       }
    }

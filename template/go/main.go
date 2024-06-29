@@ -1,15 +1,22 @@
 package main
 
-import "fmt"
-
-func part1(input string) {
-
-}
-
-func part2(input string) {
-
-}
+import (
+	core "advent/of/go/src/go"
+	"os"
+)
 
 func main() {
-	fmt.Println("Hello, world.")
+	options := core.SolutionOptions{
+		HasAlternate: false,
+		HasIo:        false,
+	}
+	core.Run(os.Args, part1, part2, options)
+}
+
+func part1(input string, isTest bool) string {
+	return ""
+}
+
+func part2(input string, isTest bool) string {
+	return ""
 }

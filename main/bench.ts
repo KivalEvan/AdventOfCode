@@ -1,12 +1,12 @@
 import { fetchArgs } from './args.ts';
 import { green, red } from './deps.ts';
-import { getLang, langName } from './lang.ts';
+import { getLang, LangName, langName } from './lang.ts';
 
 const args = fetchArgs();
 
-const langList: string[] = Object.keys(langName).filter(
+const langList: LangName[] = Object.keys(langName).filter(
    (l) => l === getLang(l) || l,
-);
+) as LangName[];
 
 const currentDate = new Date();
 let yearStart = currentDate.getFullYear();
@@ -57,7 +57,7 @@ const baseline = '';
 for (let year = yearStart; year <= yearEnd; year++) {
    for (let day = dayStart; day <= dayEnd; day++) {
       const results: Record<string, number[]> = Object.keys(langName).reduce(
-         (p, v) => ({ ...p, [langName[v]]: [] }),
+         (p, v) => ({ ...p, [langName[v as LangName]]: [] }),
          {},
       );
       console.log('\n', year, '--', day);
@@ -79,7 +79,7 @@ for (let year = yearStart; year <= yearEnd; year++) {
          }).output();
 
          const output = new TextDecoder().decode(stdout).trim().split('\n');
-         const idx = output.findIndex((e) => e.startsWith('Benchmarking'));
+         const idx = output.findIndex((e) => e.startsWith('Benchmarking '));
          if (idx === -1) {
             delete results[langName[lang]];
             continue;
