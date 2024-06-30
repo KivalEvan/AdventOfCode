@@ -36,6 +36,7 @@ def perform(tag: str, func: Callable[[str, bool], str], path: str, has_io: bool)
    return result
    
 def bench(tag: str, func: Callable[[str, bool], str], path: str, it: int, has_io: bool):
+   print(f'\nBenchmarking {tag} (ms) min..max avg')
    is_test = tag.startswith('Test')
    start = 0
    end = 0
@@ -56,8 +57,6 @@ def bench(tag: str, func: Callable[[str, bool], str], path: str, it: int, has_io
       elapsed_part.append((end - start) / 1_000_000)
       
       elapsed_overall.append(elapsed_io[i] + elapsed_part[i])
-      
-   print(f'\nBenchmarking {tag} (ms) min..max avg')
    
    calc_min = min(elapsed_io)
    calc_max = max(elapsed_io)

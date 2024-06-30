@@ -56,6 +56,7 @@ public class Run {
 
    private static void bench(String tag, ParameterFunction func, String path, int itBench, boolean hasIO)
          throws Exception {
+      System.out.println(STR."\nBenchmarking \{tag} (ms) min..max avg");
       boolean isTest = tag.startsWith("Test");
       long start = 0, end = 0;
       double min, max, avg;
@@ -80,7 +81,6 @@ public class Run {
          timesOverall[i] = timesPart[i] + timesIo[i];
       }
 
-      System.out.println(STR."\nBenchmarking \{tag} (ms) min..max avg");
       min = round(Arrays.stream(timesIo).min().getAsDouble(), 3);
       max = round(Arrays.stream(timesIo).max().getAsDouble(), 3);
       avg = round(Arrays.stream(timesIo).average().getAsDouble(), 3);

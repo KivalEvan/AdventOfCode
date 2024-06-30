@@ -60,6 +60,7 @@ function bench(
    itBench: number,
    hasIo: boolean = false,
 ): void {
+   console.log('\nBenchmarking', tag, '(ms) min..max avg');
    const isTest = tag.startsWith('Test');
 
    const timesIo = new Array(itBench).fill(0);
@@ -80,7 +81,6 @@ function bench(
       timesOverall[i] = timesPart[i] + timesIo[i];
    }
    let min, max, avg;
-   console.log('\nBenchmarking', tag, '(ms) min..max avg');
 
    min = Math.min(...timesIo);
    max = Math.max(...timesIo);

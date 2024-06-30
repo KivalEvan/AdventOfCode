@@ -40,6 +40,7 @@ namespace Core
 
       private static void Bench(string tag, SolutionPart fn, string path, int itBench, bool hasIo)
       {
+         Console.WriteLine($"\nBenchmarking {tag} (ms) min..max avg");
          bool isTest = tag.StartsWith("Test");
 
          double[] timesIo = new double[itBench];
@@ -56,7 +57,6 @@ namespace Core
             timesOverall[i] = timesPart[i] + timesIo[i];
          }
          double min, max, avg;
-         Console.WriteLine($"\nBenchmarking {tag} (ms) min..max avg");
 
          min = timesIo.Min();
          max = timesIo.Max();

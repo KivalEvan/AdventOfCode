@@ -73,6 +73,30 @@ go_compile: $(AOC_PATH)/go/main.go
 go:
 	@$(TEMP_DIR)/aoc_go $(AOC_PATH) $(BENCH) $(ARGS)
 
+rust_compile: $(AOC_PATH)/rust/main.rs
+	@rustc -o $(TEMP_DIR)/aoc_rust $(AOC_PATH)/rust/main.rs
+
+rust:
+	@$(TEMP_DIR)/aoc_rust $(AOC_PATH) $(BENCH) $(ARGS)
+
+kotlin_compile: $(AOC_PATH)/kotlin/Main.kt
+	@kotlinc -d $(TEMP_DIR) -jvm-target 22 -cp $(TEMP_DIR)\; \
+		$(SRC_DIR)/kotlin/Input.kt \
+		$(SRC_DIR)/kotlin/Run.kt \
+		$(AOC_PATH)/kotlin/Main.kt
+
+kotlin:
+	@$(TEMP_DIR)/aoc_kotlin $(AOC_PATH) $(BENCH) $(ARGS)
+
+elixir_compile: $(AOC_PATH)/elixir/main.ex
+	@elixirc $(AOC_PATH)/elixir/main.ex
+
+elixir:
+	@elixir $(AOC_PATH)/elixir/main.ex $(BENCH) $(ARGS)
+
+lua: $(AOC_PATH)/lua/main.lua
+	@luajit $(AOC_PATH)/lua/main.lua $(AOC_PATH) $(BENCH) $(ARGS)
+
 ts: $(AOC_PATH)/ts/main.ts
 	@deno run --allow-read=. --allow-hrtime $(AOC_PATH)/ts/main.ts $(AOC_PATH) $(BENCH) $(ARGS)
 

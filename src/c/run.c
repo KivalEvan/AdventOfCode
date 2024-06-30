@@ -50,6 +50,7 @@ static void _bench(const char *restrict tag,
                    char *(*fun)(const char *restrict, const int32_t),
                    const char *restrict path, const int32_t itBench,
                    const int32_t has_io) {
+   printf("\nBenchmarking %s (ms) min..max avg\n", tag);
    int32_t is_test = strncmp(tag, "Test", 4) == 0 ? 1 : 0;
    char *_, *input;
    clock_t start, end;
@@ -77,7 +78,6 @@ static void _bench(const char *restrict tag,
       free(input);
       free(_);
    }
-   printf("\nBenchmarking %s (ms) min..max avg\n", tag);
 
    min = ary_min(timesIo, itBench) * 1000;
    max = ary_max(timesIo, itBench) * 1000;

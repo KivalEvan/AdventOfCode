@@ -5,15 +5,19 @@ learning purposes because fun.
 
 ## Languages, Runner & Compiler
 
-This is also the order of priority that I will solve the problem with:
+This is also the order of priority that I will solve the problem with, ~~totally not because of job
+market~~:
 
 - TypeScript 5.4.5 with Deno 1.38.3 for `.ts`
-- Java 22 for `.java`
-- Python 3.12.4 for `.py`
-- C# 12 with .NET 8.0.106 for `.cs`
-- C23 with Clang 17.0.6 for `.c`
-- Rust 1.79.0 for `.rust`
 - Go 1.22.4 for `.go`
+- Python 3.12.4 for `.py`
+- C23 with Clang 17.0.6 for `.c`
+- C# 12 with .NET 8.0.106 for `.cs`
+- Kotlin 2.0.0 with JRE 22 for `.kt`
+- Java 22 for `.java`
+- Lua 5.4.7 with LuaJIT 2.1 for `.lua`
+- Rust 1.79.0 for `.rust`
+- Elixir 1.17.1 with Erlang/OTP 27 for `.ex`
 
 No parallelism or concurrency will be done, input parsing is included in part. Output must always
 return string. The performance metric is evaluated only on each part of the day and does not include
@@ -56,30 +60,30 @@ Will try `bash` when I feel like it.
 
 ### 2023
 
-| Day | TypeScript | Java | Python | C# | C  | Rust | Go |
-| --- | ---------- | ---- | ------ | -- | -- | ---- | -- |
-| 1   | ✅         | ✅   | ✅     | ✅ | ✅ |      | ✅ |
-| 2   | ✅         | ✅   | ✅     | ✅ | ✅ |      | ✅ |
-| 3   | ✅         | ✅   | ✅     | ✅ | ✅ |      | ✅ |
-| 4   | ✅         | ✅   | ✅     | ✅ | ✅ |      | ✅ |
-| 5   | ✅         | ✅   | ✅     | ✅ | ✅ |      | ✅ |
-| 6   | ✅         | ✅   | ✅     | ✅ | ✅ |      | ✅ |
-| 7   | ✅         | ✅   | ✅     | ✅ | ✅ |      | ✅ |
-| 8   | ✅         |      |        |    | ✅ |      |    |
-| 9   | ✅         |      |        |    | ✅ |      |    |
-| 10  | ✅         |      |        |    |    |      |    |
-| 11  | ✅         |      |        |    | ✅ |      |    |
-| 12  | ✅         |      |        |    | ☑️  |      |    |
-| 13  | ✅         |      |        |    |    |      |    |
-| 14  | ✅         |      |        |    | ☑️  |      |    |
-| 15  | ✅         |      |        |    |    |      |    |
-| 16  | ✅         |      |        |    |    |      |    |
-| 17  | ✅         |      |        |    |    |      |    |
-| 18  | ✅         |      |        |    |    |      |    |
-| 19  | ✅         |      |        |    |    |      |    |
-| 20  | ☑️          |      |        |    |    |      |    |
-| 21  | ☑️          |      |        |    |    |      |    |
-| 22  | ✅         |      |        |    |    |      |    |
-| 23  | ✅         |      |        |    |    |      |    |
-| 24  | ✅         |      |        |    |    |      |    |
-| 25  | ☑️          |      |        |    |    |      |    |
+| Day | TypeScript | Go | Python | C  | C# | Kotlin | Java | Lua | Rust | Elixir |
+| --- | ---------- | -- | ------ | -- | -- | ------ | ---- | --- | ---- | ------ |
+| 1   | ✅         | ✅ | ✅     | ✅ | ✅ |        | ✅   | ✅  |      |        |
+| 2   | ✅         | ✅ | ✅     | ✅ | ✅ |        | ✅   | ✅  |      |        |
+| 3   | ✅         | ✅ | ✅     | ✅ | ✅ |        | ✅   | ✅  |      |        |
+| 4   | ✅         | ✅ | ✅     | ✅ | ✅ |        | ✅   | ✅  |      |        |
+| 5   | ✅         | ✅ | ✅     | ✅ | ✅ |        | ✅   |     |      |        |
+| 6   | ✅         | ✅ | ✅     | ✅ | ✅ |        | ✅   |     |      |        |
+| 7   | ✅         | ✅ | ✅     | ✅ | ✅ |        | ✅   |     |      |        |
+| 8   | ✅         |    |        | ✅ |    |        |      |     |      |        |
+| 9   | ✅         |    |        | ✅ |    |        |      |     |      |        |
+| 10  | ✅         |    |        |    |    |        |      |     |      |        |
+| 11  | ✅         |    |        | ✅ |    |        |      |     |      |        |
+| 12  | ✅         |    |        | ☑️  |    |        |      |     |      |        |
+| 13  | ✅         |    |        |    |    |        |      |     |      |        |
+| 14  | ✅         |    |        | ☑️  |    |        |      |     |      |        |
+| 15  | ✅         |    |        |    |    |        |      |     |      |        |
+| 16  | ✅         |    |        |    |    |        |      |     |      |        |
+| 17  | ✅         |    |        |    |    |        |      |     |      |        |
+| 18  | ✅         |    |        |    |    |        |      |     |      |        |
+| 19  | ✅         |    |        |    |    |        |      |     |      |        |
+| 20  | ☑️          |    |        |    |    |        |      |     |      |        |
+| 21  | ☑️          |    |        |    |    |        |      |     |      |        |
+| 22  | ✅         |    |        |    |    |        |      |     |      |        |
+| 23  | ✅         |    |        |    |    |        |      |     |      |        |
+| 24  | ✅         |    |        |    |    |        |      |     |      |        |
+| 25  | ☑️          |    |        |    |    |        |      |     |      |        |

@@ -7,6 +7,14 @@ import (
 	"strings"
 )
 
+func main() {
+	options := core.SolutionOptions{
+		HasAlternate: true,
+		HasIo:        false,
+	}
+	core.Run(os.Args, part1, part2, options)
+}
+
 func isNum(c byte) bool {
 	return c >= '0' && c <= '9'
 }
@@ -46,14 +54,6 @@ func getNum(str string) byte {
 		return '9'
 	}
 	return ' '
-}
-
-func main() {
-	options := core.SolutionOptions{
-		HasAlternate: true,
-		HasIo:        false,
-	}
-	core.Run(os.Args, part1, part2, options)
 }
 
 func part1(input string, isTest bool) string {

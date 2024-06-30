@@ -48,6 +48,7 @@ func perform(tag string, fn ParameterFunction, path string, hasIo bool) string {
 }
 
 func bench(tag string, fn ParameterFunction, path string, itBench int, hasIo bool) {
+	fmt.Println("\nBenchmarking " + tag + " (ms) min..max avg")
 	isTest := strings.HasPrefix(tag, "Test")
 
 	timesIo := make([]float64, itBench)
@@ -72,7 +73,6 @@ func bench(tag string, fn ParameterFunction, path string, itBench int, hasIo boo
 	mn := 0.0
 	mx := 0.0
 	avg := 0.0
-	fmt.Println("\nBenchmarking " + tag + " (ms) min..max avg")
 
 	mn = minFloat(timesIo)
 	mx = maxFloat(timesIo)
