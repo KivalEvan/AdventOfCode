@@ -13,11 +13,11 @@ def main() -> None:
    }
    run(sys.argv, part_one, part_two, options)
 
-def tuple_moment(str: str) -> List[[int, int, int]]:
+def tuple_moment(str: str) -> List[tuple[int, ...]]:
    tup = [int(x) for x in str.split(' ')]
    return [[tup[1], tup[1] + tup[2] - 1], [tup[0], tup[0] + tup[2] - 1]]
 
-def parse_input(input: str, single: bool) -> [List[[int, int]], List[List[[int, int, int]]]]:
+def parse_input(input: str, single: bool) -> [List[tuple[int, ...]], List[List[tuple[int, ...]]]]:
    parsed = input.split('\n\n');
    header = [int(x) for x in parsed[0].split(':')[1].split(' ') if x != '']
    if single:

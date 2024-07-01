@@ -101,7 +101,7 @@ ts: $(AOC_PATH)/ts/main.ts
 	@deno run --allow-read=. --allow-hrtime $(AOC_PATH)/ts/main.ts $(AOC_PATH) $(BENCH) $(ARGS)
 
 python: $(AOC_PATH)/python/main.py
-	@python3 $(AOC_PATH)/python/main.py $(AOC_PATH) $(BENCH) $(ARGS)
+	@pypy3 $(AOC_PATH)/python/main.py $(AOC_PATH) $(BENCH) $(ARGS)
 
 .PHONY: clean
 clean:

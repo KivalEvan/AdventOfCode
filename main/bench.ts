@@ -53,6 +53,10 @@ console.log('Benchmark iterating', itBench, 'times');
 console.log('Measured in average milliseconds');
 
 const baseline = '';
+const totalTime: Record<string, number> = Object.keys(langName).reduce(
+   (p, v) => ({ ...p, [langName[v as LangName]]: 0 }),
+   {},
+);
 
 for (let year = yearStart; year <= yearEnd; year++) {
    for (let day = dayStart; day <= dayEnd; day++) {
@@ -88,17 +92,20 @@ for (let year = yearStart; year <= yearEnd; year++) {
          results[langName[lang]][0] = obtainTime(benchmarks.at(8)!)[2];
          results[langName[lang]][1] = obtainTime(benchmarks.at(-1)!)[2];
          results[langName[lang]][2] = results[langName[lang]][0] + results[langName[lang]][1];
+         totalTime[langName[lang]] += results[langName[lang]][2];
       }
 
       const min = [
          Math.min(...Object.values(results).map((v) => v[0])),
          Math.min(...Object.values(results).map((v) => v[1])),
          Math.min(...Object.values(results).map((v) => v[2])),
+         Math.min(...Object.values(totalTime).filter((x) => x).map((v) => v)),
       ];
       const max = [
          Math.max(...Object.values(results).map((v) => v[0])),
          Math.max(...Object.values(results).map((v) => v[1])),
          Math.max(...Object.values(results).map((v) => v[2])),
+         Math.max(...Object.values(totalTime).filter((x) => x).map((v) => v)),
       ];
       console.log(
          ''.padStart(16, ' '),
@@ -107,8 +114,10 @@ for (let year = yearStart; year <= yearEnd; year++) {
          '    Part',
          2,
          '     Total',
+         '          Overall',
       );
       for (const lang in results) {
+         const total = totalTime[lang];
          console.log(
             lang.padStart(16, ' '),
             '|',
@@ -122,8 +131,19 @@ for (let year = yearStart; year <= yearEnd; year++) {
                )
                .join('   '),
             results[lang][2] === min[2]
+               ? ''.padStart(8, ' ')
+               : ((results[lang][2] / min[2]).toFixed(2) + 'x').padStart(
+                  8,
+                  ' ',
+               ),
+            total === min[3]
+               ? green(total.toFixed(3).padStart(8, ' '))
+               : max[3] === total
+               ? red(total.toFixed(3).padStart(8, ' '))
+               : total.toFixed(3).padStart(8, ' '),
+            totalTime[lang] === min[3]
                ? ''
-               : ((results[lang][2] / min[2]).toFixed(2) + 'x').padStart(8, ' '),
+               : ((totalTime[lang] / min[3]).toFixed(2) + 'x').padStart(8, ' '),
          );
       }
    }

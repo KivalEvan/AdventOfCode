@@ -1,35 +1,21 @@
 #!/usr/local/bin/lua
 
 local run = require('src.lua.run')
+local str = require('src.lua.utils.str')
+local array = require('src.lua.utils.array')
 
 local options = {
    has_alternate = false,
    has_io = false,
 }
 
----@param inputstr string
----@param sep string
----@return string[]
-function string.split(inputstr, sep)
-   if sep == nil then
-      sep = "%s"
-   end
-   local t = {};
-   local i = 1
-   for str in string.gmatch(inputstr, "([^" .. sep .. "]+)") do
-      t[i] = str
-      i = i + 1
-   end
-   return t
-end
-
 ---@param input string
 ---@return number[][]
 local function parse_input(input)
    local nums = {}
    local idx = input:find(':') + 1
-   for i, line in ipairs(input:sub(idx, #input):split('|')) do
-      local t = line:split(' ')
+   for i, line in ipairs(str.split(input:sub(idx, #input), '|')) do
+      local t = str.split(line, ' ')
       local num = {}
       for j = 1, #t do
          if t[j] ~= '' then
@@ -41,15 +27,6 @@ local function parse_input(input)
    return nums
 end
 
-local function contains(s, e)
-   for _, a in ipairs(s) do
-      if a == e then
-         return true
-      end
-   end
-   return false
-end
-
 ---@param input string
 ---@param is_test boolean
 ---@return string
@@ -59,7 +36,7 @@ local function part_1(input, is_test)
       local nums = parse_input(line)
       local j = -1
       for i = 1, #nums[1] do
-         if contains(nums[2], nums[1][i]) then
+         if array.contains(nums[2], nums[1][i]) then
             j = j + 1
          end
       end
@@ -90,7 +67,7 @@ local function part_2(input, is_test)
       local nums = parse_input(line)
       local j = 0
       for k = 1, #nums[1] do
-         if contains(nums[2], nums[1][k]) then
+         if array.contains(nums[2], nums[1][k]) then
             j = j + 1
          end
       end

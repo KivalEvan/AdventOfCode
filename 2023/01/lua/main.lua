@@ -1,15 +1,12 @@
 #!/usr/local/bin/lua
 
 local run = require('src.lua.run')
+local str = require('src.lua.utils.str')
 
 local options = {
    has_alternate = true,
    has_io = false,
 }
-
-function string.starts(String, Start)
-   return string.sub(String, 1, string.len(Start)) == Start
-end
 
 local function is_num(c)
    return c >= '0' and c <= '9'
@@ -21,34 +18,34 @@ local function get_num(s)
       return tonumber(c)
    end
    c = s
-   if c:starts('zero') then
+   if str.starts_with(c, 'zero') then
       return '0'
    end
-   if c:starts('one') then
+   if str.starts_with(c, 'one') then
       return '1'
    end
-   if c:starts('two') then
+   if str.starts_with(c, 'two') then
       return '2'
    end
-   if c:starts('three') then
+   if str.starts_with(c, 'three') then
       return '3'
    end
-   if c:starts('four') then
+   if str.starts_with(c, 'four') then
       return '4'
    end
-   if c:starts('five') then
+   if str.starts_with(c, 'five') then
       return '5'
    end
-   if c:starts('six') then
+   if str.starts_with(c, 'six') then
       return '6'
    end
-   if c:starts('seven') then
+   if str.starts_with(c, 'seven') then
       return '7'
    end
-   if c:starts('eight') then
+   if str.starts_with(c, 'eight') then
       return '8'
    end
-   if c:starts('nine') then
+   if str.starts_with(c, 'nine') then
       return '9'
    end
    return nil

@@ -31,8 +31,8 @@ export const langCompile: LangName[] = [
 
 export const langName: Record<LangName, string> = {
    ts: 'TypeScript 5.4',
-   go: 'Go 1.22.4',
-   python: 'Python 3.12',
+   go: 'Go 1.22',
+   python: 'Python 3.10',
    c: 'C23',
    csharp: 'C# 12',
    kotlin: 'Kotlin 2.0',

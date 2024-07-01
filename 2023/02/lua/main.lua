@@ -1,34 +1,19 @@
 #!/usr/local/bin/lua
 
 local run = require('src.lua.run')
+local str = require('src.lua.utils.str')
 
 local options = {
    has_alternate = false,
    has_io = false,
 }
 
----@param inputstr string
----@param sep string
----@return string[]
-function string.split(inputstr, sep)
-   if sep == nil then
-      sep = "%s"
-   end
-   local t = {};
-   local i = 1
-   for str in string.gmatch(inputstr, "([^" .. sep .. "]+)") do
-      t[i] = str
-      i = i + 1
-   end
-   return t
-end
-
 local function parse_input(input)
    local results = {}
    for line in input:gmatch('[^\n]+') do
       local cubes = {}
-      for _, c in ipairs(line:split(':')[2]:gsub(',', ';'):split(';')) do
-         local lmao = c:gsub('^%s*(.-)%s*$', '%1'):split(' ')
+      for _, c in ipairs(str.split(str.split(line, ':')[2]:gsub(',', ';'), ';')) do
+         local lmao = str.split(c:gsub('^%s*(.-)%s*$', '%1'), ' ')
          local val = tonumber(lmao[1])
          local col = (lmao[2]:sub(1, 1):byte() % 3) + 1
          cubes[#cubes + 1] = { val, col }
