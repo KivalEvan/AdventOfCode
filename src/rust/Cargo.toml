@@ -1,0 +1,6 @@
+[package]
+name = "aoc-core"
+
+[lib]
+name = "aoc_core"
+path = "run.rs"

@@ -1,7 +1,7 @@
 YEAR = $(shell date '+%Y')
 DAY = $(shell date '+%d')
 AOC_PATH = $(YEAR)/$(DAY)
-BENCH = 
+BENCH = 0
 ARGS = 
 
 SRC_DIR = src
@@ -74,19 +74,10 @@ go:
 	@$(TEMP_DIR)/aoc_go $(AOC_PATH) $(BENCH) $(ARGS)
 
 rust_compile: $(AOC_PATH)/rust/main.rs
-	@rustc -o $(TEMP_DIR)/aoc_rust $(AOC_PATH)/rust/main.rs
+	@cargo build --package solution-$(YEAR)-$(DAY) -r
 
 rust:
-	@$(TEMP_DIR)/aoc_rust $(AOC_PATH) $(BENCH) $(ARGS)
-
-kotlin_compile: $(AOC_PATH)/kotlin/Main.kt
-	@kotlinc -d $(TEMP_DIR) -jvm-target 22 -cp $(TEMP_DIR)\; \
-		$(SRC_DIR)/kotlin/Input.kt \
-		$(SRC_DIR)/kotlin/Run.kt \
-		$(AOC_PATH)/kotlin/Main.kt
-
-kotlin:
-	@$(TEMP_DIR)/aoc_kotlin $(AOC_PATH) $(BENCH) $(ARGS)
+	@target/release/aoc_rs $(AOC_PATH) $(BENCH) $(ARGS)
 
 elixir_compile: $(AOC_PATH)/elixir/main.ex
 	@elixirc $(AOC_PATH)/elixir/main.ex
@@ -107,6 +98,7 @@ python: $(AOC_PATH)/python/main.py
 clean:
 	go mod tidy
 	go clean
+	cargo clean
 	rm -rf ./temp
 	rm -rf ./bin
 	rm -rf ./obj
@@ -117,3 +109,15 @@ format:
 	go fmt ./...
 	dotnet format aoc.csproj
 	deno fmt
+
+version:
+	@deno --version
+	@go version
+	@pypy3 --version
+	@clang --version
+	dotnet --version
+	@java --version
+	@lua -v
+	@luajit -v
+	@rustc --version
+	@elixirc --version

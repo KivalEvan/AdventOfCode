@@ -38,7 +38,7 @@ export const langName: Record<LangName, string> = {
    kotlin: 'Kotlin 2.0',
    java: 'Java 22',
    lua: 'Lua 5.4',
-   rust: 'Rust 1.74',
+   rust: 'Rust 1.79',
    elixir: 'Elixir 1.17',
 };
 

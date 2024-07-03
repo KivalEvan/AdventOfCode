@@ -90,7 +90,7 @@ func maxAry(values [14]int) int {
 
 func getType(str string) int {
 	var values [14]int
-	for i, _ := range str {
+	for i := range str {
 		values[ranking[str[i]]]++
 	}
 	if values[0] > 0 {

@@ -79,7 +79,7 @@ namespace Year2023
          {
             char first = ' ';
             char last = ' ';
-            char c = ' ';
+            char c;
 
             for (int j = 0; j < lines[i].Length; j++)
             {

@@ -48,9 +48,5 @@
       "complex": "c",
       "tuple": "c"
    },
-   "Lua.diagnostics.globals": [
-      "part2"
-   ],
-   "kotlin.compiler.jvm.target": "22",
-   "kotlin.languageServer.enabled": true
+   "java.compile.nullAnalysis.mode": "automatic"
 }

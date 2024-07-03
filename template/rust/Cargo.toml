@@ -1,0 +1,9 @@
+[package]
+name = "solution-year-day"
+
+[[bin]]
+name = "aoc_rs"
+path = "main.rs"
+
+[dependencies]
+aoc-core = { workspace = true }

@@ -1,10 +1,5 @@
-[package]
-name = "advent-of-code"
+[workspace]
+members = ["template/rust", "src/rust", "2023/*/rust"]
 
-[lib]
-name = "core"
-path = "src/rust/*.rs"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
-[dependencies]
+[workspace.dependencies]
+aoc-core = { path = "src/rust" }

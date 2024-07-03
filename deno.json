@@ -1,7 +1,7 @@
 {
    "lock": false,
    "fmt": {
-      "exclude": ["obj", "bin", "temp"],
+      "exclude": ["obj", "bin", "temp", "target", "build"],
       "indentWidth": 3,
       "lineWidth": 100,
       "singleQuote": true

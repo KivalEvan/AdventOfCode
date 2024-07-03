@@ -4,6 +4,7 @@ temp/
 bin/
 obj/
 __pycache__
+build/
 
 # Created by https://www.toptal.com/developers/gitignore/api/rust,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=rust,visualstudiocode

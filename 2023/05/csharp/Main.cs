@@ -24,7 +24,9 @@ namespace Year2023
          if (single)
             seedRanges = header.Select(v => new long[] { v, v }).ToList();
          else
-            seedRanges = new long[header.Length / 2].Select((_, idx) => new long[] { header[idx * 2], header[idx * 2] + header[idx * 2 + 1] }).ToList();
+            seedRanges = new long[header.Length / 2]
+               .Select((_, idx) => new long[] { header[idx * 2], header[idx * 2] + header[idx * 2 + 1] })
+               .ToList();
 
          IEnumerable<IEnumerable<((long, long), (long, long))>> srcToDestRanges = parsed[1..].Select(
             (p) =>
