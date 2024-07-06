@@ -9,14 +9,14 @@ This is also the order of priority that I will solve the problem with, ~~totally
 market~~:
 
 - TypeScript 5.4.5 with Deno 1.44.1 for `.ts`
-- Go 1.22.4 for `.go`
 - Python 3.10.14 with PyPy 7.3.16 for `.py`
-- C23 with Clang 17.0.6 for `.c`
-- C# 12 with .NET 8.0.106 for `.cs`
-- Java 22 for `.java`
-- Lua 5.4.7 with LuaJIT 2.1 for `.lua`
 - Rust 1.79.0 for `.rust`
-- Elixir 1.17.1 with Erlang/OTP 27 for `.ex`
+- Go 1.22.4 for `.go`
+- C# 12 with .NET 8.0.106 for `.cs`
+- C23 with Clang 17.0.6 for `.c`
+- Lua 5.4.7 with LuaJIT 2.1 for `.lua`
+- Java 22 for `.java`
+- OCaml 5.2.0 for `.ml`
 
 Parallelism/concurrency are allowed only in solution implementation. Result must always convert to
 and return string. The performance metric is evaluated only on IO read and function call and does
@@ -59,33 +59,33 @@ Will try `bash` when I feel like it.
 
 ### 2023
 
-| Day | TypeScript | Go | Python | C  | C# | Java | Lua |   | Rust | Elixir |
-| --- | ---------- | -- | ------ | -- | -- | ---- | --- | - | ---- | ------ |
-| 1   | ✅         | ✅ | ✅     | ✅ | ✅ | ✅   | ✅  |   | ✅   |        |
-| 2   | ✅         | ✅ | ✅     | ✅ | ✅ | ✅   | ✅  |   | ✅   |        |
-| 3   | ✅         | ✅ | ✅     | ✅ | ✅ | ✅   | ✅  |   | ✅   |        |
-| 4   | ✅         | ✅ | ✅     | ✅ | ✅ | ✅   | ✅  |   | ✅   |        |
-| 5   | ✅         | ✅ | ✅     | ✅ | ✅ | ✅   | ✅  |   | ✅   |        |
-| 6   | ✅         | ✅ | ✅     | ✅ | ✅ | ✅   | ✅  |   | ✅   |        |
-| 7   | ✅         | ✅ | ✅     | ✅ | ✅ | ✅   | ✅  |   | ✅   |        |
-| 8   | ✅         |    |        | ✅ |    |      |     |   |      |        |
-| 9   | ✅         |    |        | ✅ |    |      |     |   |      |        |
-| 10  | ✅         |    |        |    |    |      |     |   |      |        |
-| 11  | ✅         |    |        | ✅ |    |      |     |   |      |        |
-| 12  | ✅         |    |        | ☑️  |    |      |     |   |      |        |
-| 13  | ✅         |    |        |    |    |      |     |   |      |        |
-| 14  | ✅         |    |        | ☑️  |    |      |     |   |      |        |
-| 15  | ✅         |    |        |    |    |      |     |   |      |        |
-| 16  | ✅         |    |        |    |    |      |     |   |      |        |
-| 17  | ✅         |    |        |    |    |      |     |   |      |        |
-| 18  | ✅         |    |        |    |    |      |     |   |      |        |
-| 19  | ✅         |    |        |    |    |      |     |   |      |        |
-| 20  | ☑️          |    |        |    |    |      |     |   |      |        |
-| 21  | ☑️          |    |        |    |    |      |     |   |      |        |
-| 22  | ✅         |    |        |    |    |      |     |   |      |        |
-| 23  | ✅         |    |        |    |    |      |     |   |      |        |
-| 24  | ✅         |    |        |    |    |      |     |   |      |        |
-| 25  | ☑️          |    |        |    |    |      |     |   |      |        |
+| Day | TypeScript | Python | Rust | Go | C# | C  | Lua | Java | OCaml |
+| --- | ---------- | ------ | ---- | -- | -- | -- | --- | ---- | ----- |
+| 1   | ✅         | ✅     | ✅   | ✅ | ✅ | ✅ | ✅  | ✅   | ✅    |
+| 2   | ✅         | ✅     | ✅   | ✅ | ✅ | ✅ | ✅  | ✅   | ✅    |
+| 3   | ✅         | ✅     | ✅   | ✅ | ✅ | ✅ | ✅  | ✅   | ✅    |
+| 4   | ✅         | ✅     | ✅   | ✅ | ✅ | ✅ | ✅  | ✅   | ✅    |
+| 5   | ✅         | ✅     | ✅   | ✅ | ✅ | ✅ | ✅  | ✅   | ✅    |
+| 6   | ✅         | ✅     | ✅   | ✅ | ✅ | ✅ | ✅  | ✅   | ✅    |
+| 7   | ✅         | ✅     | ✅   | ✅ | ✅ | ✅ | ✅  | ✅   | ✅    |
+| 8   | ✅         |        |      |    |    | ✅ |     |      |       |
+| 9   | ✅         |        |      |    |    | ✅ |     |      |       |
+| 10  | ✅         |        |      |    |    |    |     |      |       |
+| 11  | ✅         |        |      |    |    | ✅ |     |      |       |
+| 12  | ✅         |        |      |    |    | ☑️  |     |      |       |
+| 13  | ✅         |        |      |    |    |    |     |      |       |
+| 14  | ✅         |        |      |    |    | ☑️  |     |      |       |
+| 15  | ✅         |        |      |    |    |    |     |      |       |
+| 16  | ✅         |        |      |    |    |    |     |      |       |
+| 17  | ✅         |        |      |    |    |    |     |      |       |
+| 18  | ✅         |        |      |    |    |    |     |      |       |
+| 19  | ✅         |        |      |    |    |    |     |      |       |
+| 20  | ☑️          |        |      |    |    |    |     |      |       |
+| 21  | ☑️          |        |      |    |    |    |     |      |       |
+| 22  | ✅         |        |      |    |    |    |     |      |       |
+| 23  | ✅         |        |      |    |    |    |     |      |       |
+| 24  | ✅         |        |      |    |    |    |     |      |       |
+| 25  | ☑️          |        |      |    |    |    |     |      |       |
 
 ## Note
 

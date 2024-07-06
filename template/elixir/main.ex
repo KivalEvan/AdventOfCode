@@ -1,3 +1,0 @@
-defmodule Main do
-
-end

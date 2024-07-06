@@ -6,17 +6,16 @@ export type LangName =
    | 'python'
    | 'rust'
    | 'ts'
-   | 'kotlin'
-   | 'elixir'
+   | 'ocaml'
    | 'lua';
 
 export const langParse: Record<string, LangName> = {
    typescript: 'ts',
    py: 'python',
    rs: 'rust',
-   kt: 'kotlin',
    cs: 'csharp',
    'c#': 'csharp',
+   ml: 'ocaml',
 };
 
 export const langCompile: LangName[] = [
@@ -25,21 +24,18 @@ export const langCompile: LangName[] = [
    'go',
    'java',
    'rust',
-   'kotlin',
-   'elixir',
 ];
 
 export const langName: Record<LangName, string> = {
    ts: 'TypeScript 5.4',
-   go: 'Go 1.22',
    python: 'Python 3.10',
-   c: 'C23',
-   csharp: 'C# 12',
-   kotlin: 'Kotlin 2.0',
-   java: 'Java 22',
-   lua: 'Lua 5.4',
    rust: 'Rust 1.79',
-   elixir: 'Elixir 1.17',
+   go: 'Go 1.22',
+   csharp: 'C# 12',
+   c: 'C23',
+   lua: 'Lua 5.4',
+   java: 'Java 22',
+   ocaml: 'OCaml 5.2',
 };
 
 export function getLang(str?: string): LangName {

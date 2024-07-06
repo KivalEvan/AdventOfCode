@@ -72,9 +72,7 @@ fn get_type(cards: &Vec<char>) -> CardType {
       if max == 3 {
          return CardType::ThreeOfAKind;
       }
-      if max == 4 {
-         return CardType::FourOfAKind;
-      }
+      return CardType::FourOfAKind;
    }
 
    CardType::FullHouse

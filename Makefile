@@ -56,8 +56,8 @@ java:
 	@java --enable-preview -cp $(TEMP_DIR) kival/aoc/year${YEAR}/day${DAY}/Main $(AOC_PATH) $(BENCH) $(ARGS)
 
 csharp_compile: $(AOC_PATH)/csharp/Main.cs
-	@dotnet clean aoc.csproj --nologo -v=q
-	@dotnet build aoc.csproj -v=q \
+	@dotnet clean AdventOfCode.csproj --nologo -v=q
+	@dotnet build AdventOfCode.csproj -v=q \
 		--nologo \
 		--no-incremental \
 		--configuration Release \
@@ -65,7 +65,7 @@ csharp_compile: $(AOC_PATH)/csharp/Main.cs
 		-o temp/csharp
 
 csharp:
-	@temp/csharp/aoc $(AOC_PATH) $(BENCH) $(ARGS)
+	@temp/csharp/AdventOfCode $(AOC_PATH) $(BENCH) $(ARGS)
 
 go_compile: $(AOC_PATH)/go/main.go
 	@go build -o $(TEMP_DIR)/aoc_go $(AOC_PATH)/go/main.go
@@ -79,12 +79,6 @@ rust_compile: $(AOC_PATH)/rust/main.rs
 rust:
 	@target/release/aoc_rs $(AOC_PATH) $(BENCH) $(ARGS)
 
-elixir_compile: $(AOC_PATH)/elixir/main.ex
-	@elixirc $(AOC_PATH)/elixir/main.ex
-
-elixir:
-	@elixir $(AOC_PATH)/elixir/main.ex $(BENCH) $(ARGS)
-
 lua: $(AOC_PATH)/lua/main.lua
 	@luajit $(AOC_PATH)/lua/main.lua $(AOC_PATH) $(BENCH) $(ARGS)
 
@@ -94,11 +88,18 @@ ts: $(AOC_PATH)/ts/main.ts
 python: $(AOC_PATH)/python/main.py
 	@pypy3 $(AOC_PATH)/python/main.py $(AOC_PATH) $(BENCH) $(ARGS)
 
+ocaml: $(AOC_PATH)/ocaml/main.ml
+	@opam exec -- dune exec $(AOC_PATH)/ocaml/main.exe $(AOC_PATH) $(BENCH) $(ARGS)
+
 .PHONY: clean
 clean:
 	go mod tidy
 	go clean
+	dotnet clean AdventOfCode.csproj --nologo
 	cargo clean
+	rm -rf ./target
+	rm -rf ./_build
+	rm -rf ./build
 	rm -rf ./temp
 	rm -rf ./bin
 	rm -rf ./obj
@@ -107,8 +108,9 @@ format:
 	find $(SRC_DIR)/c/*.c | xargs clang-format -i
 	find $(SRC_DIR)/c/includes/*.h | xargs clang-format -i
 	go fmt ./...
-	dotnet format aoc.csproj
+	dotnet format AdventOfCode.csproj
 	deno fmt
+	opam exec -- dune fmt
 
 version:
 	@deno --version
