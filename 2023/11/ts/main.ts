@@ -1,7 +1,7 @@
 import type { SolutionOptions } from 'src/options.ts';
 import { run } from 'src/run.ts';
 
-export const options: SolutionOptions = {
+const options: SolutionOptions = {
    hasAlternate: false,
    hasIo: false,
 };
@@ -10,7 +10,7 @@ function isBetween(val: number, n1: number, n2: number) {
    return (n1 > val && val > n2) || (n2 > val && val > n1);
 }
 
-export function part1(input: string, _isTest: boolean): string {
+function part1(input: string, _isTest: boolean): string {
    const grid: string[] = input.split('\n');
    const galaxies = [];
    const xRowAdd = [];
@@ -43,7 +43,7 @@ export function part1(input: string, _isTest: boolean): string {
    return res.toString();
 }
 
-export function part2(input: string, _isTest: boolean): string {
+function part2(input: string, _isTest: boolean): string {
    const grid: string[] = input.split('\n');
    const galaxies = [];
    const xRowAdd = [];

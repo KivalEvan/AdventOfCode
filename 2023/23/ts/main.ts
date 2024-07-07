@@ -1,7 +1,7 @@
 import type { SolutionOptions } from 'src/options.ts';
 import { run } from 'src/run.ts';
 
-export const options: SolutionOptions = {
+const options: SolutionOptions = {
    hasAlternate: false,
    hasIo: false,
 };
@@ -81,7 +81,7 @@ function parseInput(input: string) {
    return graph;
 }
 
-export function part1(input: string, _isTest: boolean): string {
+function part1(input: string, _isTest: boolean): string {
    const graph = parseInput(input);
 
    function recursiveMax(key: string): number {
@@ -96,7 +96,7 @@ export function part1(input: string, _isTest: boolean): string {
    return maxDist.toString();
 }
 
-export function part2(input: string, _isTest: boolean): string {
+function part2(input: string, _isTest: boolean): string {
    const graph = parseInput(input);
 
    function recursiveMax(

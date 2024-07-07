@@ -1,12 +1,12 @@
 import type { SolutionOptions } from 'src/options.ts';
 import { run } from 'src/run.ts';
 
-export const options: SolutionOptions = {
+const options: SolutionOptions = {
    hasAlternate: false,
    hasIo: false,
 };
 
-export function part1(input: string, _isTest: boolean): string {
+function part1(input: string, _isTest: boolean): string {
    return input
       .split('\n')
       .map((s) => {
@@ -27,7 +27,7 @@ export function part1(input: string, _isTest: boolean): string {
       .toString();
 }
 
-export function part2(input: string, _isTest: boolean): string {
+function part2(input: string, _isTest: boolean): string {
    const lines = input.split('\n');
    const instances = new Array(lines.length).fill(1);
    return lines

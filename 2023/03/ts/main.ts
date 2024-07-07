@@ -1,7 +1,7 @@
 import type { SolutionOptions } from 'src/options.ts';
 import { run } from 'src/run.ts';
 
-export const options: SolutionOptions = {
+const options: SolutionOptions = {
    hasAlternate: false,
    hasIo: false,
 };
@@ -48,7 +48,7 @@ function yeetTheNumber(grid: string[][], x: number, y: number): string {
    return res;
 }
 
-export function part1(input: string, _isTest: boolean): string {
+function part1(input: string, _isTest: boolean): string {
    const grid = input.split('\n').map((s) => s.split(''));
    const SZ = grid.length;
 
@@ -76,7 +76,7 @@ export function part1(input: string, _isTest: boolean): string {
    return res.toString();
 }
 
-export function part2(input: string, _isTest: boolean): string {
+function part2(input: string, _isTest: boolean): string {
    const grid = input.split('\n').map((s) => s.split(''));
    const SZ = grid.length;
 

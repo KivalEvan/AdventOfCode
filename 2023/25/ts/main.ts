@@ -2,7 +2,7 @@ import type { SolutionOptions } from 'src/options.ts';
 import { run } from 'src/run.ts';
 import { mincut } from 'npm:@graph-algorithm/minimum-cut';
 
-export const options: SolutionOptions = {
+const options: SolutionOptions = {
    hasAlternate: false,
    hasIo: false,
 };
@@ -69,7 +69,7 @@ function getGroups(graph: Record<string, string[]>) {
    return groups;
 }
 
-export function part1(input: string, _isTest: boolean): string {
+function part1(input: string, _isTest: boolean): string {
    const [edges, graph] = parseInput(input);
 
    for (const [a, b] of mincut(edges)) {
@@ -80,7 +80,7 @@ export function part1(input: string, _isTest: boolean): string {
    return (groups[0].length * groups[1].length).toString();
 }
 
-export function part2(input: string, _isTest: boolean): string {
+function part2(input: string, _isTest: boolean): string {
    return '';
 }
 

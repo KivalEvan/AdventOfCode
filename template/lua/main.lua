@@ -1,5 +1,3 @@
-#!/usr/local/bin/lua
-
 local run = require('src.lua.run')
 
 local options = {

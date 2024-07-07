@@ -1,7 +1,7 @@
 import type { SolutionOptions } from 'src/options.ts';
 import { run } from 'src/run.ts';
 
-export const options: SolutionOptions = {
+const options: SolutionOptions = {
    hasAlternate: false,
    hasIo: false,
 };
@@ -69,12 +69,12 @@ function sendhelp(grid: number[][], minTurn: number, maxStep: number): number {
    return cH;
 }
 
-export function part1(input: string, _isTest: boolean): string {
+function part1(input: string, _isTest: boolean): string {
    const grid = input.split('\n').map((str) => str.split('').map(Number));
    return sendhelp(grid, 0, 3).toString();
 }
 
-export function part2(input: string, _isTest: boolean): string {
+function part2(input: string, _isTest: boolean): string {
    const grid = input.split('\n').map((str) => str.split('').map(Number));
    return sendhelp(grid, 4, 10).toString();
 }

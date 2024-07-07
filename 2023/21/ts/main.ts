@@ -1,7 +1,7 @@
 import type { SolutionOptions } from 'src/options.ts';
 import { run } from 'src/run.ts';
 
-export const options: SolutionOptions = {
+const options: SolutionOptions = {
    hasAlternate: false,
    hasIo: false,
 };
@@ -13,7 +13,7 @@ const direction = [
    [0, -1],
 ];
 
-export function part1(input: string, _isTest: boolean): string {
+function part1(input: string, _isTest: boolean): string {
    const grid = input.split('\n').map((str) => str.split(''));
    const startPos: [number, number] = [0, 0];
    main: for (let y = 0; y < grid.length; y++) {
@@ -69,7 +69,7 @@ function wrapAround(x: number, m: number) {
    return ((x % m) + m) % m;
 }
 
-export function part2(input: string, _isTest: boolean): string {
+function part2(input: string, _isTest: boolean): string {
    const grid = input.split('\n').map((str) => str.split(''));
    const startPos: [number, number] = [0, 0];
    main: for (let y = 0; y < grid.length; y++) {

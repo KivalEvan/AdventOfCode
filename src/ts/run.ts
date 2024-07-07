@@ -2,8 +2,6 @@ import { getAnswers, getInput } from './input.ts';
 import { resolve } from './deps.ts';
 import { SolutionOptions } from './options.ts';
 
-let result: string;
-
 function test(actual: unknown, expected: unknown) {
    if (expected == '') return;
    if (actual != expected) {
@@ -122,12 +120,12 @@ export function run(
    }
 
    const answers = getAnswers(pathAnswers);
-   perform('Test 1', part1, pathInputTest1, options.hasIo);
+   let result = perform('Test 1', part1, pathInputTest1, options.hasIo);
    test(result, answers.test1);
-   perform('Part 1', part1, pathInputMain, options.hasIo);
+   result = perform('Part 1', part1, pathInputMain, options.hasIo);
    test(result, answers.part1);
-   perform('Test 2', part2, pathInputTest2, options.hasIo);
+   result = perform('Test 2', part2, pathInputTest2, options.hasIo);
    test(result, answers.test2);
-   perform('Part 2', part2, pathInputMain, options.hasIo);
+   result = perform('Part 2', part2, pathInputMain, options.hasIo);
    test(result, answers.part2);
 }

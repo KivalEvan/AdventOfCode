@@ -2,7 +2,7 @@ import type { SolutionOptions } from 'src/options.ts';
 import { run } from 'src/run.ts';
 // 200_000_000_000_000
 // 400_000_000_000_000
-export const options: SolutionOptions = {
+const options: SolutionOptions = {
    hasAlternate: false,
    hasIo: false,
 };
@@ -34,7 +34,7 @@ function intersect(
    };
 }
 
-export function part1(input: string, _isTest: boolean): string {
+function part1(input: string, _isTest: boolean): string {
    const hailstones = parseInput(input);
 
    const testMin = _isTest ? 7 : 200_000_000_000_000;
@@ -76,7 +76,7 @@ export function part1(input: string, _isTest: boolean): string {
    return count.toString();
 }
 
-export function part2(input: string, _isTest: boolean): string {
+function part2(input: string, _isTest: boolean): string {
    const hailstones = parseInput(input);
 
    console.log('eqs = [');

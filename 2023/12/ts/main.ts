@@ -2,7 +2,7 @@
 import type { SolutionOptions } from 'src/options.ts';
 import { run } from 'src/run.ts';
 
-export const options: SolutionOptions = {
+const options: SolutionOptions = {
    hasAlternate: false,
    hasIo: false,
 };
@@ -43,7 +43,7 @@ function solve(field: string, conditions: number[]): number {
    return wedoabitofrecursion(0, 0);
 }
 
-export function part1(input: string, _isTest: boolean): string {
+function part1(input: string, _isTest: boolean): string {
    const parsed = input.split('\n').map((str) => {
       const temp: any[] = str.split(' ');
       temp[1] = temp[1].split(',').map(Number);
@@ -56,7 +56,7 @@ export function part1(input: string, _isTest: boolean): string {
    return res.toString();
 }
 
-export function part2(input: string, _isTest: boolean): string {
+function part2(input: string, _isTest: boolean): string {
    const parsed = input.split('\n').map((str) => {
       const temp: any[] = str.split(' ');
       temp[1] = temp[1].split(',').map(Number);

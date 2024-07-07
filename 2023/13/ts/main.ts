@@ -1,7 +1,7 @@
 import type { SolutionOptions } from 'src/options.ts';
 import { run } from 'src/run.ts';
 
-export const options: SolutionOptions = {
+const options: SolutionOptions = {
    hasAlternate: false,
    hasIo: false,
 };
@@ -30,7 +30,7 @@ function mirrorVertical(grid: string[], smudge = 0): number {
    return 0;
 }
 
-export function part1(input: string, _isTest: boolean): string {
+function part1(input: string, _isTest: boolean): string {
    const parsed = input.split('\n\n').map((str) => str.split('\n'));
 
    let res = 0;
@@ -43,7 +43,7 @@ export function part1(input: string, _isTest: boolean): string {
    return res.toString();
 }
 
-export function part2(input: string, _isTest: boolean): string {
+function part2(input: string, _isTest: boolean): string {
    const parsed = input.split('\n\n').map((str) => str.split('\n'));
 
    let res = 0;

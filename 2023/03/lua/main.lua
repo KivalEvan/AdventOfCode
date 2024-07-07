@@ -1,5 +1,3 @@
-#!/usr/local/bin/lua
-
 local run = require('src.lua.run')
 local array = require('src.lua.utils.array')
 local misc = require('src.lua.utils.misc')

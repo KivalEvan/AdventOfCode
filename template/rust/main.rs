@@ -8,8 +8,8 @@ fn get_options() -> aoc_core::options::SolutionOptions {
 }
 
 fn part_1(input: &str, _is_test: bool) -> String {
-    input.to_string()
- }
+   input.to_string()
+}
  
 fn part_2(input: &str, _is_test: bool) -> String {
    input.to_string()

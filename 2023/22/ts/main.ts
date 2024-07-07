@@ -1,7 +1,7 @@
 import type { SolutionOptions } from 'src/options.ts';
 import { run } from 'src/run.ts';
 
-export const options: SolutionOptions = {
+const options: SolutionOptions = {
    hasAlternate: false,
    hasIo: false,
 };
@@ -88,7 +88,7 @@ function constructGraph(input: string) {
    return bricks;
 }
 
-export function part1(input: string, _isTest: boolean): string {
+function part1(input: string, _isTest: boolean): string {
    const bricks = constructGraph(input);
 
    let safe = Object.keys(bricks).length;
@@ -105,7 +105,7 @@ export function part1(input: string, _isTest: boolean): string {
    return safe.toString();
 }
 
-export function part2(input: string, _isTest: boolean): string {
+function part2(input: string, _isTest: boolean): string {
    const bricks = constructGraph(input);
 
    let total = 0;

@@ -1,11 +1,11 @@
 import { run } from '../../../src/ts/run.ts';
 
-export const options: SolutionOptions = {
+const options: SolutionOptions = {
    hasAlternate: false,
    hasIo: false,
 };
 
-export function part1(input: string, _isTest: boolean): string {
+function part1(input: string, _isTest: boolean): string {
    const grid = input.split('\n').map((str) => str.split(''));
    for (let x = 0; x < grid[0].length; x++) {
       let shift = -1;
@@ -70,7 +70,7 @@ function bigstuff(grid: string[][]): string {
    return grid.map((str) => str.join('')).join('\n');
 }
 
-export function part2(input: string, _isTest: boolean): string {
+function part2(input: string, _isTest: boolean): string {
    // store pattern string here
    const set = new Set<string>();
    let grid = input.split('\n').map((str) => str.split(''));

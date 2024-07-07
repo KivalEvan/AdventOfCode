@@ -1,7 +1,7 @@
 import type { SolutionOptions } from 'src/options.ts';
 import { run } from 'src/run.ts';
 
-export const options: SolutionOptions = {
+const options: SolutionOptions = {
    hasAlternate: false,
    hasIo: false,
 };
@@ -22,14 +22,14 @@ function parseInput(input: string): number[][] {
    return input.split('\n').map((str) => str.split(' ').map(Number));
 }
 
-export function part1(input: string, _isTest: boolean): string {
+function part1(input: string, _isTest: boolean): string {
    const parsed = parseInput(input);
    let res = 0;
    for (const history of parsed) res += extrapolate(history, history.length);
    return res.toString();
 }
 
-export function part2(input: string, _isTest: boolean): string {
+function part2(input: string, _isTest: boolean): string {
    const parsed = parseInput(input);
    let res = 0;
    for (const history of parsed) res += extrapolate(history.reverse(), history.length);

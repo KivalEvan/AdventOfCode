@@ -1,12 +1,12 @@
 import type { SolutionOptions } from 'src/options.ts';
 import { run } from 'src/run.ts';
 
-export const options: SolutionOptions = {
+const options: SolutionOptions = {
    hasAlternate: true,
    hasIo: false,
 };
 
-export function part1(input: string, _isTest: boolean): string {
+function part1(input: string, _isTest: boolean): string {
    const sides = input.split('\n\n');
    const instructions = sides[0].replaceAll('L', '0').replaceAll('R', '1');
    const maps = sides[1]
@@ -39,7 +39,7 @@ function lcm(a: number, b: number): number {
    return (a * b) / gcd(a, b);
 }
 
-export function part2(input: string, _isTest: boolean): string {
+function part2(input: string, _isTest: boolean): string {
    const sides = input.split('\n\n');
    const instructions = sides[0].replaceAll('L', '0').replaceAll('R', '1');
    const maps = sides[1]

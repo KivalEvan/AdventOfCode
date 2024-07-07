@@ -1,7 +1,7 @@
 import type { SolutionOptions } from 'src/options.ts';
 import { run } from 'src/run.ts';
 
-export const options: SolutionOptions = {
+const options: SolutionOptions = {
    hasAlternate: false,
    hasIo: false,
 };
@@ -57,11 +57,11 @@ function tiemyshoelace(input: string, useHex: boolean) {
    return Math.floor(perimeter / 2) + Math.floor(Math.abs(area / 2)) + 1;
 }
 
-export function part1(input: string, _isTest: boolean): string {
+function part1(input: string, _isTest: boolean): string {
    return tiemyshoelace(input, false).toString();
 }
 
-export function part2(input: string, _isTest: boolean): string {
+function part2(input: string, _isTest: boolean): string {
    return tiemyshoelace(input, true).toString();
 }
 

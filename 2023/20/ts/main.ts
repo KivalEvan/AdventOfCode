@@ -29,7 +29,7 @@ interface Conjunctions extends Module {
 
 type AllModule = Broadcaster | FlipFlop | Conjunctions;
 
-export const options: SolutionOptions = {
+const options: SolutionOptions = {
    hasAlternate: false,
    hasIo: false,
 };
@@ -101,7 +101,7 @@ function parseInput(input: string) {
    return modules;
 }
 
-export function part1(input: string, _isTest: boolean): string {
+function part1(input: string, _isTest: boolean): string {
    const modules = parseInput(input);
    let low = 0;
    let high = 0;
@@ -161,7 +161,7 @@ export function part1(input: string, _isTest: boolean): string {
    return (low * high).toString();
 }
 
-export function part2(input: string, _isTest: boolean): string {
+function part2(input: string, _isTest: boolean): string {
    return '';
 }
 

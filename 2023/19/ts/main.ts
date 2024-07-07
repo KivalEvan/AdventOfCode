@@ -1,7 +1,7 @@
 import type { SolutionOptions } from 'src/options.ts';
 import { run } from 'src/run.ts';
 
-export const options: SolutionOptions = {
+const options: SolutionOptions = {
    hasAlternate: false,
    hasIo: false,
 };
@@ -56,7 +56,7 @@ function parseInput(
    return [workflows, parts];
 }
 
-export function part1(input: string, _isTest: boolean): string {
+function part1(input: string, _isTest: boolean): string {
    const [workflows, parts] = parseInput(input);
 
    let res = 0;
@@ -172,7 +172,7 @@ function combinationsithink(
    return count + combinationsithink(workflows, fallback, parts);
 }
 
-export function part2(input: string, _isTest: boolean): string {
+function part2(input: string, _isTest: boolean): string {
    const [workflows, _] = parseInput(input);
    return combinationsithink(workflows, 'in', {
       x: [1, 4000],

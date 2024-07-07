@@ -1,4 +1,4 @@
-package kival.aoc.year2023.day01;
+package kival.aoc.year.day;
 
 import kival.aoc.core.*;
 
