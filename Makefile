@@ -1,12 +1,19 @@
 YEAR = $(shell date '+%Y')
 DAY = $(shell date '+%d')
-AOC_PATH = $(YEAR)/$(DAY)
+AOC_PATH = src/solutions/$(YEAR)/$(DAY)
 BENCH = 0
 ARGS = 
+__ARGUMENTS = $(AOC_PATH) $(BENCH) $(ARGS)
 
-SRC_DIR = src
+SRC_DIR = src/langs
 OBJ_DIR = obj
 TEMP_DIR = temp
+
+PY_RUNTIME = pypy3
+JS_RUNTIME = deno run --allow-read=. --allow-hrtime
+# JS_RUNTIME = bun
+LUA_RUNTIME = luajit
+OCAML_RUNTIME = opam exec -- dune exec
 
 SRCS = $(wildcard $(SRC_DIR)/c/*.c)
 OBJS = $(patsubst $(SRC_DIR)/c/%.c, $(TEMP_DIR)/%.o, $(SRCS))
@@ -30,17 +37,17 @@ all:
 	@echo "Languages available: ts, c, java"
 
 c_compile: $(OBJS) $(TEMP_DIR)
-	$(CC) $(LDFLAGS) -c $(AOC_PATH)/c/main.c -o $(TEMP_DIR)/main.o
-	$(CC) $(CFLAGS) $(OBJS) $(TEMP_DIR)/main.o -lm -o $(TEMP_DIR)/aoc_c
+	@$(CC) $(LDFLAGS) -c $(AOC_PATH)/c/main.c -o $(TEMP_DIR)/main.o
+	@$(CC) $(CFLAGS) $(OBJS) $(TEMP_DIR)/main.o -lm -o $(TEMP_DIR)/aoc_c
 
 c:
-	temp/aoc_c $(AOC_PATH) $(BENCH) $(ARGS)
+	@temp/aoc_c $(__ARGUMENTS)
 
 c_debug:
 	@valgrind temp/aoc_c $(AOC_PATH) $(ARGS) > /dev/null
 
 $(TEMP_DIR)/%.o: $(SRC_DIR)/c/%.c $(SRC_DIR)/c/includes/%.h $(TEMP_DIR)
-	$(CC) $(LDFLAGS) -c $< -o $@
+	@$(CC) $(LDFLAGS) -c $< -o $@
 
 $(TEMP_DIR):
 	mkdir -p $@
@@ -53,7 +60,7 @@ java_compile: $(AOC_PATH)/java/Main.java
 		$(AOC_PATH)/java/Main.java
 
 java:
-	@java --enable-preview -cp $(TEMP_DIR) kival/aoc/year${YEAR}/day${DAY}/Main $(AOC_PATH) $(BENCH) $(ARGS)
+	@java --enable-preview -cp $(TEMP_DIR) kival/aoc/year${YEAR}/day${DAY}/Main $(__ARGUMENTS)
 
 csharp_compile: $(AOC_PATH)/csharp/Main.cs
 	@dotnet clean AdventOfCode.csproj --nologo -v=q
@@ -65,31 +72,31 @@ csharp_compile: $(AOC_PATH)/csharp/Main.cs
 		-o temp/csharp
 
 csharp:
-	@temp/csharp/AdventOfCode $(AOC_PATH) $(BENCH) $(ARGS)
+	@temp/csharp/AdventOfCode $(__ARGUMENTS)
 
 go_compile: $(AOC_PATH)/go/main.go
 	@go build -o $(TEMP_DIR)/aoc_go $(AOC_PATH)/go/main.go
 
 go:
-	@$(TEMP_DIR)/aoc_go $(AOC_PATH) $(BENCH) $(ARGS)
+	@$(TEMP_DIR)/aoc_go $(__ARGUMENTS)
 
 rust_compile: $(AOC_PATH)/rust/main.rs
-	@cargo build --package solution-$(YEAR)-$(DAY) -r
+	@cargo build --package solution-$(YEAR)-$(DAY) -rq
 
 rust:
-	@target/release/aoc_rs $(AOC_PATH) $(BENCH) $(ARGS)
+	@target/release/aoc_rs $(__ARGUMENTS)
 
 lua: $(AOC_PATH)/lua/main.lua
-	@luajit $(AOC_PATH)/lua/main.lua $(AOC_PATH) $(BENCH) $(ARGS)
+	@$(LUA_RUNTIME) $(AOC_PATH)/lua/main.lua $(__ARGUMENTS)
 
 ts: $(AOC_PATH)/ts/main.ts
-	@deno run --allow-read=. --allow-hrtime $(AOC_PATH)/ts/main.ts $(AOC_PATH) $(BENCH) $(ARGS)
+	@$(JS_RUNTIME) $(AOC_PATH)/ts/main.ts $(__ARGUMENTS)
 
 python: $(AOC_PATH)/python/main.py
-	@pypy3 $(AOC_PATH)/python/main.py $(AOC_PATH) $(BENCH) $(ARGS)
+	@$(PY_RUNTIME) $(AOC_PATH)/python/main.py $(__ARGUMENTS)
 
 ocaml: $(AOC_PATH)/ocaml/main.ml
-	@opam exec -- dune exec $(AOC_PATH)/ocaml/main.exe $(AOC_PATH) $(BENCH) $(ARGS)
+	@$(OCAML_RUNTIME) $(AOC_PATH)/ocaml/main.exe $(__ARGUMENTS)
 
 .PHONY: clean
 clean:
@@ -114,12 +121,13 @@ format:
 
 version:
 	@deno --version
-	@go version
 	@pypy3 --version
-	@clang --version
+	@rustc --version
+	@go version
 	dotnet --version
-	@java --version
+	@clang --version
+	zig version
 	@lua -v
 	@luajit -v
-	@rustc --version
-	@elixirc --version
+	@java --version
+	@ocaml --version

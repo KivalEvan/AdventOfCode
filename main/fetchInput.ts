@@ -1,4 +1,6 @@
+import { env } from 'node:process';
 import { fetchArgs } from './args.ts';
+import { writeFile } from 'node:fs/promises';
 
 const args = fetchArgs();
 
@@ -8,21 +10,21 @@ let yearEnd = currDate.getFullYear();
 let dayStart = currDate.getDate();
 let dayEnd = currDate.getDate();
 
-if (args.a) {
+if (args.all) {
    yearStart = 2015;
    yearEnd = currDate.getFullYear();
    dayStart = 1;
    dayEnd = 25;
 }
 
-if (args.y) {
-   yearStart = parseInt(args.y);
-   yearEnd = parseInt(args.y);
+if (args.year) {
+   yearStart = parseInt(args.year);
+   yearEnd = parseInt(args.year);
 }
 
-if (args.d) {
-   dayStart = parseInt(args.d);
-   dayEnd = parseInt(args.d);
+if (args.day) {
+   dayStart = parseInt(args.day);
+   dayEnd = parseInt(args.day);
 }
 
 if (dayStart > 25 || dayEnd > 25) throw new Error('no');
@@ -32,18 +34,16 @@ for (let year = yearStart; year <= yearEnd; year++) {
       console.log(`Fetching input for year ${year} day ${day}`);
       const response = await fetch(`https://adventofcode.com/${year}/day/${day}/input`, {
          headers: [
-            ['Cookie', `session=${Deno.env.get('AOC_COOKIE') || ''}`],
+            ['Cookie', `session=${env.AOC_COOKIE || ''}`],
             ['User-Agent', 'github.com/KivalEvan/AdventOfCode/fetchInput.ts'],
          ],
       });
       if (response.body && response.status === 200) {
          console.log(`Writing input to input.txt`);
-         const file = await Deno.open(`./${year}/${day.toString().padStart(2, '0')}/input.txt`, {
-            write: true,
-            create: true,
-            truncate: true,
-         });
-         await response.body.pipeTo(file.writable);
+         writeFile(
+            `./${year}/${day.toString().padStart(2, '0')}/input.txt`,
+            Buffer.from(await response.arrayBuffer()),
+         );
       } else {
          console.error(response.status, response.statusText);
       }

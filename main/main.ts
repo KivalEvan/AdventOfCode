@@ -6,7 +6,7 @@ console.log('https://adventofcode.com/');
 
 const args = fetchArgs();
 
-const lang = getLang(args.l || 'ts');
+const lang = getLang(args.lang || 'ts');
 
 const currentDate = new Date();
 let yearStart = currentDate.getFullYear();
@@ -14,33 +14,33 @@ let yearEnd = currentDate.getFullYear();
 let dayStart = currentDate.getDate();
 let dayEnd = currentDate.getDate();
 
-if (args.a) {
+if (args.all) {
    yearStart = 2015;
    yearEnd = currentDate.getFullYear();
    dayStart = 1;
    dayEnd = 25;
 }
 
-if (args.y) {
-   yearStart = parseInt(args.y);
-   yearEnd = parseInt(args.y);
+if (args.year) {
+   yearStart = parseInt(args.year);
+   yearEnd = parseInt(args.year);
    if (yearStart !== currentDate.getFullYear()) {
       dayStart = 1;
       dayEnd = 25;
    }
 }
 
-if (args.d) {
-   dayStart = parseInt(args.d);
-   dayEnd = parseInt(args.d);
+if (args.day) {
+   dayStart = parseInt(args.day);
+   dayEnd = parseInt(args.day);
 }
 
-if (args.m) {
+if (args.month) {
    dayStart = 1;
    dayEnd = 25;
 }
 
-const itBench = typeof args.b === 'string' ? +args.b : args.b ? 1_000 : 0;
+const itBench = typeof args.bench === 'string' ? +args.bench : args.bench ? 1_000 : 0;
 
 for (let year = yearStart; year <= yearEnd; year++) {
    console.log(`Advent of Code -- year ${year}`);

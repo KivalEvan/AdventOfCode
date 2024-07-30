@@ -7,7 +7,8 @@ export type LangName =
    | 'rust'
    | 'ts'
    | 'ocaml'
-   | 'lua';
+   | 'lua'
+   | 'zig';
 
 export const langParse: Record<string, LangName> = {
    typescript: 'ts',
@@ -24,15 +25,17 @@ export const langCompile: LangName[] = [
    'go',
    'java',
    'rust',
+   'zig',
 ];
 
 export const langName: Record<LangName, string> = {
-   ts: 'TypeScript 5.4',
+   ts: 'TypeScript 5.5',
    python: 'Python 3.10',
    rust: 'Rust 1.79',
    go: 'Go 1.22',
    csharp: 'C# 12',
    c: 'C23',
+   zig: 'Zig 0.13',
    lua: 'Lua 5.4',
    java: 'Java 22',
    ocaml: 'OCaml 5.2',

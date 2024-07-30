@@ -1,6 +1,6 @@
 import { fetchArgs } from './args.ts';
-import { green, red } from './deps.ts';
 import { getLang, LangName, langName } from './lang.ts';
+import { execSync } from 'node:child_process';
 
 const args = fetchArgs();
 
@@ -14,30 +14,49 @@ let yearEnd = currentDate.getFullYear();
 let dayStart = currentDate.getDate();
 let dayEnd = currentDate.getDate();
 
-if (args.a) {
+if (args.all) {
    yearStart = 2015;
    yearEnd = currentDate.getFullYear();
    dayStart = 1;
    dayEnd = 25;
 }
 
-if (args.y) {
-   yearStart = parseInt(args.y);
-   yearEnd = parseInt(args.y);
+if (args.year) {
+   yearStart = parseInt(args.year);
+   yearEnd = parseInt(args.year);
    if (yearStart !== currentDate.getFullYear()) {
       dayStart = 1;
       dayEnd = 25;
    }
 }
 
-if (args.d) {
-   dayStart = parseInt(args.d);
-   dayEnd = parseInt(args.d);
+if (args.day) {
+   dayStart = parseInt(args.day);
+   dayEnd = parseInt(args.day);
 }
 
-if (args.m) {
+if (args.month) {
    dayStart = 1;
    dayEnd = 25;
+}
+function getCode(open: number, close: number) {
+   return {
+      open: `\x1b[${open}m`,
+      close: `\x1b[${close}m`,
+      regexp: new RegExp(`\\x1b\\[${close}m`, 'g'),
+   };
+}
+
+function run(str: string, code: ReturnType<typeof getCode>): string {
+   return `${code.open}${str.replace(code.regexp, code.open)}${code.close}`;
+}
+
+function green(str: string): string {
+   return run(str, getCode(32, 39));
+}
+
+function red(str: string): string {
+   return run(str, getCode(31, 39));
 }
 
 function obtainTime(s: string): number[] {
@@ -48,7 +67,7 @@ function obtainTime(s: string): number[] {
       .filter((n) => !isNaN(n));
 }
 
-const itBench = typeof args.b === 'string' ? +args.b : args.b ? 1_000 : 1_000;
+const itBench = typeof args.bench === 'string' ? +args.bench : args.bench ? 1_000 : 1_000;
 console.log('Benchmark iterating', itBench, 'times');
 console.log('Measured in average milliseconds');
 
@@ -64,23 +83,23 @@ for (let year = yearStart; year <= yearEnd; year++) {
          (p, v) => ({ ...p, [langName[v as LangName]]: [] }),
          {},
       );
-      console.log('\n', year, '--', day);
+      console.log('\n', 'Running:', year, '--', day);
       for (const lang of langList) {
-         const { code, stdout, stderr } = await new Deno.Command('deno', {
-            args: [
-               'task',
-               'aoc',
-               'bench',
-               '--lang',
-               lang,
-               '--year',
-               year.toString(),
-               '--day',
-               day.toString(),
-               '--bench',
-               itBench.toString(),
-            ],
-         }).output();
+         const stdout = execSync(
+            'deno ' +
+               [
+                  'task',
+                  'aoc',
+                  '--lang',
+                  lang,
+                  '--year',
+                  year.toString(),
+                  '--day',
+                  day.toString(),
+                  '--bench',
+                  itBench.toString(),
+               ].join(' '),
+         );
 
          const output = new TextDecoder().decode(stdout).trim().split('\n');
          const idx = output.findIndex((e) => e.startsWith('Benchmarking '));
@@ -99,14 +118,23 @@ for (let year = yearStart; year <= yearEnd; year++) {
          Math.min(...Object.values(results).map((v) => v[0])),
          Math.min(...Object.values(results).map((v) => v[1])),
          Math.min(...Object.values(results).map((v) => v[2])),
-         Math.min(...Object.values(totalTime).filter((x) => x).map((v) => v)),
+         Math.min(
+            ...Object.values(totalTime)
+               .filter((x) => x)
+               .map((v) => v),
+         ),
       ];
       const max = [
          Math.max(...Object.values(results).map((v) => v[0])),
          Math.max(...Object.values(results).map((v) => v[1])),
          Math.max(...Object.values(results).map((v) => v[2])),
-         Math.max(...Object.values(totalTime).filter((x) => x).map((v) => v)),
+         Math.max(
+            ...Object.values(totalTime)
+               .filter((x) => x)
+               .map((v) => v),
+         ),
       ];
+      console.log('\n', year, '--', day);
       console.log(
          ''.padStart(16, ' '),
          '    Part',

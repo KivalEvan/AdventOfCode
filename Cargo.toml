@@ -1,5 +1,5 @@
 [workspace]
-members = ["template/rust", "src/rust", "2023/*/rust"]
+members = ["src/template/rust", "src/langs/rust", "src/solutions/2023/*/rust"]
 
 [workspace.dependencies]
-aoc-core = { path = "src/rust" }
+aoc-core = { path = "src/langs/rust" }
