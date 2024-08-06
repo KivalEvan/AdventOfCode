@@ -2,6 +2,81 @@ import { getAnswers, getInput } from './input.ts';
 import { resolve } from 'node:path';
 import { SolutionOptions } from './options.ts';
 
+type SolutionWrapper = {
+   readonly tag: string;
+   readonly func: (input: string, isTest: boolean) => string;
+   readonly path: string;
+   readonly test: string;
+   readonly iteration: number;
+   readonly options: SolutionOptions;
+   result: string;
+   elapsed: [number, number];
+   bench: [number[], number[], number[]];
+};
+function getSolutionWrapper(
+   tag: string,
+   func: (input: string, isTest: boolean) => string,
+   path: string,
+   test: string,
+   iteration: number,
+   options: SolutionOptions,
+): SolutionWrapper {
+   return {
+      tag,
+      func,
+      path,
+      test,
+      iteration,
+      options,
+      result: '',
+      elapsed: [0, 0],
+      bench: [[], [], []],
+   };
+}
+
+function printResult(solution: SolutionWrapper): SolutionWrapper {
+   if (solution.iteration === 1) {
+      console.log('\n' + solution.tag + ': (ms) IO > Part > Overall');
+      console.log(
+         'Timer:',
+         round(solution.bench[0][2]),
+         '>',
+         round(solution.bench[1][2]),
+         '>',
+         round(solution.bench[2][2]),
+      );
+   } else {
+      console.log('\n' + solution.tag + ': (ms) min..max avg');
+      console.log(
+         'IO:',
+         round(solution.bench[0][0]),
+         '..',
+         round(solution.bench[0][1]),
+         '-',
+         round(solution.bench[0][2]),
+      );
+      console.log(
+         'Part:',
+         round(solution.bench[1][0]),
+         '..',
+         round(solution.bench[1][1]),
+         '-',
+         round(solution.bench[1][2]),
+      );
+      console.log(
+         'Overall:',
+         round(solution.bench[2][0]),
+         '..',
+         round(solution.bench[2][1]),
+         '-',
+         round(solution.bench[2][2]),
+      );
+   }
+   console.log('Result:', solution.result);
+
+   return solution;
+}
+
 function test(actual: unknown, expected: unknown) {
    if (expected == '') return;
    if (actual != expected) {
@@ -20,62 +95,31 @@ function round(num: number, r = 3): number {
    return Math.round(num * Math.pow(10, r)) / Math.pow(10, r);
 }
 
-function perform(
-   tag: string,
-   func: (path: string, _isTest: boolean) => string,
-   path: string,
-   hasIo: boolean = false,
-): string {
-   console.log('\n\\', tag);
-   const isTest = tag.startsWith('Test');
+function execute(solution: SolutionWrapper): SolutionWrapper {
+   const isTest = solution.tag.startsWith('Test');
 
    const [input, elapsedIo] = timer(() => {
-      return hasIo ? path : getInput(path);
+      return solution.options.hasIo ? solution.path : getInput(solution.path);
    });
-
    const [result, elapsedPart] = timer(() => {
-      return func(input, isTest);
+      return solution.func(input, isTest);
    });
 
-   console.log(
-      ' -- Time Taken (ms):\n | IO > PART > ALL\n |',
-      Math.round(elapsedIo * 1000) / 1000,
-      '>',
-      Math.round(elapsedPart * 1000) / 1000,
-      '>',
-      Math.round((elapsedIo + elapsedPart) * 1000) / 1000,
-   );
+   solution.result = result;
+   solution.elapsed = [elapsedIo, elapsedPart];
 
-   console.log('/ Result:', result);
-
-   return result;
+   return solution;
 }
 
-function bench(
-   tag: string,
-   func: (path: string, _isTest: boolean) => string,
-   path: string,
-   itBench: number,
-   hasIo: boolean = false,
-): void {
-   console.log('\nBenchmarking', tag, '(ms) min..max avg');
-   const isTest = tag.startsWith('Test');
+function perform(solution: SolutionWrapper): SolutionWrapper {
+   const timesIo = new Array(solution.iteration).fill(0);
+   const timesPart = new Array(solution.iteration).fill(0);
+   const timesOverall = new Array(solution.iteration).fill(0);
 
-   const timesIo = new Array(itBench).fill(0);
-   const timesPart = new Array(itBench).fill(0);
-   const timesOverall = new Array(itBench).fill(0);
-
-   for (let i = 0; i < itBench; i++) {
-      const [input, elapsedIo] = timer(() => {
-         return hasIo ? path : getInput(path);
-      });
-
-      const [_, elapsedPart] = timer(() => {
-         return func(input, isTest);
-      });
-
-      timesIo[i] = elapsedIo;
-      timesPart[i] = elapsedPart;
+   for (let i = 0; i < solution.iteration; i++) {
+      execute(solution);
+      timesIo[i] = solution.elapsed[0];
+      timesPart[i] = solution.elapsed[1];
       timesOverall[i] = timesPart[i] + timesIo[i];
    }
    let min, max, avg;
@@ -83,49 +127,76 @@ function bench(
    min = Math.min(...timesIo);
    max = Math.max(...timesIo);
    avg = timesIo.reduce((pv, v) => pv + v, 0) / timesIo.length;
-   console.log('IO:', round(min), '..', round(max), '-', round(avg));
+   const resIo = [min, max, avg];
 
    min = Math.min(...timesPart);
    max = Math.max(...timesPart);
    avg = timesPart.reduce((pv, v) => pv + v, 0) / timesPart.length;
-   console.log('Part:', round(min), '..', round(max), '-', round(avg));
+   const resPart = [min, max, avg];
 
    min = Math.min(...timesOverall);
    max = Math.max(...timesOverall);
    avg = timesOverall.reduce((pv, v) => pv + v, 0) / timesOverall.length;
-   console.log('Overall:', round(min), '..', round(max), '-', round(avg));
+   const resOverall = [min, max, avg];
+
+   solution.bench = [resIo, resPart, resOverall];
+
+   return solution;
 }
 
 export function run(
    args: string[],
-   part1: (input: string, _isTest: boolean) => string,
-   part2: (input: string, _isTest: boolean) => string,
+   part1: (input: string, isTest: boolean) => string,
+   part2: (input: string, isTest: boolean) => string,
    options: SolutionOptions = {},
 ) {
-   const [path, itBench] = args.slice(2);
+   const [path, itStr] = args.slice(2);
    const pathAnswers = resolve(path, 'answers.txt');
    const pathInputTest1 = resolve(path, 'test1.txt');
    const pathInputTest2 = options.hasAlternate
       ? resolve(path, 'test2.txt')
       : resolve(path, 'test1.txt');
    const pathInputMain = resolve(path, 'input.txt');
-
-   const it = +itBench;
-   if (it > 0) {
-      bench('Test 1', part1, pathInputTest1, it, options.hasIo);
-      bench('Part 1', part1, pathInputMain, it, options.hasIo);
-      bench('Test 2', part2, pathInputTest2, it, options.hasIo);
-      bench('Part 2', part2, pathInputMain, it, options.hasIo);
-      return;
-   }
+   const it = +itStr;
 
    const answers = getAnswers(pathAnswers);
-   let result = perform('Test 1', part1, pathInputTest1, options.hasIo);
-   test(result, answers.test1);
-   result = perform('Part 1', part1, pathInputMain, options.hasIo);
-   test(result, answers.part1);
-   result = perform('Test 2', part2, pathInputTest2, options.hasIo);
-   test(result, answers.test2);
-   result = perform('Part 2', part2, pathInputMain, options.hasIo);
-   test(result, answers.part2);
+   const solutions = [
+      getSolutionWrapper(
+         'Test 1',
+         part1,
+         pathInputTest1,
+         answers.test1,
+         it,
+         options,
+      ),
+      getSolutionWrapper(
+         'Part 1',
+         part1,
+         pathInputMain,
+         answers.part1,
+         it,
+         options,
+      ),
+      getSolutionWrapper(
+         'Test 2',
+         part2,
+         pathInputTest2,
+         answers.test2,
+         it,
+         options,
+      ),
+      getSolutionWrapper(
+         'Part 2',
+         part2,
+         pathInputMain,
+         answers.part2,
+         it,
+         options,
+      ),
+   ];
+
+   solutions.map(perform).forEach((p) => {
+      printResult(p);
+      test(p.result, p.test);
+   });
 }

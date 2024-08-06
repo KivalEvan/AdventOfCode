@@ -5,9 +5,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-static const int32_t HAS_IO = 0;
-static const int32_t HAS_ALTERNATE = 0;
-
 struct hands {
    char cards[6];
    int32_t values;
@@ -178,5 +175,6 @@ static char *part2(const char *restrict input, const int32_t isTest) {
 }
 
 int main(int argc, char *argv[]) {
-   return run(argc, argv, part1, part2, HAS_ALTERNATE, HAS_IO);
+   solution_options_t options = getoptions();
+return run(argc, argv, part1, part2, options);
 }

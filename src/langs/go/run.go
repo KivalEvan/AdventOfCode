@@ -8,6 +8,32 @@ import (
 )
 
 type ParameterFunction func(string, bool) string
+type SolutionWrapper struct {
+	tag       string
+	fn        ParameterFunction
+	path      string
+	test      string
+	iteration int
+	options   SolutionOptions
+	result    string
+	elapsed   [2]int64
+	bench     [3][3]float64
+}
+
+func printResult(solution SolutionWrapper) SolutionWrapper {
+	if solution.iteration == 1 {
+		fmt.Println("\n" + solution.tag + ": (ms) IO > Part > Overall")
+		fmt.Println("Timer: " + strconv.FormatFloat(solution.bench[0][2], 'f', -1, 64) + " > " + strconv.FormatFloat(solution.bench[1][2], 'f', -1, 64) + " > " + strconv.FormatFloat(solution.bench[2][2], 'f', -1, 64))
+	} else {
+		fmt.Println("\n" + solution.tag + ": (ms) min..max avg")
+		fmt.Println("IO: " + strconv.FormatFloat(solution.bench[0][0], 'f', -1, 64) + " .. " + strconv.FormatFloat(solution.bench[0][1], 'f', -1, 64) + " - " + strconv.FormatFloat(solution.bench[0][2], 'f', -1, 64))
+		fmt.Println("Part: " + strconv.FormatFloat(solution.bench[1][0], 'f', -1, 64) + " .. " + strconv.FormatFloat(solution.bench[1][1], 'f', -1, 64) + " - " + strconv.FormatFloat(solution.bench[1][2], 'f', -1, 64))
+		fmt.Println("Overall: " + strconv.FormatFloat(solution.bench[2][0], 'f', -1, 64) + " .. " + strconv.FormatFloat(solution.bench[2][1], 'f', -1, 64) + " - " + strconv.FormatFloat(solution.bench[2][2], 'f', -1, 64))
+	}
+	fmt.Println("Result: " + solution.result)
+
+	return solution
+}
 
 func test(result string, expected string) {
 	if expected == "" {
@@ -26,49 +52,35 @@ func timer(fn func() string) (string, int64) {
 	return result, end.Microseconds()
 }
 
-func perform(tag string, fn ParameterFunction, path string, hasIo bool) string {
-	fmt.Println("\n\\ " + tag)
-	isTest := strings.HasPrefix(tag, "Test")
+func execute(solution *SolutionWrapper) *SolutionWrapper {
+	isTest := strings.HasPrefix(solution.tag, "Test")
 
 	input, elapsedIo := timer(func() string {
-		input := path
-		if !hasIo {
-			input = GetInput(path)
+		input := solution.path
+		if !solution.options.HasIo {
+			input = GetInput(solution.path)
 		}
 		return input
 	})
 
-	output, elapsedPart := timer(func() string { return fn(input, isTest) })
+	output, elapsedPart := timer(func() string { return solution.fn(input, isTest) })
 
-	fmt.Println(" -- Time taken (ms):")
-	fmt.Println(" | IO > PART > ALL")
-	fmt.Println(" | " + strconv.FormatFloat((float64(elapsedIo))/1000.0, 'f', -1, 64) + " > " + strconv.FormatFloat(float64(elapsedPart)/1000.0, 'f', -1, 64) + " > " + strconv.FormatFloat(float64(elapsedIo+elapsedPart)/1000, 'f', -1, 64))
-	fmt.Println("/ Result: " + output)
-	return output
+	solution.result = output
+	solution.elapsed = [2]int64{elapsedIo, elapsedPart}
+
+	return solution
 }
 
-func bench(tag string, fn ParameterFunction, path string, itBench int, hasIo bool) {
-	fmt.Println("\nBenchmarking " + tag + " (ms) min..max avg")
-	isTest := strings.HasPrefix(tag, "Test")
+func perform(solution *SolutionWrapper) *SolutionWrapper {
+	timesIo := make([]float64, solution.iteration)
+	timesPart := make([]float64, solution.iteration)
+	timesOverall := make([]float64, solution.iteration)
 
-	timesIo := make([]float64, itBench)
-	timesPart := make([]float64, itBench)
-	timesOverall := make([]float64, itBench)
-
-	for i := 0; i < itBench; i++ {
-		input, elapsedIo := timer(func() string {
-			input := path
-			if !hasIo {
-				input = GetInput(path)
-			}
-			return input
-		})
-
-		_, elapsedPart := timer(func() string { return fn(input, isTest) })
-
-		timesIo[i] = float64(elapsedIo) / 1000.0
-		timesPart[i] = float64(elapsedPart) / 1000.0
-		timesOverall[i] = float64(elapsedIo+elapsedPart) / 1000.0
+	for i := 0; i < solution.iteration; i++ {
+		solution = execute(solution)
+		timesIo[i] = float64(solution.elapsed[0]) / 1000.0
+		timesPart[i] = float64(solution.elapsed[1]) / 1000.0
+		timesOverall[i] = float64(solution.elapsed[0]+solution.elapsed[1]) / 1000.0
 	}
 	mn := 0.0
 	mx := 0.0
@@ -76,18 +88,20 @@ func bench(tag string, fn ParameterFunction, path string, itBench int, hasIo boo
 
 	mn = minFloat(timesIo)
 	mx = maxFloat(timesIo)
-	avg = sumFloat(timesIo) / float64(itBench)
-	fmt.Println("IO: " + strconv.FormatFloat(mn, 'f', -1, 64) + " .. " + strconv.FormatFloat(mx, 'f', -1, 64) + " - " + strconv.FormatFloat(avg, 'f', -1, 64))
+	avg = sumFloat(timesIo) / float64(solution.iteration)
+	solution.bench[0] = [3]float64{mn, mx, avg}
 
 	mn = minFloat(timesPart)
 	mx = maxFloat(timesPart)
-	avg = sumFloat(timesPart) / float64(itBench)
-	fmt.Println("Part: " + strconv.FormatFloat(mn, 'f', -1, 64) + " .. " + strconv.FormatFloat(mx, 'f', -1, 64) + " - " + strconv.FormatFloat(avg, 'f', -1, 64))
+	avg = sumFloat(timesPart) / float64(solution.iteration)
+	solution.bench[1] = [3]float64{mn, mx, avg}
 
 	mn = minFloat(timesOverall)
 	mx = maxFloat(timesOverall)
-	avg = sumFloat(timesOverall) / float64(itBench)
-	fmt.Println("Overall: " + strconv.FormatFloat(mn, 'f', -1, 64) + " .. " + strconv.FormatFloat(mx, 'f', -1, 64) + " - " + strconv.FormatFloat(avg, 'f', -1, 64))
+	avg = sumFloat(timesOverall) / float64(solution.iteration)
+	solution.bench[2] = [3]float64{mn, mx, avg}
+
+	return solution
 }
 
 func Run(args []string, part1 ParameterFunction, part2 ParameterFunction, options SolutionOptions) {
@@ -98,29 +112,29 @@ func Run(args []string, part1 ParameterFunction, part2 ParameterFunction, option
 		pathTest2 = args[1] + "/test2.txt"
 	}
 	pathInput := args[1] + "/input.txt"
-
 	itBench := 0
 	if len(args) > 2 {
 		itBench, _ = strconv.Atoi(args[2])
 	}
-	if itBench > 0 {
-		bench("Test 1", part1, pathTest1, itBench, options.HasIo)
-		bench("Part 1", part1, pathInput, itBench, options.HasIo)
-		bench("Test 2", part2, pathTest2, itBench, options.HasIo)
-		bench("Part 2", part2, pathInput, itBench, options.HasIo)
-		return
-	}
 
 	answers := GetAnswers(pathAnswers)
-	result := ""
-	result = perform("Test 1", part1, pathTest1, options.HasIo)
-	test(result, answers.test1)
-	result = perform("Part 1", part1, pathInput, options.HasIo)
-	test(result, answers.part1)
-	result = perform("Test 2", part2, pathTest2, options.HasIo)
-	test(result, answers.test2)
-	result = perform("Part 2", part2, pathInput, options.HasIo)
-	test(result, answers.part2)
+	solutions := [4]SolutionWrapper{
+		{tag: "Test 1", fn: part1, path: pathTest1, test: answers.test1, iteration: itBench, options: options},
+		{tag: "Part 1", fn: part1, path: pathInput, test: answers.part1, iteration: itBench, options: options},
+		{tag: "Test 2", fn: part2, path: pathTest2, test: answers.test2, iteration: itBench, options: options},
+		{tag: "Part 2", fn: part2, path: pathInput, test: answers.part2, iteration: itBench, options: options},
+	}
+
+	for i := range solutions {
+		solution := &solutions[i]
+		perform(solution)
+	}
+
+	for i := range solutions {
+		solution := &solutions[i]
+		printResult(*solution)
+		test(solution.result, solution.test)
+	}
 }
 
 func sumFloat(times []float64) float64 {

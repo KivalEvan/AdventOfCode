@@ -8,7 +8,7 @@ learning purposes because fun and pain.
 This is also the order of priority that I will solve the problem with, ~~totally not because of job
 market~~:
 
-- TypeScript 5.5.2 with Deno 1.45.3 for `.ts`
+- TypeScript 5.5.2 with Deno 1.45.5 for `.ts`
 - Python 3.10.14 with PyPy 7.3.16 for `.py`
 - Rust 1.79.0 for `.rust`
 - Go 1.22.5 for `.go`
@@ -62,7 +62,7 @@ Will try `bash` when I feel like it.
 
 | Day | TypeScript | Python | Rust | Go | C# | C  | Zig | Lua | Java | OCaml |
 | --- | ---------- | ------ | ---- | -- | -- | -- | --- | --- | ---- | ----- |
-| 1   | ✅         | ✅     | ✅   | ✅ | ✅ | ✅ |     | ✅  | ✅   | ✅    |
+| 1   | ✅         | ✅     | ✅   | ✅ | ✅ | ✅ | ✅  | ✅  | ✅   | ✅    |
 | 2   | ✅         | ✅     | ✅   | ✅ | ✅ | ✅ |     | ✅  | ✅   | ✅    |
 | 3   | ✅         | ✅     | ✅   | ✅ | ✅ | ✅ |     | ✅  | ✅   | ✅    |
 | 4   | ✅         | ✅     | ✅   | ✅ | ✅ | ✅ |     | ✅  | ✅   | ✅    |
@@ -70,7 +70,7 @@ Will try `bash` when I feel like it.
 | 6   | ✅         | ✅     | ✅   | ✅ | ✅ | ✅ |     | ✅  | ✅   | ✅    |
 | 7   | ✅         | ✅     | ✅   | ✅ | ✅ | ✅ |     | ✅  | ✅   | ✅    |
 | 8   | ✅         | ✅     | ✅   | ✅ | ✅ | ✅ |     | ✅  | ✅   | ✅    |
-| 9   | ✅         | ✅     | ✅   | ✅ | ✅ | ✅ |     | ✅  | ✅   | ✅    |
+| 9   | ✅         | ✅     | ✅   | ✅ | ✅ | ✅ | ✅  | ✅  | ✅   | ✅    |
 | 10  | ✅         |        |      |    |    |    |     |     |      |       |
 | 11  | ✅         |        |      |    |    | ✅ |     |     |      |       |
 | 12  | ✅         |        |      |    |    | ☑️  |     |     |      |       |

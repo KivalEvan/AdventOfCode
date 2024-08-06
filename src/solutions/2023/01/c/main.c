@@ -1,13 +1,11 @@
 #include "main.h"
+#include "options.h"
 #include "run.h"
 #include "utils_num.h"
 #include "utils_str.h"
 #include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
-
-static const int32_t HAS_IO = 0;
-static const int32_t HAS_ALTERNATE = 1;
 
 static char getnum(const char *restrict str) {
    if (strncmp(str, "zero", 4) == 0)
@@ -103,5 +101,7 @@ static char *part2(const char *restrict input, const int32_t isTest) {
 }
 
 int main(int argc, char *argv[]) {
-   return run(argc, argv, part1, part2, HAS_ALTERNATE, HAS_IO);
+   solution_options_t options = getoptions();
+   options.has_alternate = 1;
+   return run(argc, argv, part1, part2, options);
 }

@@ -3,9 +3,6 @@ package kival.aoc.year.day;
 import kival.aoc.core.*;
 
 public class Main {
-   public final boolean HAS_IO = false;
-public final boolean HAS_ALTERNATE = false;
-
    public String part1(String input, boolean isTest) {
       return "";
    }
@@ -15,6 +12,7 @@ public final boolean HAS_ALTERNATE = false;
    }
 
    public void main(String[] args) {
-      Run.execute(args, this::part1, this::part2, HAS_ALTERNATE, HAS_IO);
+      Options.SolutionOptions options = new Options.SolutionOptions();
+      Runner.run(args, this::part1, this::part2, options);
    }
 }

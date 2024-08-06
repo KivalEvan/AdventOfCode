@@ -9,9 +9,6 @@ import java.util.HashMap;
 import java.util.Collections;
 
 public class Main {
-   public final boolean HAS_IO = false;
-   public final boolean HAS_ALTERNATE = false;
-
    private long[] Difference(long[] ary, int n) {
       for (int i = 0; i < n; i++)
          ary[i] = ary[i + 1] - ary[i];
@@ -52,6 +49,7 @@ public class Main {
    }
 
    public void main(String[] args) {
-      Run.execute(args, this::part1, this::part2, HAS_ALTERNATE, HAS_IO);
+      Options.SolutionOptions options = new Options.SolutionOptions();
+      Runner.run(args, this::part1, this::part2, options);
    }
 }

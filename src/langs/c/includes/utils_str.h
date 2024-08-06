@@ -1,7 +1,6 @@
-#include <stdlib.h>
-
 #ifndef UTILS_STR_H_
 #define UTILS_STR_H_
+#include <stdlib.h>
 
 char *str_replacec(char *restrict str, const char replace, const char with);
 

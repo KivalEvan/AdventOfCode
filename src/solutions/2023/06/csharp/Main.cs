@@ -35,7 +35,7 @@ namespace Year2023
 
       static void Main(string[] args)
       {
-         Run.Execute(args, Part1, Part2, OPTIONS);
+         Runner.Run(args, Part1, Part2, OPTIONS);
       }
    }
 }

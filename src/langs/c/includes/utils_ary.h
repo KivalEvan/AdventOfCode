@@ -1,8 +1,7 @@
-#include <stdint.h>
-#include <stdlib.h>
-
 #ifndef UTILS_ARY_H_
 #define UTILS_ARY_H_
+#include <stdint.h>
+#include <stdlib.h>
 
 int32_t ary_i32sum(const int32_t *restrict array, const size_t sz);
 uint32_t ary_ui32sum(const uint32_t *restrict array, const size_t sz);

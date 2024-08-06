@@ -6,9 +6,6 @@ import java.util.List;
 import kival.aoc.core.*;
 
 public class Main {
-   public final boolean HAS_IO = false;
-   public final boolean HAS_ALTERNATE = false;
-
    public String part1(String input,boolean isTest) {
       int res = 0;
       for (String line : input.split("\n")) {
@@ -61,6 +58,7 @@ public class Main {
    }
 
    public void main(String[] args) {
-      Run.execute(args, this::part1, this::part2, HAS_ALTERNATE, HAS_IO);
+      Options.SolutionOptions options = new Options.SolutionOptions();
+      Runner.run(args, this::part1, this::part2, options);
    }
 }

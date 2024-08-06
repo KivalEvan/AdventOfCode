@@ -46,7 +46,8 @@
       "hash_set": "c",
       "utils_vec.h": "c",
       "complex": "c",
-      "tuple": "c"
+      "tuple": "c",
+      "options.h": "c"
    },
    "java.compile.nullAnalysis.mode": "automatic"
 }

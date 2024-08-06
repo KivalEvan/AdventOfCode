@@ -24,14 +24,14 @@ export async function runner(
       );
 
       const stderr = cmd.stderr.trim();
-      if (stderr && stderr.length !== 115) {
+      if (stderr && stderr.length !== 118) {
          console.log(cmd.stdout.trim());
          console.error(stderr);
          return;
       }
    }
 
-   if (benchmark > 0) console.log('Benchmarking...');
+   if (benchmark > 1) console.log('Benchmarking...');
    else console.log('Running...');
    const { stdout, stderr } = await execAsync(
       'make ' +
@@ -39,7 +39,7 @@ export async function runner(
             lang,
             'YEAR=' + year,
             'DAY=' + day.toString().padStart(2, '0'),
-            'BENCH=' + benchmark.toString(),
+            'ITERATION=' + benchmark.toString(),
          ].join(' '),
    );
 

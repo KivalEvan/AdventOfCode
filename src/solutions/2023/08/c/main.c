@@ -10,9 +10,6 @@
 
 #define BUCKET_SIZE 1024
 
-static const int32_t HAS_IO = 0;
-static const int32_t HAS_ALTERNATE = 1;
-
 static void hashmap_cleanup(void *obj) {
    char **ary;
    ary = obj;
@@ -142,5 +139,7 @@ static char *part2(const char *restrict input, const int32_t isTest) {
 }
 
 int main(int argc, char *argv[]) {
-   return run(argc, argv, part1, part2, HAS_ALTERNATE, HAS_IO);
+   solution_options_t options = getoptions();
+   options.has_alternate = 1;
+   return run(argc, argv, part1, part2, options);
 }

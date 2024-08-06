@@ -12,9 +12,6 @@ public class Main {
    private record Pair<K, V>(K v1, V v2) {
    }
 
-   public final boolean HAS_IO = false;
-   public final boolean HAS_ALTERNATE = false;
-
    private Pair<List<long[]>, long[][][]> parseInput(String input, boolean single)
    {
       String[] parsed = input.split("\n\n");
@@ -99,6 +96,7 @@ public class Main {
    }
 
    public void main(String[] args) {
-      Run.execute(args, this::part1, this::part2, HAS_ALTERNATE, HAS_IO);
+      Options.SolutionOptions options = new Options.SolutionOptions();
+      Runner.run(args, this::part1, this::part2, options);
    }
 }

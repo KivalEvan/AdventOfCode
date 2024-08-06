@@ -53,6 +53,7 @@ func part1(input string, isTest bool) string {
 			cube := cubes[j]
 			if cube.value > rgb_p1[cube.color] {
 				found = true
+				break
 			}
 		}
 		if !found {

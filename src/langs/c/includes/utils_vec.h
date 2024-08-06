@@ -1,8 +1,7 @@
-#include <math.h>
-#include <stdlib.h>
-
 #ifndef UTILS_VEC_H_
 #define UTILS_VEC_H_
+#include <math.h>
+#include <stdlib.h>
 
 struct Vector {
    size_t size;

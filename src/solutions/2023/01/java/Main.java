@@ -8,9 +8,6 @@ import java.util.List;
 import kival.aoc.core.*;
 
 public class Main {
-   public final boolean HAS_IO = false;
-   public final boolean HAS_ALTERNATE = true;
-
    private Map<String, Integer> strToNum = new HashMap<String, Integer>() {
       {
          put("zero", 0);
@@ -103,6 +100,8 @@ public class Main {
    }
 
    public void main(String[] args) {
-      Run.execute(args, this::part1, this::part2, HAS_ALTERNATE, HAS_IO);
+      Options.SolutionOptions options = new Options.SolutionOptions();
+      options.hasAlternate = true;
+      Runner.run(args, this::part1, this::part2, options);
    }
 }

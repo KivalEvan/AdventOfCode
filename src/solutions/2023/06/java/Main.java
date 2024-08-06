@@ -7,9 +7,6 @@ import java.util.stream.Stream;
 import kival.aoc.core.*;
 
 public class Main {
-   public final boolean HAS_IO = false;
-   public final boolean HAS_ALTERNATE = false;
-
    private long ohnomath(long b, long c) {
       double pepsilon = 0.001;
       double mn = Math.floor((b + Math.sqrt(Math.abs(b * b - 4 * c))) / 2 - pepsilon);
@@ -36,6 +33,7 @@ public class Main {
    }
 
    public void main(String[] args) {
-      Run.execute(args, this::part1, this::part2, HAS_ALTERNATE, HAS_IO);
+      Options.SolutionOptions options = new Options.SolutionOptions();
+      Runner.run(args, this::part1, this::part2, options);
    }
 }

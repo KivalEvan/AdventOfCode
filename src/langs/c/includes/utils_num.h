@@ -1,7 +1,6 @@
-#include <stdint.h>
-
 #ifndef UTILS_NUM_H_
 #define UTILS_NUM_H_
+#include <stdint.h>
 
 #define num_min(a, b)                                                          \
    ({                                                                          \

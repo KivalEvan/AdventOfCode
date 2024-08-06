@@ -1,7 +1,6 @@
-#include <stdint.h>
-
 #ifndef UTILS_MATH_H_
 #define UTILS_MATH_H_
+#include <stdint.h>
 
 int32_t math_i32gcd(const int32_t a, const int32_t b);
 uint32_t math_ui32gcd(const uint32_t a, const uint32_t b);

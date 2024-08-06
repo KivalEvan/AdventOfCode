@@ -27,9 +27,9 @@ local function get_answers(path)
    file:close()
    return {
       test1 = lines[1],
-      part_1 = lines[2],
+      part1 = lines[2],
       test2 = lines[3],
-      part_2 = lines[4],
+      part2 = lines[4],
    }
 end
 

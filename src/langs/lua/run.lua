@@ -20,29 +20,6 @@ local function test(result, expected)
    end
 end
 
----@param tag string
----@param func function
----@param path string
----@param has_io boolean
----@return string
-local function perform(tag, func, path, has_io)
-   print(string.format("\n\\ %s", tag))
-   local is_test = tag:sub(1, 4) == "Test"
-
-   local input, elapsedIo = timer(function()
-      return has_io and path or Input.get_input(path)
-   end)
-   local result, elapsedPart = timer(function()
-      return func(input, is_test)
-   end)
-
-   print(string.format(" -- Time taken (ms):"))
-   print(string.format(" | IO > PART > ALL\n | %.3f > %.3f > %.3f", elapsedIo * 1000,
-      elapsedPart * 1000, (elapsedIo + elapsedPart) * 1000))
-   print(string.format(" / Result: %s", result))
-   return result
-end
-
 local function min(xdd)
    local z = math.huge
    for _, v in ipairs(xdd) do
@@ -75,49 +52,72 @@ local function avg(xdd)
    return sum(xdd) / #xdd
 end
 
----@param tag string
----@param func function
----@param path string
----@param iterations number
----@param has_io boolean
----@return nil
-local function bench(tag, func, path, iterations, has_io)
-   print(string.format("\nBenchmarking %s (ms) min..max avg", tag))
-   local is_test = tag:sub(1, 4) == "Test"
+---@param solution table
+---@return table
+local function print_result(solution)
+   if solution.iteration == 1 then
+      print(string.format("\n%s: (ms) IO > Part > Overall", solution.tag))
+      print(string.format("Timer: %.3f > %.3f > %.3f", solution.bench[1][3],
+         solution.bench[2][3], solution.bench[3][3]))
+   else
+      print(string.format("\n%s: (ms) min..max avg", solution.tag))
+      print(string.format("IO: %.3f .. %.3f - %.3f", solution.bench[1][1], solution.bench[1][2], solution.bench[1][3]))
+      print(string.format("Part: %.3f .. %.3f - %.3f", solution.bench[2][1], solution.bench[2][2], solution.bench[2][3]))
+      print(string.format("Overall: %.3f .. %.3f - %.3f", solution.bench[3][1], solution.bench[3][2],
+         solution.bench[3][3]))
+   end
+   print(string.format("Result: %s", solution.result))
 
+   return solution
+end
+
+---@param solution table
+---@return table
+local function execute(solution)
+   local is_test = solution.tag:sub(1, 4) == "Test"
+
+   local input, elapsedIo = timer(function()
+      return solution.has_io and solution.path or Input.get_input(solution.path)
+   end)
+   local result, elapsedPart = timer(function()
+      return solution.func(input, is_test)
+   end)
+
+   solution.result = result
+   solution.elapsed = { elapsedIo, elapsedPart }
+
+   return solution
+end
+
+---@param solution table
+---@return table
+local function perform(solution)
    local timesIo = {}
    local timesPart = {}
    local timesOverall = {}
 
-   for i = 1, iterations do
-      local input, elapsedIo = timer(function()
-         return has_io and path or Input.get_input(path)
-      end)
-      local result, elapsedPart = timer(function()
-         return func(input, is_test)
-      end)
-
-      timesIo[i] = elapsedIo
-      timesPart[i] = elapsedPart
-      timesOverall[i] = elapsedIo + elapsedPart
+   for i = 1, solution.iteration do
+      execute(solution)
+      timesIo[i] = solution.elapsed[1]
+      timesPart[i] = solution.elapsed[2]
+      timesOverall[i] = solution.elapsed[1] + solution.elapsed[2]
    end
 
-   local mn, mx, av
+   solution.bench = { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }
 
-   mn = min(timesIo) * 1000
-   mx = max(timesIo) * 1000
-   av = avg(timesIo) * 1000
-   print(string.format("IO: %.3f .. %.3f - %.3f", mn, mx, av))
+   solution.bench[1][1] = min(timesIo) * 1000
+   solution.bench[1][2] = max(timesIo) * 1000
+   solution.bench[1][3] = avg(timesIo) * 1000
 
-   mn = min(timesPart) * 1000
-   mx = max(timesPart) * 1000
-   av = avg(timesPart) * 1000
-   print(string.format("Part: %.3f .. %.3f - %.3f", mn, mx, av))
+   solution.bench[2][1] = min(timesPart) * 1000
+   solution.bench[2][2] = max(timesPart) * 1000
+   solution.bench[2][3] = avg(timesPart) * 1000
 
-   mn = min(timesOverall) * 1000
-   mx = max(timesOverall) * 1000
-   av = avg(timesOverall) * 1000
-   print(string.format("Overall: %.3f .. %.3f - %.3f", mn, mx, av))
+   solution.bench[3][1] = min(timesOverall) * 1000
+   solution.bench[3][2] = max(timesOverall) * 1000
+   solution.bench[3][3] = avg(timesOverall) * 1000
+
+   return solution
 end
 
 ---@param args string[]
@@ -135,26 +135,24 @@ local function run(args, part_1, part_2, options)
    local path_input_test1 = args[1] .. "/test1.txt"
    local path_input_test2 = options.has_alternate and args[1] .. "/test2.txt" or path_input_test1
    local path_input_main = args[1] .. "/input.txt"
-
    local iterations = tonumber(args[2]) or 0
-   if iterations > 0 then
-      bench("Test 1", part_1, path_input_test1, iterations, options.has_io)
-      bench("Part 1", part_1, path_input_main, iterations, options.has_io)
-      bench("Test 2", part_2, path_input_test2, iterations, options.has_io)
-      bench("Part 2", part_2, path_input_main, iterations, options.has_io)
-      return
-   end
 
    local answers = Input.get_answers(path_answers)
-   local result
-   result = perform("Test 1", part_1, path_input_test1, options.has_io)
-   test(result, answers.test1)
-   result = perform("Part 1", part_1, path_input_main, options.has_io)
-   test(result, answers.part_1)
-   result = perform("Test 2", part_2, path_input_test2, options.has_io)
-   test(result, answers.test2)
-   result = perform("Part 2", part_2, path_input_main, options.has_io)
-   test(result, answers.part_2)
+   local solutions = {
+      { tag = "Test 1", path = path_input_test1, func = part_1, test=answers.test1, iteration = iterations, options = options },
+      { tag = "Part 1", path = path_input_main,  func = part_1, test=answers.part1, iteration = iterations, options = options },
+      { tag = "Test 2", path = path_input_test2, func = part_2, test=answers.test2, iteration = iterations, options = options },
+      { tag = "Part 2", path = path_input_main,  func = part_2, test=answers.part2, iteration = iterations, options = options }
+   }
+
+   for _, solution in ipairs(solutions) do
+      perform(solution)
+   end
+
+   for _, solution in ipairs(solutions) do
+      print_result(solution)
+      test(solution.result, solution.test)
+   end
 end
 
 return run

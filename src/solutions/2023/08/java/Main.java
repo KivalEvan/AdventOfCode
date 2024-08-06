@@ -11,9 +11,6 @@ import java.util.HashMap;
 import java.util.Collections;
 
 public class Main {
-   public final boolean HAS_IO = false;
-public final boolean HAS_ALTERNATE = false;
-
    private long gcd(long a, long b) {
       return b == 0 ? a : gcd(b, a % b);
    }
@@ -77,6 +74,8 @@ public final boolean HAS_ALTERNATE = false;
    }
 
    public void main(String[] args) {
-      Run.execute(args, this::part1, this::part2, HAS_ALTERNATE, HAS_IO);
+      Options.SolutionOptions options = new Options.SolutionOptions();
+      options.hasAlternate = true;
+      Runner.run(args, this::part1, this::part2, options);
    }
 }

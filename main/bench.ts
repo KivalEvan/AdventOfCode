@@ -1,6 +1,7 @@
+import { promisify } from 'node:util';
 import { fetchArgs } from './args.ts';
 import { getLang, LangName, langName } from './lang.ts';
-import { execSync } from 'node:child_process';
+import { exec } from 'node:child_process';
 
 const args = fetchArgs();
 
@@ -83,9 +84,8 @@ for (let year = yearStart; year <= yearEnd; year++) {
          (p, v) => ({ ...p, [langName[v as LangName]]: [] }),
          {},
       );
-      console.log('\n', 'Running:', year, '--', day);
       for (const lang of langList) {
-         const stdout = execSync(
+         const cmd = await promisify(exec)(
             'deno ' +
                [
                   'task',
@@ -101,15 +101,15 @@ for (let year = yearStart; year <= yearEnd; year++) {
                ].join(' '),
          );
 
-         const output = new TextDecoder().decode(stdout).trim().split('\n');
-         const idx = output.findIndex((e) => e.startsWith('Benchmarking '));
+         const output = cmd.stdout.trim().split('\n');
+         const idx = output.findIndex((e) => e.endsWith('min..max avg'));
          if (idx === -1) {
             delete results[langName[lang]];
             continue;
          }
          const benchmarks = output.slice(idx);
-         results[langName[lang]][0] = obtainTime(benchmarks.at(8)!)[2];
-         results[langName[lang]][1] = obtainTime(benchmarks.at(-1)!)[2];
+         results[langName[lang]][0] = obtainTime(benchmarks.at(9)!)[2];
+         results[langName[lang]][1] = obtainTime(benchmarks.at(-2)!)[2];
          results[langName[lang]][2] = results[langName[lang]][0] + results[langName[lang]][1];
          totalTime[langName[lang]] += results[langName[lang]][2];
       }

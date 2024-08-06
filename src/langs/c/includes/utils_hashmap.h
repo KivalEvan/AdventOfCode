@@ -1,7 +1,6 @@
-#include <stdlib.h>
-
 #ifndef UTILS_HASHMAP_H_
 #define UTILS_HASHMAP_H_
+#include <stdlib.h>
 
 struct Node {
    char *key;

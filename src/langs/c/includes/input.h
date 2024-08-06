@@ -1,7 +1,7 @@
 #ifndef INPUT_H_
 #define INPUT_H_
 
-typedef struct answers {
+typedef struct Answers {
    char *test1;
    char *test2;
    char *part1;

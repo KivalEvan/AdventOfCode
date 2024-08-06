@@ -1,5 +1,6 @@
 #include "run.h"
 #include "input.h"
+#include "options.h"
 #include "utils_ary.h"
 #include "utils_str.h"
 #include <stdint.h>
@@ -8,7 +9,36 @@
 #include <string.h>
 #include <time.h>
 
-static char *result;
+typedef struct SolutionWrapper {
+   const char *restrict tag;
+   char *(*fun)(const char *restrict, const int32_t);
+   char *restrict path;
+   char *restrict test;
+   const size_t iteration;
+   const solution_options_t options;
+   char *restrict result;
+   double elapsed[2];
+   double bench[3][3];
+} solution_t;
+
+static solution_t
+_solution_get(const char *restrict tag,
+              char *(*fun)(const char *restrict, const int32_t),
+              char *restrict path, char *restrict test, const size_t iteration,
+              const solution_options_t options) {
+   solution_t solution = {
+       .tag = tag,
+       .fun = fun,
+       .path = path,
+       .test = test,
+       .iteration = iteration,
+       .options = options,
+       .result = NULL,
+       .elapsed = {0, 0},
+       .bench = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
+   };
+   return solution;
+}
 
 static void _test(const char *restrict actual, const char *restrict expected) {
    if (strlen(expected) == 0)
@@ -19,89 +49,93 @@ static void _test(const char *restrict actual, const char *restrict expected) {
    }
 }
 
-static void _perform(const char *restrict tag,
-                     char *(*fun)(const char *restrict, const int32_t),
-                     const char *restrict path, const int32_t has_io) {
-   int32_t is_test = strncmp(tag, "Test", 4) == 0 ? 1 : 0;
+static solution_t _print_result(const solution_t solution) {
+   if (solution.iteration == 1) {
+      printf("\n%s: (ms) IO > Part > Overall\n", solution.tag);
+      printf("Timer: %.3f > %.3f > %.3f\n", solution.bench[0][2],
+             solution.bench[1][2], solution.bench[2][2]);
+   } else {
+      printf("\n%s: (ms) min..max avg\n", solution.tag);
+      printf("IO: %.3f .. %.3f - %.3f\n", solution.bench[0][0],
+             solution.bench[0][1], solution.bench[0][2]);
+      printf("Part: %.3f .. %.3f - %.3f\n", solution.bench[1][0],
+             solution.bench[1][1], solution.bench[1][2]);
+      printf("Overall: %.3f .. %.3f %.3f\n", solution.bench[2][0],
+             solution.bench[2][1], solution.bench[2][2]);
+   }
+   printf("Result: %s\n", solution.result);
+
+   return solution;
+}
+
+static solution_t *_execute(solution_t *solution) {
+   int32_t is_test = strncmp(solution->tag, "Test", 4) == 0 ? 1 : 0;
    clock_t start, end;
-   char *input;
+   char *input, *result;
    double e_io, e_part;
 
-   printf("\n\\ %s\n", tag);
-
    start = clock();
-   input = has_io ? strcpy(malloc(strlen(path) + 1), path) : get_input(path);
+   input = solution->options.has_io
+               ? strcpy(malloc(strlen(solution->path) + 1), solution->path)
+               : get_input(solution->path);
    end = clock();
    e_io = ((double)(end - start)) / CLOCKS_PER_SEC;
 
    start = clock();
-   result = fun(input, is_test);
+   result = solution->fun(input, is_test);
    end = clock();
    e_part = ((double)(end - start)) / CLOCKS_PER_SEC;
-   printf(" -- Time Taken (ms):\n | IO > PART > ALL\n | %.3f > %.3f > %.3f\n",
-          e_io * 1000, e_part * 1000, (e_io + e_part) * 1000);
 
-   printf("/ Result: %s\n", result);
+   solution->result = result;
+   solution->elapsed[0] = e_io;
+   solution->elapsed[1] = e_part;
 
    free(input);
+
+   return solution;
 }
 
-static void _bench(const char *restrict tag,
-                   char *(*fun)(const char *restrict, const int32_t),
-                   const char *restrict path, const int32_t itBench,
-                   const int32_t has_io) {
-   printf("\nBenchmarking %s (ms) min..max avg\n", tag);
-   int32_t is_test = strncmp(tag, "Test", 4) == 0 ? 1 : 0;
-   char *_, *input;
-   clock_t start, end;
-   double elapsed, min, max, avg;
-   int32_t i;
+static solution_t *_perform(solution_t *solution) {
+   size_t it = solution->iteration;
 
-   double *timesIo = malloc(itBench * sizeof(double));
-   double *timesPart = malloc(itBench * sizeof(double));
-   double *timesOverall = malloc(itBench * sizeof(double));
+   double *timesIo = malloc(it * sizeof(double));
+   double *timesPart = malloc(it * sizeof(double));
+   double *timesOverall = malloc(it * sizeof(double));
 
-   for (i = 0; i < itBench; i++) {
-      start = clock();
-      input = has_io ? strcpy(malloc(strlen(path) + 1), path) : get_input(path);
-      end = clock();
-      elapsed = ((double)(end - start)) / CLOCKS_PER_SEC;
-      timesIo[i] = elapsed;
-
-      start = clock();
-      _ = fun(input, is_test);
-      end = clock();
-      elapsed = ((double)(end - start)) / CLOCKS_PER_SEC;
-      timesPart[i] = elapsed;
-
+   for (size_t i = 0; i < it; i++) {
+      _execute(solution);
+      timesIo[i] = solution->elapsed[0];
+      timesPart[i] = solution->elapsed[1];
       timesOverall[i] = timesPart[i] + timesIo[i];
-      free(input);
-      free(_);
+
+      if (i != it - 1) {
+         free(solution->result);
+      }
    }
 
-   min = ary_min(timesIo, itBench) * 1000;
-   max = ary_max(timesIo, itBench) * 1000;
-   avg = ary_sum(timesIo, itBench) / itBench * 1000;
-   printf("IO: %.3f .. %.3f - %.3f\n", min, max, avg);
+   solution->bench[0][0] = ary_min(timesIo, it) * 1000;
+   solution->bench[0][1] = ary_max(timesIo, it) * 1000;
+   solution->bench[0][2] = ary_sum(timesIo, it) / it * 1000;
 
-   min = ary_min(timesPart, itBench) * 1000;
-   max = ary_max(timesPart, itBench) * 1000;
-   avg = ary_sum(timesPart, itBench) / itBench * 1000;
-   printf("Part: %.3f .. %.3f - %.3f\n", min, max, avg);
+   solution->bench[1][0] = ary_min(timesPart, it) * 1000;
+   solution->bench[1][1] = ary_max(timesPart, it) * 1000;
+   solution->bench[1][2] = ary_sum(timesPart, it) / it * 1000;
 
-   min = ary_min(timesOverall, itBench) * 1000;
-   max = ary_max(timesOverall, itBench) * 1000;
-   avg = ary_sum(timesOverall, itBench) / itBench * 1000;
-   printf("Overall: %.3f .. %.3f %.3f\n", min, max, avg);
+   solution->bench[2][0] = ary_min(timesOverall, it) * 1000;
+   solution->bench[2][1] = ary_max(timesOverall, it) * 1000;
+   solution->bench[2][2] = ary_sum(timesOverall, it) / it * 1000;
 
    free(timesIo);
    free(timesPart);
    free(timesOverall);
+
+   return solution;
 }
 
 static char *_strcatpath(const char *restrict path1,
                          const char *restrict path2) {
-   char *str = malloc((strlen(path1) + strlen(path2) + 1) * sizeof(char));
+   size_t len = strlen(path1) + strlen(path2);
+   char *str = malloc((len + 1) * sizeof(char));
    str[0] = 0;
    strcat(str, path1);
    strcat(str, path2);
@@ -112,50 +146,43 @@ static char *_strcatpath(const char *restrict path1,
 int run(int32_t argc, char *argv[],
         char *(*fun_part1)(const char *restrict, const int32_t),
         char *(*fun_part2)(const char *restrict, const int32_t),
-        const int32_t has_alternate, const int32_t has_io) {
+        const solution_options_t options) {
    if (argc == 1) {
       fprintf(stderr, "Usage: <path/to/year/day> <number_input_for_bench>\n");
       return -1;
    }
-
    char *pathAnswers = _strcatpath(argv[1], "/answers.txt");
    char *pathInput = _strcatpath(argv[1], "/input.txt");
    char *pathTest1 = _strcatpath(argv[1], "/test1.txt");
-   char *pathTest2 = _strcatpath(argv[1], "/test2.txt");
-
-   int32_t itBench = argc > 2 ? atoi(argv[2]) : 0;
-   if (itBench > 0) {
-      _bench("Test 1", fun_part1, pathTest1, itBench, has_io);
-      _bench("Part 1", fun_part1, pathInput, itBench, has_io);
-      _bench("Test 2", fun_part2, has_alternate ? pathTest2 : pathTest1,
-             itBench, has_io);
-      _bench("Part 2", fun_part2, pathInput, itBench, has_io);
-      return 0;
-   }
+   char *pathTest2 = options.has_alternate ? _strcatpath(argv[1], "/test2.txt")
+                                           : strdup(pathTest1);
+   int32_t iteration = argc > 2 ? atoi(argv[2]) : 0;
 
    answers_t answers = get_answers(pathAnswers);
-   _perform("Test 1", fun_part1, pathTest1, has_io);
-   _test(result, answers.test1);
-   free(result);
-   _perform("Part 1", fun_part1, pathInput, has_io);
-   _test(result, answers.part1);
-   free(result);
-   _perform("Test 2", fun_part2, has_alternate ? pathTest2 : pathTest1, has_io);
-   _test(result, answers.test2);
-   free(result);
-   _perform("Part 2", fun_part2, pathInput, has_io);
-   _test(result, answers.part2);
-   free(result);
+   solution_t solutions[4] = {
+       _solution_get("Test 1", fun_part1, pathTest1, answers.test1, iteration,
+                     options),
+       _solution_get("Part 1", fun_part1, pathInput, answers.part1, iteration,
+                     options),
+       _solution_get("Test 2", fun_part2, pathTest2, answers.test2, iteration,
+                     options),
+       _solution_get("Part 2", fun_part2, strdup(pathInput), answers.part2,
+                     iteration, options),
+   };
 
-   free(answers.part1);
-   free(answers.part2);
-   free(answers.test1);
-   free(answers.test2);
+   for (size_t i = 0; i < 4; i++) {
+      _perform(&solutions[i]);
+   }
 
+   for (size_t i = 0; i < 4; i++) {
+      _print_result(solutions[i]);
+      _test(solutions[i].result, solutions[i].test);
+
+      free(solutions[i].path);
+      free(solutions[i].result);
+      free(solutions[i].test);
+   }
    free(pathAnswers);
-   free(pathInput);
-   free(pathTest1);
-   free(pathTest2);
 
    return 0;
 }

@@ -8,9 +8,6 @@
 #include <stdio.h>
 #include <string.h>
 
-static const int32_t HAS_IO = 0;
-static const int32_t HAS_ALTERNATE = 0;
-
 static int64_t ohnomath(const int64_t b, const int64_t c) {
    double min = floor((-b - sqrt(b * b - 4 * c)) / -2 - 0.001);
    double max = ceil((-b + sqrt(b * b - 4 * c)) / -2 + 0.001);
@@ -108,5 +105,6 @@ static char *part2(const char *restrict input, const int32_t isTest) {
 }
 
 int main(int argc, char *argv[]) {
-   return run(argc, argv, part1, part2, HAS_ALTERNATE, HAS_IO);
+   solution_options_t options = getoptions();
+return run(argc, argv, part1, part2, options);
 }

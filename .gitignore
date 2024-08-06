@@ -1,5 +1,7 @@
 *.txt
 .env
+.zig-cache/
+zig-out/
 temp/
 bin/
 obj/

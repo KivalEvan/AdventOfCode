@@ -1,9 +1,9 @@
 YEAR = $(shell date '+%Y')
 DAY = $(shell date '+%d')
 AOC_PATH = src/solutions/$(YEAR)/$(DAY)
-BENCH = 0
+ITERATION = 1
 ARGS = 
-__ARGUMENTS = $(AOC_PATH) $(BENCH) $(ARGS)
+__ARGUMENTS = $(AOC_PATH) $(ITERATION) $(ARGS)
 
 SRC_DIR = src/langs
 OBJ_DIR = obj
@@ -32,7 +32,7 @@ LDFLAGS = -std=c2x \
 
 all:
 	@echo -e "You must specify which to run:"
-	@echo "make <language> YEAR=<current_year_by_default> DAY=<current_day_by_default> BENCH=<any_input_to_bench>"
+	@echo "make <language> YEAR=<current_year_by_default> DAY=<current_day_by_default> ITERATION=<any_input_to_bench>"
 	@echo ""
 	@echo "Languages available: ts, c, java"
 
@@ -56,7 +56,8 @@ $(TEMP_DIR):
 java_compile: $(AOC_PATH)/java/Main.java
 	@javac --enable-preview --release 22 -Xlint:unchecked -d $(TEMP_DIR) -cp $(TEMP_DIR)\; \
 		$(SRC_DIR)/java/Input.java \
-		$(SRC_DIR)/java/Run.java \
+		$(SRC_DIR)/java/Options.java \
+		$(SRC_DIR)/java/Runner.java \
 		$(AOC_PATH)/java/Main.java
 
 java:
@@ -98,12 +99,20 @@ python: $(AOC_PATH)/python/main.py
 ocaml: $(AOC_PATH)/ocaml/main.ml
 	@$(OCAML_RUNTIME) $(AOC_PATH)/ocaml/main.exe $(__ARGUMENTS)
 
+zig_compile: $(AOC_PATH)/zig/main.zig
+	@zig build -- $(AOC_PATH)/zig/main.zig
+
+zig:
+	@zig-out/bin/aoc_zig $(__ARGUMENTS)
+
 .PHONY: clean
 clean:
 	go mod tidy
 	go clean
 	dotnet clean AdventOfCode.csproj --nologo
 	cargo clean
+	rm -rf ./.zig-cache
+	rm -rf ./zig-out
 	rm -rf ./target
 	rm -rf ./_build
 	rm -rf ./build
@@ -117,6 +126,7 @@ format:
 	go fmt ./...
 	dotnet format AdventOfCode.csproj
 	deno fmt
+	zig fmt
 	opam exec -- dune fmt
 
 version:
