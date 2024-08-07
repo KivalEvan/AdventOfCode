@@ -20,7 +20,7 @@ func lcm(a int64, b int64) int64 {
 
 func main() {
 	options := core.SolutionOptions{
-		HasAlternate: false,
+		HasAlternate: true,
 		HasIo:        false,
 	}
 	core.Run(os.Args, part1, part2, options)

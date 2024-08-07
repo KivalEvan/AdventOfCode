@@ -7,7 +7,7 @@ from src.langs.python.run import run
 
 def main() -> None:
    options = {
-      'has_alternate': False,
+      'has_alternate': True,
       'has_io': False
    }
    run(sys.argv, part_one, part_two, options)

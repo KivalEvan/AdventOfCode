@@ -8,6 +8,7 @@ pub fn build(b: *std.Build) void {
         .optimize = .ReleaseSafe,
     });
     const aoc = b.addModule("aoc", .{ .root_source_file = b.path("src/langs/zig/run.zig") });
+    exe.linkLibC();
     exe.root_module.addImport("aoc", aoc);
 
     b.installArtifact(exe);

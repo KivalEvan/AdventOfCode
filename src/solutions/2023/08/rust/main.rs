@@ -3,6 +3,7 @@ use std::{collections::HashMap, env, iter::FromIterator};
 
 fn get_options() -> aoc_core::options::SolutionOptions {
    aoc_core::options::SolutionOptions {
+      has_alternate: true,
       ..Default::default()
    }
 }

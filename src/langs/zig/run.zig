@@ -21,8 +21,8 @@ const SolutionWrapper = struct {
     bench: [3][3]i128,
 
     pub fn init(
-        tag: []const u8,
-        func: fn (
+        comptime tag: []const u8,
+        comptime func: fn (
             input: []const u8,
             is_test: bool,
         ) []const u8,

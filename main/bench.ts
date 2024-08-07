@@ -68,8 +68,8 @@ function obtainTime(s: string): number[] {
       .filter((n) => !isNaN(n));
 }
 
-const itBench = typeof args.bench === 'string' ? +args.bench : args.bench ? 1_000 : 1_000;
-console.log('Benchmark iterating', itBench, 'times');
+const iteration = typeof args.bench === 'string' ? +args.bench : args.bench ? 2_500 : 2_500;
+console.log('Benchmark iterating', iteration, 'times');
 console.log('Measured in average milliseconds');
 
 const baseline = '';
@@ -97,7 +97,7 @@ for (let year = yearStart; year <= yearEnd; year++) {
                   '--day',
                   day.toString(),
                   '--bench',
-                  itBench.toString(),
+                  iteration.toString(),
                ].join(' '),
          );
 

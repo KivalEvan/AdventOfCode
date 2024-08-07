@@ -51,7 +51,7 @@ fn part1(input: []const u8, is_test: bool) []const u8 {
         res = res + (std.fmt.parseUnsigned(u32, &s, 10) catch 0);
     }
 
-    const buf = std.heap.page_allocator.alloc(u8, 42) catch unreachable;
+    const buf = std.heap.c_allocator.alloc(u8, 42) catch unreachable;
     const str = std.fmt.bufPrint(buf, "{}", .{res}) catch "";
     return str;
 }
@@ -90,7 +90,7 @@ fn part2(input: []const u8, is_test: bool) []const u8 {
         res = res + (std.fmt.parseUnsigned(u32, &s, 10) catch 0);
     }
 
-    const buf = std.heap.page_allocator.alloc(u8, 42) catch unreachable;
+    const buf = std.heap.c_allocator.alloc(u8, 42) catch unreachable;
     const str = std.fmt.bufPrint(buf, "{}", .{res}) catch "";
     return str;
 }

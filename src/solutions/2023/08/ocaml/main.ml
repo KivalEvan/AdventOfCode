@@ -1,6 +1,6 @@
 let options = Hashtbl.create 128;;
 
-Hashtbl.add options "has_alternate" false;;
+Hashtbl.add options "has_alternate" true;;
 Hashtbl.add options "has_io" false
 
 let ( +/ ) = Int64.add

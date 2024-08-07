@@ -2,7 +2,7 @@ local run = require('src.langs.lua.run')
 local str = require "src.langs.lua.utils.str"
 
 local options = {
-   has_alternate = false,
+   has_alternate = true,
    has_io = false,
 }
 
