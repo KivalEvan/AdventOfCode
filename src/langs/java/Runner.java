@@ -105,6 +105,10 @@ public class Runner {
       double timesPart[] = new double[solution.iteration];
       double timesOverall[] = new double[solution.iteration];
 
+      for (int i = 0; i < solution.iteration / 2; i++) {
+         execute(solution);
+      }
+
       for (int i = 0; i < solution.iteration; i++) {
          execute(solution);
          timesIo[i] = solution.elapsed[0];

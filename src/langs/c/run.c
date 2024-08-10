@@ -1,5 +1,6 @@
 #include "run.h"
 #include "input.h"
+#include "math.h"
 #include "options.h"
 #include "utils_ary.h"
 #include "utils_str.h"
@@ -60,7 +61,7 @@ static solution_t _print_result(const solution_t solution) {
              solution.bench[0][1], solution.bench[0][2]);
       printf("Part: %.3f .. %.3f - %.3f\n", solution.bench[1][0],
              solution.bench[1][1], solution.bench[1][2]);
-      printf("Overall: %.3f .. %.3f %.3f\n", solution.bench[2][0],
+      printf("Overall: %.3f .. %.3f - %.3f\n", solution.bench[2][0],
              solution.bench[2][1], solution.bench[2][2]);
    }
    printf("Result: %s\n", solution.result);
@@ -101,6 +102,11 @@ static solution_t *_perform(solution_t *solution) {
    double *timesIo = malloc(it * sizeof(double));
    double *timesPart = malloc(it * sizeof(double));
    double *timesOverall = malloc(it * sizeof(double));
+
+   for (size_t i = 0; i < it / 2; i++) {
+      _execute(solution);
+      free(solution->result);
+   }
 
    for (size_t i = 0; i < it; i++) {
       _execute(solution);

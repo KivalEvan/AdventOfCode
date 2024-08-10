@@ -7,8 +7,8 @@ namespace Year
    {
       static SolutionOptions OPTIONS = new()
       {
-         HasIO = false,
          HasAlternate = false,
+         HasIO = false,
       };
 
       static string Part1(string input, bool isTest = false)

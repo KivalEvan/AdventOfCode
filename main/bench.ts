@@ -68,7 +68,7 @@ function obtainTime(s: string): number[] {
       .filter((n) => !isNaN(n));
 }
 
-const iteration = typeof args.bench === 'string' ? +args.bench : args.bench ? 2_500 : 2_500;
+const iteration = typeof args.bench === 'string' ? +args.bench : args.bench ? 1_000 : 1_000;
 console.log('Benchmark iterating', iteration, 'times');
 console.log('Measured in average milliseconds');
 
@@ -107,9 +107,9 @@ for (let year = yearStart; year <= yearEnd; year++) {
             delete results[langName[lang]];
             continue;
          }
-         const benchmarks = output.slice(idx);
-         results[langName[lang]][0] = obtainTime(benchmarks.at(9)!)[2];
-         results[langName[lang]][1] = obtainTime(benchmarks.at(-2)!)[2];
+         const benchmarks = output.slice(idx).filter((e) => e.startsWith('Overall:'));
+         results[langName[lang]][0] = obtainTime(benchmarks.at(1)!)[2];
+         results[langName[lang]][1] = obtainTime(benchmarks.at(3)!)[2];
          results[langName[lang]][2] = results[langName[lang]][0] + results[langName[lang]][1];
          totalTime[langName[lang]] += results[langName[lang]][2];
       }

@@ -63,6 +63,9 @@ def perform(solution: SolutionWrapper) -> SolutionWrapper:
    elapsed_part = []
    elapsed_overall = []
    
+   for i in range(int(solution.iteration / 2)):
+      execute(solution)
+   
    for i in range(solution.iteration):
       execute(solution)
       elapsed_io.append(solution.elapsed[0])

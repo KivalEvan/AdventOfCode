@@ -126,6 +126,11 @@ fn perform(solution: *SolutionWrapper) !*SolutionWrapper {
     var times_part = try allocator.alloc(i128, solution.iteration);
     var times_overall = try allocator.alloc(i128, solution.iteration);
 
+    for (0..(solution.iteration / 2)) |_| {
+        _ = try execute(solution);
+        allocator.free(solution.result);
+    }
+
     for (0..solution.iteration) |i| {
         _ = try execute(solution);
         times_io[i] = solution.elapsed[0];

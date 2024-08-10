@@ -96,6 +96,10 @@ local function perform(solution)
    local timesPart = {}
    local timesOverall = {}
 
+   for i = 1, solution.iteration / 2 do
+      execute(solution)
+   end
+
    for i = 1, solution.iteration do
       execute(solution)
       timesIo[i] = solution.elapsed[1]

@@ -47,7 +47,8 @@
       "utils_vec.h": "c",
       "complex": "c",
       "tuple": "c",
-      "options.h": "c"
+      "options.h": "c",
+      "strings.h": "c"
    },
    "java.compile.nullAnalysis.mode": "automatic"
 }

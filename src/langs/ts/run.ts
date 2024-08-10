@@ -116,6 +116,10 @@ function perform(solution: SolutionWrapper): SolutionWrapper {
    const timesPart = new Array(solution.iteration).fill(0);
    const timesOverall = new Array(solution.iteration).fill(0);
 
+   for (let i = 0; i < (solution.iteration / 2); i++) {
+      execute(solution);
+   }
+
    for (let i = 0; i < solution.iteration; i++) {
       execute(solution);
       timesIo[i] = solution.elapsed[0];

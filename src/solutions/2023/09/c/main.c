@@ -9,7 +9,8 @@
 #include <string.h>
 
 static int64_t **parse_input(const char *restrict input, size_t *sz,
-                     size_t **restrict parsedSz, const int32_t reverse) {
+                             size_t **restrict parsedSz,
+                             const int32_t reverse) {
    size_t chunksSz, i, j;
    char **lines, **chunks;
    int64_t **ary, *aryParsed;
@@ -85,5 +86,5 @@ static char *part2(const char *restrict input, const int32_t isTest) {
 
 int main(int argc, char *argv[]) {
    solution_options_t options = getoptions();
-return run(argc, argv, part1, part2, options);
+   return run(argc, argv, part1, part2, options);
 }

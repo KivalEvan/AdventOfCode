@@ -78,6 +78,10 @@ fn perform(solution: &mut SolutionWrapper) -> &SolutionWrapper {
    let mut times_part: Vec<u128> = vec![0; solution.iteration as usize];
    let mut times_all: Vec<u128> = vec![0; solution.iteration as usize];
 
+   for _ in 0..(solution.iteration / 2) {
+      execute(solution);
+   }
+
    for i in 0..solution.iteration {
       execute(solution);
       times_io[i] = solution.elapsed[0];
@@ -137,7 +141,7 @@ pub fn run(
          bench: [[0.0, 0.0, 0.0], [0.0, 0.0, 0.0], [0.0, 0.0, 0.0]],
       },
       SolutionWrapper {
-         tag: "Test 1".to_string(),
+         tag: "Part 1".to_string(),
          func: part_1,
          path: path_input_main.clone(),
          test: answers.1,
@@ -159,7 +163,7 @@ pub fn run(
          bench: [[0.0, 0.0, 0.0], [0.0, 0.0, 0.0], [0.0, 0.0, 0.0]],
       },
       SolutionWrapper {
-         tag: "Test 2".to_string(),
+         tag: "Part 2".to_string(),
          func: part_2,
          path: path_input_main.clone(),
          test: answers.3,

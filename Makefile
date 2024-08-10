@@ -122,6 +122,7 @@ clean:
 
 format:
 	find $(SRC_DIR)/c/*.c | xargs clang-format -i
+	find $(SRC_DIR)/../solutions/*/*/c/*.c | xargs clang-format -i
 	find $(SRC_DIR)/c/includes/*.h | xargs clang-format -i
 	go fmt ./...
 	dotnet format AdventOfCode.csproj

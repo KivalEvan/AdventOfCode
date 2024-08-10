@@ -1,8 +1,8 @@
 #include "main.h"
 #include "run.h"
-#include "utils_vec.h"
 #include "utils_num.h"
 #include "utils_str.h"
+#include "utils_vec.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -159,5 +159,5 @@ static char *part2(const char *restrict input, const int32_t isTest) {
 
 int main(int argc, char *argv[]) {
    solution_options_t options = getoptions();
-return run(argc, argv, part1, part2, options);
+   return run(argc, argv, part1, part2, options);
 }

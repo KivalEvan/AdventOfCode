@@ -4,8 +4,8 @@
 #include "utils_str.h"
 #include <ctype.h>
 #include <math.h>
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 static int64_t ohnomath(const int64_t b, const int64_t c) {
@@ -40,11 +40,12 @@ static int64_t *getnum(const char *restrict str, size_t *count) {
       if (isdigit(str[i])) {
          digits *= 10;
          digits += str[i] - '0';
-      } else if(digits) {
+      } else if (digits) {
          ary[j++] = digits;
          digits = 0;
       }
-      if (str[i] == '\0') break;
+      if (str[i] == '\0')
+         break;
    }
 
    return ary;
@@ -106,5 +107,5 @@ static char *part2(const char *restrict input, const int32_t isTest) {
 
 int main(int argc, char *argv[]) {
    solution_options_t options = getoptions();
-return run(argc, argv, part1, part2, options);
+   return run(argc, argv, part1, part2, options);
 }

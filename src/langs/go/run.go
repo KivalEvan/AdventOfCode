@@ -76,12 +76,17 @@ func perform(solution *SolutionWrapper) *SolutionWrapper {
 	timesPart := make([]float64, solution.iteration)
 	timesOverall := make([]float64, solution.iteration)
 
+	for i := 0; i < solution.iteration/2; i++ {
+		solution = execute(solution)
+	}
+
 	for i := 0; i < solution.iteration; i++ {
 		solution = execute(solution)
 		timesIo[i] = float64(solution.elapsed[0]) / 1000.0
 		timesPart[i] = float64(solution.elapsed[1]) / 1000.0
 		timesOverall[i] = float64(solution.elapsed[0]+solution.elapsed[1]) / 1000.0
 	}
+
 	mn := 0.0
 	mx := 0.0
 	avg := 0.0

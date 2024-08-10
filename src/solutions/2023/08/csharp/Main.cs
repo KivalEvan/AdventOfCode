@@ -7,8 +7,8 @@ namespace Year2023
    {
       static SolutionOptions OPTIONS = new()
       {
-         HasIO = false,
          HasAlternate = true,
+         HasIO = false,
       };
 
       static private long gcd(long a, long b)

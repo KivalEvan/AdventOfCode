@@ -40,3 +40,9 @@ void *vec_get(const struct Vector *vec, const size_t idx) {
       return NULL;
    return vec->elements[idx];
 }
+
+void *vec_pop(struct Vector *vec) {
+   void *item = vec->elements[vec->length - 1];
+   vec->length--;
+   return item;
+}

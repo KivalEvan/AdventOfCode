@@ -90,6 +90,11 @@ namespace Core
          double[] timesPart = new double[solution.iteration];
          double[] timesOverall = new double[solution.iteration];
 
+         for (int i = 0; i < solution.iteration / 2; i++)
+         {
+            Execute(solution);
+         }
+
          for (int i = 0; i < solution.iteration; i++)
          {
             Execute(solution);

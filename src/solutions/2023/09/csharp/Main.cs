@@ -7,8 +7,8 @@ namespace Year2023
    {
       static SolutionOptions OPTIONS = new()
       {
-         HasIO = false,
          HasAlternate = false,
+         HasIO = false,
       };
 
       static long[] Difference(long[] ary, uint sz)

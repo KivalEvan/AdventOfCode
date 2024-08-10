@@ -1,7 +1,7 @@
 #include "main.h"
 #include "run.h"
-#include "utils_str.h"
 #include "utils_num.h"
+#include "utils_str.h"
 #include <ctype.h>
 #include <math.h>
 #include <stdio.h>
@@ -9,8 +9,8 @@
 #include <string.h>
 
 static void parse_input(const char *restrict input, int64_t ***locations,
-                int64_t **xRow, int64_t **yRow, int32_t *locSz, int32_t *xSz,
-                int32_t *ySz) {
+                        int64_t **xRow, int64_t **yRow, int32_t *locSz,
+                        int32_t *xSz, int32_t *ySz) {
    size_t i, j, x, y, maxX, maxY;
    int32_t flag;
    char **parsed = str_splitc(input, '\n', &maxY);
@@ -62,8 +62,9 @@ static void parse_input(const char *restrict input, int64_t ***locations,
    *ySz = i;
 }
 
-static int64_t len_between_locations(const int64_t *restrict row, const int32_t sz,
-                            const int64_t x1, const int64_t x2) {
+static int64_t len_between_locations(const int64_t *restrict row,
+                                     const int32_t sz, const int64_t x1,
+                                     const int64_t x2) {
    int64_t count = 0;
    for (int32_t i = 0; i < sz; i++) {
       int64_t x = row[i];
@@ -129,5 +130,5 @@ static char *part2(const char *restrict input, const int32_t isTest) {
 
 int main(int argc, char *argv[]) {
    solution_options_t options = getoptions();
-return run(argc, argv, part1, part2, options);
+   return run(argc, argv, part1, part2, options);
 }

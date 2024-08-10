@@ -95,6 +95,10 @@ let perform (solution : solutionwrapper) : solutionwrapper =
   let times_io = Array.init solution.iteration (fun _ -> 0.0) in
   let times_part = Array.init solution.iteration (fun _ -> 0.0) in
   let times_overall = Array.init solution.iteration (fun _ -> 0.0) in
+  for _ = 0 to solution.iteration - (1 / 2) do
+    let _ = execute solution in
+    ()
+  done;
   for i = 0 to solution.iteration - 1 do
     let _ = execute solution in
     times_io.(i) <- solution.elapsed.(0);

@@ -1,7 +1,7 @@
 #include "main.h"
 #include "run.h"
-#include "utils_str.h"
 #include "utils_num.h"
+#include "utils_str.h"
 #include <ctype.h>
 #include <math.h>
 #include <stdio.h>
@@ -11,7 +11,7 @@
 static char *part1(const char *restrict input, const int32_t isTest) {
    size_t ySz, xSz, x, y, shift, res = 0;
    char **grid;
-   
+
    grid = str_splitc(input, '\n', &ySz);
    xSz = strlen(grid[0]);
 
@@ -41,7 +41,7 @@ static char *part1(const char *restrict input, const int32_t isTest) {
 static char *joingrid(char **grid, const size_t xSz, const size_t ySz) {
    size_t y;
    char *str;
-   
+
    str = malloc((ySz * xSz + ySz) * sizeof(*str));
    str[0] = 0;
    for (y = 0; y < ySz; y++) {
@@ -114,7 +114,7 @@ static char *part2(const char *restrict input, const int32_t isTest) {
    char **set = malloc(1000 * sizeof(char *)), // i really dont want to check
                                                // or dynamically allocate
        **grid = str_splitc(input, '\n', &ySz);
-       
+
    xSz = strlen(grid[0]);
 
    for (c = 0; c < MAX_CYCLE; c++) {
@@ -151,5 +151,5 @@ static char *part2(const char *restrict input, const int32_t isTest) {
 
 int main(int argc, char *argv[]) {
    solution_options_t options = getoptions();
-return run(argc, argv, part1, part2, options);
+   return run(argc, argv, part1, part2, options);
 }

@@ -11,9 +11,8 @@
 
 #define BUCKET_SIZE 1024
 
-static void parse_input(const char *restrict input, size_t *sz,
-                          char ***fields, size_t ***conditions,
-                          size_t **conditionsSz) {
+static void parse_input(const char *restrict input, size_t *sz, char ***fields,
+                        size_t ***conditions, size_t **conditionsSz) {
    size_t linesSz, i, j;
    char **parsed, **lines, **cond;
    parsed = str_splitc(input, '\n', sz);
@@ -194,5 +193,5 @@ static char *part2(const char *restrict input, const int32_t isTest) {
 
 int main(int argc, char *argv[]) {
    solution_options_t options = getoptions();
-return run(argc, argv, part1, part2, options);
+   return run(argc, argv, part1, part2, options);
 }
