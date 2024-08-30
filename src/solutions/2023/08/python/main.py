@@ -5,18 +5,19 @@ import typing
 sys.path.append(os.getcwd())
 from src.langs.python.run import run
 
+
 def main() -> None:
-   options = {
-      'has_alternate': True,
-      'has_io': False
-   }
+   options = {'has_alternate': True, 'has_io': False}
    run(sys.argv, part_one, part_two, options)
 
+
 def gcd(a: int, b: int) -> int:
-   return  a if b == 0 else gcd(b, a % b)
+   return a if b == 0 else gcd(b, a % b)
+
 
 def lcm(a: int, b: int) -> int:
    return (a * b) / gcd(a, b)
+
 
 def part_one(input: str, is_test: bool) -> str:
    lines = input.split('\n')
@@ -25,7 +26,7 @@ def part_one(input: str, is_test: bool) -> str:
    for line in lines[2:]:
       dest, lr = line.split(' = ')
       maps[dest] = [x for x in lr[1:-1].split(', ')]
-      
+
    i = 0
    nav = 'AAA'
    sz = len(instructions)
@@ -35,8 +36,9 @@ def part_one(input: str, is_test: bool) -> str:
       i += 1
       if nav == 'ZZZ':
          break
-   
+
    return str(i)
+
 
 def part_two(input: str, is_test: bool) -> str:
    lines = input.split('\n')
@@ -48,7 +50,7 @@ def part_two(input: str, is_test: bool) -> str:
       maps[dest] = [x for x in lr[1:-1].split(', ')]
       if dest[2] == 'A':
          navs.append(dest)
-      
+
    res = 1
    for i in range(len(navs)):
       j = 0
@@ -59,8 +61,9 @@ def part_two(input: str, is_test: bool) -> str:
          if navs[i][2] == 'Z':
             break
       res = lcm(res, j)
-   
+
    return str(int(res))
+
 
 if __name__ == '__main__':
    main()

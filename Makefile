@@ -122,12 +122,15 @@ clean:
 
 format:
 	find $(SRC_DIR)/c/*.c | xargs clang-format -i
-	find $(SRC_DIR)/../solutions/*/*/c/*.c | xargs clang-format -i
 	find $(SRC_DIR)/c/includes/*.h | xargs clang-format -i
+	find $(SRC_DIR)/../solutions/*/*/c/*.c | xargs clang-format -i
 	go fmt ./...
 	dotnet format AdventOfCode.csproj
 	deno fmt
-	zig fmt
+	find $(SRC_DIR)/python/*.py | xargs yapf -ip
+	find $(SRC_DIR)/../solutions/*/*/python/*.py | xargs yapf -ip
+	find $(SRC_DIR)/zig/*.zig | xargs zig fmt
+	find $(SRC_DIR)/../solutions/*/*/zig/*.zig | xargs zig fmt
 	opam exec -- dune fmt
 
 version:

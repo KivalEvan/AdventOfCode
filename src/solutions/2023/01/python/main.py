@@ -5,12 +5,11 @@ import typing
 sys.path.append(os.getcwd())
 from src.langs.python.run import run
 
+
 def main() -> None:
-   options = {
-      'has_alternate': True,
-      'has_io': False
-   }
+   options = {'has_alternate': True, 'has_io': False}
    run(sys.argv, part_one, part_two, options)
+
 
 def get_num(str: str) -> str:
    if str.startswith("zero"):
@@ -33,19 +32,23 @@ def get_num(str: str) -> str:
       return '8'
    if str.startswith("nine"):
       return '9'
-   return None;
+   return None
+
 
 def get_num2(str: str) -> str:
    if str[0].isdigit():
       return str[0]
    return get_num(str)
 
+
 def do_part_one(line: str) -> int:
    digits = [x for x in line if x.isdigit()]
    return int(digits[0] + digits[-1])
 
+
 def part_one(input: str, is_test: bool) -> str:
    return str(sum(do_part_one(x) for x in input.split('\n')))
+
 
 def do_part_two(line: str) -> int:
    res = ''
@@ -62,8 +65,10 @@ def do_part_two(line: str) -> int:
          break
    return int(res)
 
+
 def part_two(input: str, is_test: bool) -> str:
    return str(sum(do_part_two(x) for x in input.split('\n')))
+
 
 if __name__ == '__main__':
    main()
