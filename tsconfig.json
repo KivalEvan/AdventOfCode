@@ -1,5 +1,8 @@
 {
    "compilerOptions": {
+      "module": "ESNext",
+      "target": "ESNext",
+      "allowImportingTsExtensions": true,
       "paths": {
          "src/*": ["./src/langs/ts/*"]
       }

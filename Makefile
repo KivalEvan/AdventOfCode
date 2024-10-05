@@ -14,6 +14,7 @@ JS_RUNTIME = deno run --allow-read=. --allow-hrtime
 # JS_RUNTIME = bun
 LUA_RUNTIME = luajit
 OCAML_RUNTIME = opam exec -- dune exec
+MEMORY_USAGE_CMD = /usr/bin/time -f "\nMemory used (KB): %M"
 
 SRCS = $(wildcard $(SRC_DIR)/c/*.c)
 OBJS = $(patsubst $(SRC_DIR)/c/%.c, $(TEMP_DIR)/%.o, $(SRCS))
@@ -41,7 +42,7 @@ c_compile: $(OBJS) $(TEMP_DIR)
 	@$(CC) $(CFLAGS) $(OBJS) $(TEMP_DIR)/main.o -lm -o $(TEMP_DIR)/aoc_c
 
 c:
-	@temp/aoc_c $(__ARGUMENTS)
+	@$(MEMORY_USAGE_CMD) temp/aoc_c $(__ARGUMENTS)
 
 c_debug:
 	@valgrind temp/aoc_c $(AOC_PATH) $(ARGS) > /dev/null
@@ -61,7 +62,7 @@ java_compile: $(AOC_PATH)/java/Main.java
 		$(AOC_PATH)/java/Main.java
 
 java:
-	@java --enable-preview -cp $(TEMP_DIR) kival/aoc/year${YEAR}/day${DAY}/Main $(__ARGUMENTS)
+	@$(MEMORY_USAGE_CMD) java --enable-preview -cp $(TEMP_DIR) kival/aoc/year${YEAR}/day${DAY}/Main $(__ARGUMENTS)
 
 csharp_compile: $(AOC_PATH)/csharp/Main.cs
 	@dotnet clean AdventOfCode.csproj --nologo -v=q
@@ -73,37 +74,37 @@ csharp_compile: $(AOC_PATH)/csharp/Main.cs
 		-o temp/csharp
 
 csharp:
-	@temp/csharp/AdventOfCode $(__ARGUMENTS)
+	@$(MEMORY_USAGE_CMD) temp/csharp/AdventOfCode $(__ARGUMENTS)
 
 go_compile: $(AOC_PATH)/go/main.go
 	@go build -o $(TEMP_DIR)/aoc_go $(AOC_PATH)/go/main.go
 
 go:
-	@$(TEMP_DIR)/aoc_go $(__ARGUMENTS)
+	@$(MEMORY_USAGE_CMD) $(TEMP_DIR)/aoc_go $(__ARGUMENTS)
 
 rust_compile: $(AOC_PATH)/rust/main.rs
 	@cargo build --package solution-$(YEAR)-$(DAY) -rq
 
 rust:
-	@target/release/aoc_rs $(__ARGUMENTS)
+	@$(MEMORY_USAGE_CMD) target/release/aoc_rs $(__ARGUMENTS)
 
 lua: $(AOC_PATH)/lua/main.lua
-	@$(LUA_RUNTIME) $(AOC_PATH)/lua/main.lua $(__ARGUMENTS)
+	@$(MEMORY_USAGE_CMD) $(LUA_RUNTIME) $(AOC_PATH)/lua/main.lua $(__ARGUMENTS)
 
 ts: $(AOC_PATH)/ts/main.ts
-	@$(JS_RUNTIME) $(AOC_PATH)/ts/main.ts $(__ARGUMENTS)
+	@$(MEMORY_USAGE_CMD) $(JS_RUNTIME) $(AOC_PATH)/ts/main.ts $(__ARGUMENTS)
 
 python: $(AOC_PATH)/python/main.py
-	@$(PY_RUNTIME) $(AOC_PATH)/python/main.py $(__ARGUMENTS)
+	@$(MEMORY_USAGE_CMD) $(PY_RUNTIME) $(AOC_PATH)/python/main.py $(__ARGUMENTS)
 
 ocaml: $(AOC_PATH)/ocaml/main.ml
-	@$(OCAML_RUNTIME) $(AOC_PATH)/ocaml/main.exe $(__ARGUMENTS)
+	@$(MEMORY_USAGE_CMD) $(OCAML_RUNTIME) $(AOC_PATH)/ocaml/main.exe $(__ARGUMENTS)
 
 zig_compile: $(AOC_PATH)/zig/main.zig
 	@zig build -- $(AOC_PATH)/zig/main.zig
 
 zig:
-	@zig-out/bin/aoc_zig $(__ARGUMENTS)
+	@$(MEMORY_USAGE_CMD) zig-out/bin/aoc_zig $(__ARGUMENTS)
 
 .PHONY: clean
 clean:

@@ -9,8 +9,8 @@
    "imports": { "src/": "./src/langs/ts/" },
    "tasks": {
       "fetch": "deno run --allow-read --allow-write=. --allow-net --allow-env --env ./main/main.ts",
-      "aoc": "deno run --allow-read --allow-hrtime --allow-run --allow-env ./main/main.ts",
-      "aoc:watch": "deno run --watch --allow-read --allow-hrtime --allow-run --allow-env ./main/main.ts",
-      "aoc:bench": "deno run --allow-read --allow-hrtime --allow-run --allow-env ./main/bench.ts"
+      "aoc": "deno run --allow-read --allow-hrtime --allow-run --allow-env --allow-sys ./main/main.ts",
+      "aoc:watch": "deno run --watch --allow-read --allow-hrtime --allow-run --allow-sys --allow-env ./main/main.ts",
+      "aoc:bench": "deno run --allow-read --allow-hrtime --allow-run --allow-env --allow-sys ./main/bench.ts"
    }
 }

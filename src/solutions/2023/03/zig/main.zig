@@ -14,6 +14,8 @@ fn concat(al: std.mem.Allocator, a: []const u8, b: []const u8) ![]u8 {
     const result = try al.alloc(u8, a.len + b.len);
     @memcpy(result[0..a.len], a);
     @memcpy(result[a.len..], b);
+    al.free(a);
+    al.free(b);
     return result;
 }
 
@@ -23,11 +25,20 @@ fn yeetTheNumber(grid: [][]u8, x: usize, y: usize) []u8 {
         res = std.heap.c_allocator.alloc(u8, 1) catch unreachable;
         res[0] = grid[y][x];
         grid[y][x] = '.';
-        if (x > 0) res =
-            concat(std.heap.c_allocator, yeetTheNumber(grid, x - 1, y), res) catch unreachable;
-        if (x < grid[y].len - 1) res = concat(std.heap.c_allocator, res, yeetTheNumber(grid, x + 1, y)) catch unreachable;
+        if (x > 0) {
+            res =
+                concat(std.heap.c_allocator, yeetTheNumber(grid, x - 1, y), res) catch unreachable;
+        }
+        if (x < grid[y].len - 1) {
+            res = concat(std.heap.c_allocator, res, yeetTheNumber(grid, x + 1, y)) catch unreachable;
+        }
     }
     return res;
+}
+
+fn parseThenFree(val: []u8) u64 {
+    defer std.heap.c_allocator.free(val);
+    return std.fmt.parseInt(u64, val, 10) catch 0;
 }
 
 fn part1(input: []const u8, is_test: bool) []const u8 {
@@ -46,17 +57,17 @@ fn part1(input: []const u8, is_test: bool) []const u8 {
         for (0..grid.len) |x| {
             if (isSymbol(grid[y][x])) {
                 if (x > 0) {
-                    if (y < grid.len - 1) res += std.fmt.parseInt(u64, yeetTheNumber(grid, x - 1, y + 1), 10) catch 0;
-                    if (y > 0) res += std.fmt.parseInt(u64, yeetTheNumber(grid, x - 1, y - 1), 10) catch 0;
-                    res += std.fmt.parseInt(u64, yeetTheNumber(grid, x - 1, y), 10) catch 0;
+                    if (y < grid.len - 1) res += parseThenFree(yeetTheNumber(grid, x - 1, y + 1));
+                    if (y > 0) res += parseThenFree(yeetTheNumber(grid, x - 1, y - 1));
+                    res += parseThenFree(yeetTheNumber(grid, x - 1, y));
                 }
                 if (x < grid.len - 1) {
-                    if (y < grid.len - 1) res += std.fmt.parseInt(u64, yeetTheNumber(grid, x + 1, y + 1), 10) catch 0;
-                    if (y > 0) res += std.fmt.parseInt(u64, yeetTheNumber(grid, x + 1, y - 1), 10) catch 0;
-                    res += std.fmt.parseInt(u64, yeetTheNumber(grid, x + 1, y), 10) catch 0;
+                    if (y < grid.len - 1) res += parseThenFree(yeetTheNumber(grid, x + 1, y + 1));
+                    if (y > 0) res += parseThenFree(yeetTheNumber(grid, x + 1, y - 1));
+                    res += parseThenFree(yeetTheNumber(grid, x + 1, y));
                 }
-                if (y > 0) res += std.fmt.parseInt(u64, yeetTheNumber(grid, x, y - 1), 10) catch 0;
-                if (y < grid.len - 1) res += std.fmt.parseInt(u64, yeetTheNumber(grid, x, y + 1), 10) catch 0;
+                if (y > 0) res += parseThenFree(yeetTheNumber(grid, x, y - 1));
+                if (y < grid.len - 1) res += parseThenFree(yeetTheNumber(grid, x, y + 1));
             }
         }
     }
@@ -84,17 +95,17 @@ fn part2(input: []const u8, is_test: bool) []const u8 {
                 var ary = std.ArrayList(u64).initCapacity(std.heap.c_allocator, 8) catch unreachable;
                 defer ary.deinit();
                 if (x > 0) {
-                    if (y < grid.len - 1) ary.append(std.fmt.parseInt(u64, yeetTheNumber(grid, x - 1, y + 1), 10) catch 0) catch unreachable;
-                    if (y > 0) ary.append(std.fmt.parseInt(u64, yeetTheNumber(grid, x - 1, y - 1), 10) catch 0) catch unreachable;
-                    ary.append(std.fmt.parseInt(u64, yeetTheNumber(grid, x - 1, y), 10) catch 0) catch unreachable;
+                    if (y < grid.len - 1) ary.append(parseThenFree(yeetTheNumber(grid, x - 1, y + 1))) catch unreachable;
+                    if (y > 0) ary.append(parseThenFree(yeetTheNumber(grid, x - 1, y - 1))) catch unreachable;
+                    ary.append(parseThenFree(yeetTheNumber(grid, x - 1, y))) catch unreachable;
                 }
                 if (x < grid.len - 1) {
-                    if (y < grid.len - 1) ary.append(std.fmt.parseInt(u64, yeetTheNumber(grid, x + 1, y + 1), 10) catch 0) catch unreachable;
-                    if (y > 0) ary.append(std.fmt.parseInt(u64, yeetTheNumber(grid, x + 1, y - 1), 10) catch 0) catch unreachable;
-                    ary.append(std.fmt.parseInt(u64, yeetTheNumber(grid, x + 1, y), 10) catch 0) catch unreachable;
+                    if (y < grid.len - 1) ary.append(parseThenFree(yeetTheNumber(grid, x + 1, y + 1))) catch unreachable;
+                    if (y > 0) ary.append(parseThenFree(yeetTheNumber(grid, x + 1, y - 1))) catch unreachable;
+                    ary.append(parseThenFree(yeetTheNumber(grid, x + 1, y))) catch unreachable;
                 }
-                if (y > 0) ary.append(std.fmt.parseInt(u64, yeetTheNumber(grid, x, y - 1), 10) catch 0) catch unreachable;
-                if (y < grid.len - 1) ary.append(std.fmt.parseInt(u64, yeetTheNumber(grid, x, y + 1), 10) catch 0) catch unreachable;
+                if (y > 0) ary.append(parseThenFree(yeetTheNumber(grid, x, y - 1))) catch unreachable;
+                if (y < grid.len - 1) ary.append(parseThenFree(yeetTheNumber(grid, x, y + 1))) catch unreachable;
 
                 var filtered = std.ArrayList(u64).init(std.heap.c_allocator);
                 defer filtered.deinit();

@@ -8,11 +8,11 @@ learning purposes because fun and pain.
 This is also the order of priority that I will solve the problem with, ~~totally not because of job
 market~~:
 
-- TypeScript 5.5.2 with Deno 1.45.5 for `.ts`
-- Python 3.10.14 with PyPy 7.3.16 for `.py`
+- TypeScript 5.5.2 with Deno 1.46.3 for `.ts`
+- Python 3.10.14 with PyPy 7.3.17 for `.py`
 - Rust 1.79.0 for `.rust`
-- Go 1.22.5 for `.go`
-- C# 12 with .NET 8.0.107 for `.cs`
+- Go 1.23.1 for `.go`
+- C# 13 with .NET 9.0.100-rc for `.cs`
 - C23 with Clang 18.1.8 for `.c`
 - Zig 0.13 for `.zig`
 - Lua 5.4.7 with LuaJIT 2.1 for `.lua`
@@ -73,20 +73,20 @@ Will try `bash` when I feel like it.
 | 9   | ✅         | ✅     | ✅   | ✅ | ✅ | ✅ | ✅  | ✅  | ✅   | ✅    |
 | 10  | ✅         | ✅     | ✅   | ✅ | ✅ | ✅ | ✅  | ✅  |      |       |
 | 11  | ✅         |        |      |    |    | ✅ |     |     |      |       |
-| 12  | ✅         |        |      |    |    | ☑️  |     |     |      |       |
+| 12  | ✅         |        |      |    |    | ☑️ |     |     |      |       |
 | 13  | ✅         |        |      |    |    |    |     |     |      |       |
-| 14  | ✅         |        |      |    |    | ☑️  |     |     |      |       |
+| 14  | ✅         |        |      |    |    | ☑️ |     |     |      |       |
 | 15  | ✅         |        |      |    |    |    |     |     |      |       |
 | 16  | ✅         |        |      |    |    |    |     |     |      |       |
 | 17  | ✅         |        |      |    |    |    |     |     |      |       |
 | 18  | ✅         |        |      |    |    |    |     |     |      |       |
 | 19  | ✅         |        |      |    |    |    |     |     |      |       |
-| 20  | ☑️          |        |      |    |    |    |     |     |      |       |
-| 21  | ☑️          |        |      |    |    |    |     |     |      |       |
+| 20  | ☑️         |        |      |    |    |    |     |     |      |       |
+| 21  | ☑️         |        |      |    |    |    |     |     |      |       |
 | 22  | ✅         |        |      |    |    |    |     |     |      |       |
 | 23  | ✅         |        |      |    |    |    |     |     |      |       |
 | 24  | ✅         |        |      |    |    |    |     |     |      |       |
-| 25  | ☑️          |        |      |    |    |    |     |     |      |       |
+| 25  | ☑️         |        |      |    |    |    |     |     |      |       |
 
 ## Note
 
