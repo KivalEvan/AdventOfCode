@@ -33,7 +33,9 @@ export async function runner(
 
    if (benchmark > 1) console.log('Benchmarking...');
    else console.log('Running...');
-   const { stdout, stderr } = await execAsync(
+   let stdout = '';
+   let stderr = '';
+   await execAsync(
       'make ' +
          [
             lang,
@@ -41,7 +43,10 @@ export async function runner(
             'DAY=' + day.toString().padStart(2, '0'),
             'ITERATION=' + benchmark.toString(),
          ].join(' '),
-   );
+   ).catch((e) => e).then(({ stdout: out, stderr: err }) => {
+      stdout = out;
+      stderr = err;
+   });
 
    console.log(stdout.trim());
    const td = stderr.trim();

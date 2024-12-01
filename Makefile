@@ -10,7 +10,7 @@ OBJ_DIR = obj
 TEMP_DIR = temp
 
 PY_RUNTIME = pypy3
-JS_RUNTIME = deno run --allow-read=. --allow-hrtime
+JS_RUNTIME = deno run --allow-read=.
 # JS_RUNTIME = bun
 LUA_RUNTIME = luajit
 OCAML_RUNTIME = opam exec -- dune exec
@@ -55,7 +55,7 @@ $(TEMP_DIR):
 
 # imagine "compiling" these with makefile lmao
 java_compile: $(AOC_PATH)/java/Main.java
-	@javac --enable-preview --release 22 -Xlint:unchecked -d $(TEMP_DIR) -cp $(TEMP_DIR)\; \
+	@javac --enable-preview --release 23 -Xlint:unchecked -d $(TEMP_DIR) -cp $(TEMP_DIR)\; \
 		$(SRC_DIR)/java/Input.java \
 		$(SRC_DIR)/java/Options.java \
 		$(SRC_DIR)/java/Runner.java \

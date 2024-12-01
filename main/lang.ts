@@ -31,13 +31,13 @@ export const langCompile: LangName[] = [
 export const langName: Record<LangName, string> = {
    ts: 'TypeScript 5.6',
    python: 'Python 3.10',
-   rust: 'Rust 1.79',
+   rust: 'Rust 1.82',
    go: 'Go 1.23',
-   csharp: 'C# 13',
+   csharp: 'C# 12',
    c: 'C23',
    zig: 'Zig 0.13',
    lua: 'Lua 5.4',
-   java: 'Java 22',
+   java: 'Java 23',
    ocaml: 'OCaml 5.2',
 };
 

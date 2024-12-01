@@ -1,4 +1,4 @@
-package kival.aoc.year2023.day10;
+package kival.aoc.year2023.day13;
 
 import kival.aoc.core.*;
 
@@ -13,7 +13,6 @@ public class Main {
 
    public void main(String[] args) {
       Options.SolutionOptions options = new Options.SolutionOptions();
-      options.hasAlternate = true;
       Runner.run(args, this::part1, this::part2, options);
    }
 }

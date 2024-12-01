@@ -1,7 +1,5 @@
 package kival.aoc.core;
 
-import static java.lang.StringTemplate.STR;
-
 import java.util.stream.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -58,21 +56,24 @@ public class Runner {
       if (expected.equals(""))
          return;
       if (!actual.equals(expected))
-         throw new Error(STR."Expected \{expected} but got \{actual}");
+         throw new Error("Expected " + expected + " but got " + actual);
    }
 
    private static SolutionWrapper printResult(SolutionWrapper solution) {
       if (solution.iteration == 1) {
-         System.out.println(STR."\n\{solution.tag}: (ms) IO > Part > Overall");
-         System.out.println(STR."Timer: \{solution.bench[0][2]} > \{solution.bench[1][2]} > \{solution.bench[2][2]}");
+         System.out.println("\n" + solution.tag + ": (ms) IO > Part > Overall");
+         System.out
+               .println("Timer: " + solution.bench[0][2] + " > " + solution.bench[1][2] + " > " + solution.bench[2][2]);
+      } else {
+         System.out.println("\n" + solution.tag + ": (ms) min..max avg");
+         System.out
+               .println("IO: " + solution.bench[0][0] + " .. " + solution.bench[0][1] + " - " + solution.bench[0][2]);
+         System.out
+               .println("Part: " + solution.bench[1][0] + " .. " + solution.bench[1][1] + " - " + solution.bench[1][2]);
+         System.out.println(
+               "Overall: " + solution.bench[2][0] + " .. " + solution.bench[2][1] + " - " + solution.bench[2][2]);
       }
-      else {
-         System.out.println(STR."\n\{solution.tag}: (ms) min..max avg");
-         System.out.println(STR."IO: \{solution.bench[0][0]} .. \{solution.bench[0][1]} - \{solution.bench[0][2]}");
-         System.out.println(STR."Part: \{solution.bench[1][0]} .. \{solution.bench[1][1]} - \{solution.bench[1][2]}");
-         System.out.println(STR."Overall: \{solution.bench[2][0]} .. \{solution.bench[2][1]} - \{solution.bench[2][2]}");
-      }
-      System.out.println(STR."Result: \{solution.result}");
+      System.out.println("Result: " + solution.result);
 
       return solution;
    }
@@ -95,7 +96,7 @@ public class Runner {
 
       solution.result = result;
       solution.elapsed[1] = elapsed;
-      
+
       return solution;
    }
 
@@ -119,15 +120,15 @@ public class Runner {
       solution.bench[0][0] = round(Arrays.stream(timesIo).min().getAsDouble(), 3);
       solution.bench[0][1] = round(Arrays.stream(timesIo).max().getAsDouble(), 3);
       solution.bench[0][2] = round(Arrays.stream(timesIo).average().getAsDouble(), 3);
-      
+
       solution.bench[1][0] = round(Arrays.stream(timesPart).min().getAsDouble(), 3);
       solution.bench[1][1] = round(Arrays.stream(timesPart).max().getAsDouble(), 3);
       solution.bench[1][2] = round(Arrays.stream(timesPart).average().getAsDouble(), 3);
-      
+
       solution.bench[2][0] = round(Arrays.stream(timesOverall).min().getAsDouble(), 3);
       solution.bench[2][1] = round(Arrays.stream(timesOverall).max().getAsDouble(), 3);
       solution.bench[2][2] = round(Arrays.stream(timesOverall).average().getAsDouble(), 3);
-      
+
       return solution;
    }
 
@@ -149,7 +150,7 @@ public class Runner {
          solutions[1] = new SolutionWrapper("Part 1", part1, pathInputMain, answers.part1, iteration, options);
          solutions[2] = new SolutionWrapper("Test 2", part2, pathInputTest2, answers.test2, iteration, options);
          solutions[3] = new SolutionWrapper("Part 2", part2, pathInputMain, answers.part2, iteration, options);
-         
+
          for (SolutionWrapper s : solutions) {
             perform(s);
          }

@@ -6,7 +6,7 @@ import { exec } from 'node:child_process';
 const args = fetchArgs();
 
 const langList: LangName[] = Object.keys(langName).filter(
-   (l) => l === getLang(l) || l
+   (l) => l === getLang(l) || l,
 ) as LangName[];
 
 const currentDate = new Date();
@@ -68,26 +68,25 @@ function obtainTime(s: string): number[] {
       .filter((n) => !isNaN(n));
 }
 
-const iteration =
-   typeof args.bench === 'string' ? +args.bench : args.bench ? 1_000 : 1_000;
+const iteration = typeof args.bench === 'string' ? +args.bench : args.bench ? 1_000 : 1_000;
 console.log('Benchmark iterating', iteration, 'times');
 console.log('Measured in average milliseconds');
 
 const baseline = '';
 const totalTime: Record<string, number> = Object.keys(langName).reduce(
    (p, v) => ({ ...p, [langName[v as LangName]]: 0 }),
-   {}
+   {},
 );
 
 for (let year = yearStart; year <= yearEnd; year++) {
    for (let day = dayStart; day <= dayEnd; day++) {
       const results: Record<string, number[]> = Object.keys(langName).reduce(
          (p, v) => ({ ...p, [langName[v as LangName]]: [] }),
-         {}
+         {},
       );
       const memories: Record<string, number[]> = Object.keys(langName).reduce(
          (p, v) => ({ ...p, [langName[v as LangName]]: [] }),
-         {}
+         {},
       );
       for (const lang of langList) {
          const cmd = await promisify(exec)(
@@ -103,15 +102,18 @@ for (let year = yearStart; year <= yearEnd; year++) {
                   day.toString(),
                   '--bench',
                   iteration.toString(),
-               ].join(' ')
+               ].join(' '),
          );
 
          const output = cmd.stdout.trim().split('\n');
-         const idx = output.findIndex((e) => e.endsWith('min..max avg'));
-         if (idx === -1) {
+         if (
+            output.some((e) => e.startsWith('make: ***')) ||
+            !output.some((e) => e.startsWith('Memory used'))
+         ) {
             delete results[langName[lang]];
             continue;
          }
+         const idx = output.findIndex((e) => e.startsWith('Benchmarking...'));
          const benchmarks = output
             .slice(idx)
             .filter((e) => e.startsWith('Overall:'));
@@ -120,8 +122,7 @@ for (let year = yearStart; year <= yearEnd; year++) {
             .filter((e) => e.startsWith('Memory used'));
          results[langName[lang]][0] = obtainTime(benchmarks.at(1)!)[2];
          results[langName[lang]][1] = obtainTime(benchmarks.at(3)!)[2];
-         results[langName[lang]][2] =
-            results[langName[lang]][0] + results[langName[lang]][1];
+         results[langName[lang]][2] = results[langName[lang]][0] + results[langName[lang]][1];
          memories[langName[lang]][0] = +mems[0].split(' ').at(-1)! / 1024;
          totalTime[langName[lang]] += results[langName[lang]][2];
       }
@@ -133,7 +134,7 @@ for (let year = yearStart; year <= yearEnd; year++) {
          Math.min(
             ...Object.values(totalTime)
                .filter((x) => x)
-               .map((v) => v)
+               .map((v) => v),
          ),
       ];
       const max = [
@@ -143,13 +144,13 @@ for (let year = yearStart; year <= yearEnd; year++) {
          Math.max(
             ...Object.values(totalTime)
                .filter((x) => x)
-               .map((v) => v)
+               .map((v) => v),
          ),
       ];
       const minPeak = Math.min(
          ...Object.values(memories)
             .filter((x) => x[0] > 0)
-            .map((v) => v[0])
+            .map((v) => v[0]),
       );
       const maxPeak = Math.max(...Object.values(memories).map((v) => v[0]));
       console.log('\n', year, '--', day);
@@ -161,7 +162,7 @@ for (let year = yearStart; year <= yearEnd; year++) {
          2,
          '     Total',
          '          Overall',
-         '           Memory'
+         '           Memory',
       );
       for (const lang in results) {
          const total = totalTime[lang];
@@ -180,9 +181,9 @@ for (let year = yearStart; year <= yearEnd; year++) {
             results[lang][2] === min[2]
                ? ''.padStart(8, ' ')
                : ((results[lang][2] / min[2]).toFixed(2) + 'x').padStart(
-                    8,
-                    ' '
-                 ),
+                  8,
+                  ' ',
+               ),
             total === min[3]
                ? green(total.toFixed(3).padStart(8, ' '))
                : max[3] === total
@@ -203,8 +204,8 @@ for (let year = yearStart; year <= yearEnd; year++) {
                : minPeak === memories[lang][0]
                ? ''.padStart(8, ' ')
                : (
-                    (memories[lang][0] / (minPeak || 1)).toFixed(2) + 'x'
-                 ).padStart(8, ' ')
+                  (memories[lang][0] / (minPeak || 1)).toFixed(2) + 'x'
+               ).padStart(8, ' '),
          );
       }
    }

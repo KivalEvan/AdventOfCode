@@ -8,15 +8,15 @@ learning purposes because fun and pain.
 This is also the order of priority that I will solve the problem with, ~~totally not because of job
 market~~:
 
-- TypeScript 5.5.2 with Deno 1.46.3 for `.ts`
+- TypeScript 5.6.2 with Deno 2.2.1 for `.ts`
 - Python 3.10.14 with PyPy 7.3.17 for `.py`
-- Rust 1.79.0 for `.rust`
-- Go 1.23.1 for `.go`
-- C# 13 with .NET 9.0.100-rc for `.cs`
+- Rust 1.82.0 for `.rust`
+- Go 1.23.3 for `.go`
+- C# 12 with .NET 8.0.110 for `.cs`
 - C23 with Clang 18.1.8 for `.c`
 - Zig 0.13 for `.zig`
 - Lua 5.4.7 with LuaJIT 2.1 for `.lua`
-- Java 22 for `.java`
+- Java 23 for `.java`
 - OCaml 5.2.0 for `.ml`
 
 Parallelism/concurrency are allowed only in solution implementation. Result must always convert to
@@ -57,6 +57,36 @@ Will try `bash` when I feel like it.
 ☑️ = Partial
 
 ✅ = Completed
+
+### 2024
+
+| Day | TypeScript | Python | Rust | Go | C# | C | Zig | Lua | Java | OCaml |
+| --- | ---------- | ------ | ---- | -- | -- | - | --- | --- | ---- | ----- |
+| 1   | ✅         | ✅     |      | ✅ | ✅ |   |     | ✅  |      |       |
+| 2   |            |        |      |    |    |   |     |     |      |       |
+| 3   |            |        |      |    |    |   |     |     |      |       |
+| 4   |            |        |      |    |    |   |     |     |      |       |
+| 5   |            |        |      |    |    |   |     |     |      |       |
+| 6   |            |        |      |    |    |   |     |     |      |       |
+| 7   |            |        |      |    |    |   |     |     |      |       |
+| 8   |            |        |      |    |    |   |     |     |      |       |
+| 9   |            |        |      |    |    |   |     |     |      |       |
+| 10  |            |        |      |    |    |   |     |     |      |       |
+| 11  |            |        |      |    |    |   |     |     |      |       |
+| 12  |            |        |      |    |    |   |     |     |      |       |
+| 13  |            |        |      |    |    |   |     |     |      |       |
+| 14  |            |        |      |    |    |   |     |     |      |       |
+| 15  |            |        |      |    |    |   |     |     |      |       |
+| 16  |            |        |      |    |    |   |     |     |      |       |
+| 17  |            |        |      |    |    |   |     |     |      |       |
+| 18  |            |        |      |    |    |   |     |     |      |       |
+| 19  |            |        |      |    |    |   |     |     |      |       |
+| 20  |            |        |      |    |    |   |     |     |      |       |
+| 21  |            |        |      |    |    |   |     |     |      |       |
+| 22  |            |        |      |    |    |   |     |     |      |       |
+| 23  |            |        |      |    |    |   |     |     |      |       |
+| 24  |            |        |      |    |    |   |     |     |      |       |
+| 25  |            |        |      |    |    |   |     |     |      |       |
 
 ### 2023
 
