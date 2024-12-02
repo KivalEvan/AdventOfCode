@@ -1,29 +1,27 @@
 
 using Core;
 
-namespace Year2023
+namespace Year2023;
+public static class Day12
 {
-   public static class Day12
+   static SolutionOptions OPTIONS = new()
    {
-      static SolutionOptions OPTIONS = new()
-      {
-         HasAlternate = false,
-         HasIO = false,
-      };
+      HasAlternate = false,
+      HasIO = false,
+   };
 
-      static string Part1(string input, bool isTest = false)
-      {
-         return "";
-      }
+   static string Part1(string input, bool isTest = false)
+   {
+      return "";
+   }
 
-      static string Part2(string input, bool isTest = false)
-      {
-         return "";
-      }
+   static string Part2(string input, bool isTest = false)
+   {
+      return "";
+   }
 
-      static void Main(string[] args)
-      {
-         Runner.Run(args, Part1, Part2, OPTIONS);
-      }
+   static void Main(string[] args)
+   {
+      Runner.Run(args, Part1, Part2, OPTIONS);
    }
 }

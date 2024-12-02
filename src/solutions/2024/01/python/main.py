@@ -12,11 +12,8 @@ def main() -> None:
 
 
 def part_one(input: str, is_test: bool) -> str:
-   pairs = [line.split() for line in input.split('\n')]
-   l = [int(pair[0]) for pair in pairs]
-   r = [int(pair[1]) for pair in pairs]
-   l.sort()
-   r.sort()
+   l, r = (sorted(list([int(y) for y in x]))
+           for x in zip(*[line.split() for line in input.split('\n')]))
 
    total = 0
    for i in range(len(l)):
