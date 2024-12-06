@@ -41,7 +41,7 @@ public static class Runner
       Stopwatch stopwatch = Stopwatch.StartNew();
       string output = fn();
       stopwatch.Stop();
-      return (output, stopwatch.Elapsed.Microseconds / 1000d);
+      return (output, stopwatch.Elapsed.TotalMilliseconds);
    }
 
    private static void Test(string actual, string expected)
@@ -114,6 +114,9 @@ public static class Runner
       solution.bench[2][1] = timesOverall.Max();
       solution.bench[2][2] = timesOverall.Sum() / timesOverall.Length;
 
+      PrintResult(solution);
+      Test(solution.result, solution.test);
+
       return solution;
    }
 
@@ -126,17 +129,12 @@ public static class Runner
       int iteration = args.Length > 1 ? int.Parse(args[1]) : 0;
 
       Input.Answers answers = Input.GetAnswers(pathAnswers);
-      IEnumerable<SolutionWrapper> solutions = new List<SolutionWrapper> {
-            new SolutionWrapper("Test 1", part1, pathTest1, answers.Test1, iteration, options),
-            new SolutionWrapper("Part 1", part1, pathInput, answers.Part1, iteration, options),
-            new SolutionWrapper("Test 2", part2, pathTest2, answers.Test2, iteration, options),
-            new SolutionWrapper("Part 2", part2, pathInput, answers.Part2, iteration, options)
+      var solutions = new List<SolutionWrapper> {
+            new ("Test 1", part1, pathTest1, answers.Test1, iteration, options),
+            new ("Part 1", part1, pathInput, answers.Part1, iteration, options),
+            new ("Test 2", part2, pathTest2, answers.Test2, iteration, options),
+            new ("Part 2", part2, pathInput, answers.Part2, iteration, options)
          };
-
-      solutions.Select(Perform).ToList().ForEach(solution =>
-      {
-         PrintResult(solution);
-         Test(solution.result, solution.test);
-      });
+      solutions.ForEach((sol) => Perform(sol));
    }
 }

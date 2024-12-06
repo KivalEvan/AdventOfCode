@@ -145,6 +145,9 @@ function perform(solution: SolutionWrapper): SolutionWrapper {
 
    solution.bench = [resIo, resPart, resOverall];
 
+   printResult(solution);
+   test(solution.result, solution.test);
+
    return solution;
 }
 
@@ -199,8 +202,5 @@ export function run(
       ),
    ];
 
-   solutions.map(perform).forEach((p) => {
-      printResult(p);
-      test(p.result, p.test);
-   });
+   solutions.forEach(perform);
 }

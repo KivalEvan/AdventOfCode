@@ -40,12 +40,12 @@ public static class Day02
 
    static string Part1(string input, bool isTest = false)
    {
-      return input.Split('\n').Select(line => KillMe(line.Split(' ').Select(x => int.Parse(x)).ToList())).Sum().ToString();
+      return input.Split('\n').Select(line => KillMe(line.Split(' ').Select(int.Parse).ToList())).Sum().ToString();
    }
 
    static string Part2(string input, bool isTest = false)
    {
-      return input.Split('\n').Select(line => KillMe2(line.Split(' ').Select(x => int.Parse(x)).ToList())).Sum().ToString();
+      return input.Split('\n').Select(line => KillMe2(line.Split(' ').Select(int.Parse).ToList())).Sum().ToString();
    }
 
    static void Main(string[] args)
