@@ -17,27 +17,30 @@ def mulit(x: str) -> int:
    return int(a) * int(b)
 
 
-def part_one(input: str, is_test: bool) -> str:
-   return str(
-       sum([mulit(x) for x in re.findall(r"mul\(\d{1,3},\d{1,3}\)", input)]))
-
-
-def part_two(input: str, is_test: bool) -> str:
+def solve(input: str, p2: bool) -> str:
    total = 0
    instructed = True
 
    for x in re.findall(r"(mul\(\d{1,3},\d{1,3}\)|do\(\)|don\'t\(\))", input):
       if x == "do()":
-         instructed = True
+         if p2: instructed = True
          continue
       if x == "don't()":
-         instructed = False
+         if p2: instructed = False
          continue
       if not instructed:
          continue
       total += mulit(x)
 
    return str(total)
+
+
+def part_one(input: str, is_test: bool) -> str:
+   return solve(input, False)
+
+
+def part_two(input: str, is_test: bool) -> str:
+   return solve(input, True)
 
 
 if __name__ == "__main__":

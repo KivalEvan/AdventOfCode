@@ -28,7 +28,7 @@ function part1(input: string, _isTest: boolean): string {
             }
          }
       }
-      total += page.at(Math.floor(page.length / 2))!;
+      total += page[Math.floor(page.length / 2)];
    }
 
    return total.toString();

@@ -10,14 +10,16 @@ public static class Day
       HasIO = false,
    };
 
+   static private string Solve(string input, bool p2) { return ""; }
+
    static string Part1(string input, bool isTest = false)
    {
-      return "";
+      return Solve(input, false);
    }
 
    static string Part2(string input, bool isTest = false)
    {
-      return "";
+      return Solve(input, true);
    }
 
    static void Main(string[] args)

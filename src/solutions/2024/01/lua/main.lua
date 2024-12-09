@@ -6,49 +6,50 @@ local options = {
    has_io = false,
 }
 
----@param input string
----@param is_test boolean
----@return string
-local function part_1(input, is_test)
+
+local function solve(input, p2)
    local l = {}
    local r = {}
+   local hashmap = {}
    for line in input:gmatch('[^\n]+') do
       local pair = str.split(line, '   ')
       l[#l + 1] = pair[1]
       r[#r + 1] = pair[2]
+      if (hashmap[pair[1]] == nil) then hashmap[pair[1]] = 0 end
+      if (hashmap[pair[2]] == nil) then hashmap[pair[2]] = 0 end
+      hashmap[pair[2]] = hashmap[pair[2]] + 1
    end
 
-   table.sort(l)
-   table.sort(r)
 
    local sum = 0
-   for i = 1, #l do
-      sum = sum + math.abs(l[i] - r[i])
+   if p2 then
+      for i = 1, #l do
+         sum = sum + l[i] * hashmap[l[i]]
+      end
+   else
+      table.sort(l)
+      table.sort(r)
+      for i = 1, #l do
+         sum = sum + math.abs(l[i] - r[i])
+      end
    end
 
    return tostring(sum)
+end
+
+
+---@param input string
+---@param is_test boolean
+---@return string
+local function part_1(input, is_test)
+   return solve(input, false)
 end
 
 ---@param input string
 ---@param is_test boolean
 ---@return string
 local function part_2(input, is_test)
-   local l = {}
-   local hashmap = {}
-   for line in input:gmatch('[^\n]+') do
-      local pair = str.split(line, '   ')
-      l[#l + 1] = pair[1]
-      if (hashmap[pair[1]] == nil) then hashmap[pair[1]] = 0 end
-      if (hashmap[pair[2]] == nil)then hashmap[pair[2]] = 0 end
-      hashmap[pair[2]] = hashmap[pair[2]] + 1
-   end
-
-   local sum = 0
-   for i = 1, #l do
-      sum = sum + l[i] * hashmap[l[i]]
-   end
-
-   return tostring(sum)
+   return solve(input, true)
 end
 
 local function main()

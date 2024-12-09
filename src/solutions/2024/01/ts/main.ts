@@ -7,44 +7,43 @@ const options: SolutionOptions = {
    hasIo: false,
 };
 
-function part1(input: string, _isTest: boolean): string {
+function solve(input: string, p2: boolean): string {
    const l: number[] = [];
    const r: number[] = [];
-   input.split('\n').forEach((line) => {
-      const pair = line.split('   ');
-      l.push(+pair[0]);
-      r.push(+pair[1]);
-   });
-   l.sort((a, b) => a - b);
-   r.sort((a, b) => a - b);
-
-   let sum = 0;
-   for (let i = 0; i < l.length; i++) {
-      sum += Math.abs(l[i] - r[i]);
-   }
-
-   return sum.toString();
-}
-
-function part2(input: string, _isTest: boolean): string {
-   const l: number[] = [];
    const hashmap: { [key: number]: number } = {};
    input.split('\n').forEach((line) => {
       const pair = line.split('   ');
       const k = +pair[0];
       const v = +pair[1];
       l.push(k);
+      r.push(v);
       hashmap[k] ||= 0;
       hashmap[v] ||= 0;
       hashmap[v]++;
    });
+   l.sort((a, b) => a - b);
+   r.sort((a, b) => a - b);
 
-   let count = 0;
-   l.forEach((e) => {
-      count += e * hashmap[e];
-   });
+   let sum = 0;
+   if (p2) {
+      for (const e of l) {
+         sum += e * hashmap[e];
+      }
+   } else {
+      for (let i = 0; i < l.length; i++) {
+         sum += Math.abs(l[i] - r[i]);
+      }
+   }
 
-   return count.toString();
+   return sum.toString();
+}
+
+function part1(input: string, _isTest: boolean): string {
+   return solve(input, false);
+}
+
+function part2(input: string, _isTest: boolean): string {
+   return solve(input, true);
 }
 
 if (import.meta.main) {

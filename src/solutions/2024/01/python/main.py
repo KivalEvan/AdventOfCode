@@ -11,20 +11,9 @@ def main() -> None:
    run(sys.argv, part_one, part_two, options)
 
 
-def part_one(input: str, is_test: bool) -> str:
-   l, r = (sorted(list([int(y) for y in x]))
-           for x in zip(*[line.split() for line in input.split('\n')]))
-
-   total = 0
-   for i in range(len(l)):
-      total += abs(l[i] - r[i])
-
-   return str(total)
-
-
-def part_two(input: str, is_test: bool) -> str:
+def solve(input: str, p2: bool) -> str:
    pairs = [line.split() for line in input.split('\n')]
-   l = [int(pair[0]) for pair in pairs]
+   l, r = ((list([int(y) for y in x])) for x in zip(*pairs))
    hashmap = {int(pair[0]): 0 for pair in pairs}
    for pair in pairs:
       v = int(pair[1])
@@ -33,10 +22,24 @@ def part_two(input: str, is_test: bool) -> str:
       hashmap[v] += 1
 
    total = 0
-   for e in l:
-      total += e * hashmap[e]
+   if p2:
+      for e in l:
+         total += e * hashmap[e]
+   else:
+      l.sort()
+      r.sort()
+      for i in range(len(l)):
+         total += abs(l[i] - r[i])
 
    return str(total)
+
+
+def part_one(input: str, is_test: bool) -> str:
+   return solve(input, False)
+
+
+def part_two(input: str, is_test: bool) -> str:
+   return solve(input, True)
 
 
 if __name__ == '__main__':

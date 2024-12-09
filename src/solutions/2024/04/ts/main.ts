@@ -22,8 +22,9 @@ function part1(input: string, _isTest: boolean): string {
                      x + dx * 3 > grid[y].length - 1 ||
                      y + dy * 3 < 0 ||
                      x + dx * 3 < 0
-                  )
+                  ) {
                      continue;
+                  }
                   if (
                      grid[y + dy][x + dx] === 'M' &&
                      grid[y + dy * 2][x + dx * 2] === 'A' &&
@@ -41,24 +42,22 @@ function part1(input: string, _isTest: boolean): string {
 }
 
 function fkinkillme(grid: string[], x: number, y: number): number {
-   for (let dy = -1; dy <= 1; dy += 2) {
-      for (let dx = -1; dx <= 1; dx += 2) {
-         if (
-            grid[y + dy][x + dx] === 'M' &&
-            grid[y + -dy][x + -dx] === 'S' &&
-            grid[y + dy][x + -dx] === 'M' &&
-            grid[y + -dy][x + dx] === 'S'
-         ) {
-            return 1;
-         }
-         if (
-            grid[y + -dy][x + -dx] === 'M' &&
-            grid[y + -dy][x + dx] === 'S' &&
-            grid[y + dy][x + -dx] === 'M' &&
-            grid[y + dy][x + dx] === 'S'
-         ) {
-            return 1;
-         }
+   for (let d = -1; d <= 1; d += 2) {
+      if (
+         grid[y + d][x + d] === 'M' &&
+         grid[y + -d][x + -d] === 'S' &&
+         grid[y + d][x + -d] === 'M' &&
+         grid[y + -d][x + d] === 'S'
+      ) {
+         return 1;
+      }
+      if (
+         grid[y + -d][x + -d] === 'M' &&
+         grid[y + -d][x + d] === 'S' &&
+         grid[y + d][x + -d] === 'M' &&
+         grid[y + d][x + d] === 'S'
+      ) {
+         return 1;
       }
    }
    return 0;
