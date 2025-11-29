@@ -1,6 +1,6 @@
-import { exec } from 'node:child_process';
-import { promisify } from 'node:util';
-import { langCompile, LangName } from './lang.ts';
+import { exec } from "node:child_process";
+import { promisify } from "node:util";
+import { langCompile, LangName } from "./lang.ts";
 
 const execAsync = promisify(exec);
 
@@ -13,14 +13,14 @@ export async function runner(
    const needCompile = langCompile.includes(lang);
 
    if (needCompile) {
-      console.log('Compiling...');
+      console.log("Compiling...");
       const cmd = await execAsync(
-         'make ' +
-            [
-               lang + '_compile',
-               'YEAR=' + year,
-               'DAY=' + day.toString().padStart(2, '0'),
-            ].join(' '),
+         "make "
+            + [
+               lang + "_compile",
+               "YEAR=" + year,
+               "DAY=" + day.toString().padStart(2, "0"),
+            ].join(" "),
       );
 
       const stderr = cmd.stderr.trim();
@@ -31,24 +31,24 @@ export async function runner(
       }
    }
 
-   if (benchmark > 1) console.log('Benchmarking...');
-   else console.log('Running...');
-   let stdout = '';
-   let stderr = '';
+   if (benchmark > 1) console.log("Benchmarking...");
+   else console.log("Running...");
+   let stdout = "";
+   let stderr = "";
    await execAsync(
-      'make ' +
-         [
+      "make "
+         + [
             lang,
-            'YEAR=' + year,
-            'DAY=' + day.toString().padStart(2, '0'),
-            'ITERATION=' + benchmark.toString(),
-         ].join(' '),
+            "YEAR=" + year,
+            "DAY=" + day.toString().padStart(2, "0"),
+            "ITERATION=" + benchmark.toString(),
+         ].join(" "),
    ).catch((e) => e).then(({ stdout: out, stderr: err }) => {
       stdout = out;
       stderr = err;
    });
 
-   console.log(stdout.trim());
-   const td = stderr.trim();
-   if (td) console.log(td);
+   console.log(stdout);
+   const td = stderr;
+   if (td.trim()) console.log(td);
 }

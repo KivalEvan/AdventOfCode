@@ -1,6 +1,6 @@
-import { argv } from 'node:process';
-import { run } from 'src/run.ts';
-import type { SolutionOptions } from 'src/options.ts';
+import { argv } from "node:process";
+import { run } from "src/run.ts";
+import type { SolutionOptions } from "src/options.ts";
 
 const options: SolutionOptions = {
    hasAlternate: false,
@@ -8,21 +8,21 @@ const options: SolutionOptions = {
 };
 
 function part1(input: string, _isTest: boolean): string {
-   const grid = input.split('\n').map((str) => str.split(''));
+   const grid = input.split("\n").map((str) => str.split(""));
    for (let x = 0; x < grid[0].length; x++) {
       let shift = -1;
       for (let y = 0; y < grid.length; y++) {
-         if (grid[y][x] === '#') shift = y;
-         if (grid[y][x] === 'O') {
-            grid[y][x] = '.';
-            grid[++shift][x] = 'O';
+         if (grid[y][x] === "#") shift = y;
+         if (grid[y][x] === "O") {
+            grid[y][x] = ".";
+            grid[++shift][x] = "O";
          }
       }
    }
 
    let res = 0;
    for (let i = 0; i < grid.length; i++) {
-      for (const k of grid[i]) if (k === 'O') res += grid.length - i;
+      for (const k of grid[i]) if (k === "O") res += grid.length - i;
    }
 
    return res.toString();
@@ -32,50 +32,50 @@ function bigstuff(grid: string[][]): string {
    for (let x = 0; x < grid[0].length; x++) {
       let shift = -1;
       for (let y = 0; y < grid.length; y++) {
-         if (grid[y][x] === '#') shift = y;
-         if (grid[y][x] === 'O') {
-            grid[y][x] = '.';
-            grid[++shift][x] = 'O';
+         if (grid[y][x] === "#") shift = y;
+         if (grid[y][x] === "O") {
+            grid[y][x] = ".";
+            grid[++shift][x] = "O";
          }
       }
    }
    for (let y = 0; y < grid.length; y++) {
       let shift = -1;
       for (let x = 0; x < grid[0].length; x++) {
-         if (grid[y][x] === '#') shift = x;
-         if (grid[y][x] === 'O') {
-            grid[y][x] = '.';
-            grid[y][++shift] = 'O';
+         if (grid[y][x] === "#") shift = x;
+         if (grid[y][x] === "O") {
+            grid[y][x] = ".";
+            grid[y][++shift] = "O";
          }
       }
    }
    for (let x = 0; x < grid[0].length; x++) {
       let shift = grid.length;
       for (let y = shift - 1; y >= 0; y--) {
-         if (grid[y][x] === '#') shift = y;
-         if (grid[y][x] === 'O') {
-            grid[y][x] = '.';
-            grid[--shift][x] = 'O';
+         if (grid[y][x] === "#") shift = y;
+         if (grid[y][x] === "O") {
+            grid[y][x] = ".";
+            grid[--shift][x] = "O";
          }
       }
    }
    for (let y = 0; y < grid.length; y++) {
       let shift = grid[0].length;
       for (let x = shift - 1; x >= 0; x--) {
-         if (grid[y][x] === '#') shift = x;
-         if (grid[y][x] === 'O') {
-            grid[y][x] = '.';
-            grid[y][--shift] = 'O';
+         if (grid[y][x] === "#") shift = x;
+         if (grid[y][x] === "O") {
+            grid[y][x] = ".";
+            grid[y][--shift] = "O";
          }
       }
    }
-   return grid.map((str) => str.join('')).join('\n');
+   return grid.map((str) => str.join("")).join("\n");
 }
 
 function part2(input: string, _isTest: boolean): string {
    // store pattern string here
    const set = new Set<string>();
-   let grid = input.split('\n').map((str) => str.split(''));
+   let grid = input.split("\n").map((str) => str.split(""));
 
    const CYCLES = 1_000_000_000;
    for (let c = 0; c < CYCLES; c++) {
@@ -91,10 +91,10 @@ function part2(input: string, _isTest: boolean): string {
       set.add(temp);
    }
 
-   grid = input.split('\n').map((str) => str.split(''));
+   grid = input.split("\n").map((str) => str.split(""));
    let res = 0;
    for (let i = 0; i < grid.length; i++) {
-      for (const k of grid[i]) if (k === 'O') res += grid.length - i;
+      for (const k of grid[i]) if (k === "O") res += grid.length - i;
    }
 
    return res.toString();

@@ -4,7 +4,8 @@ const input = @import("input.zig");
 const getAllocator = @import("allocator.zig").getAllocator;
 
 const allocator = getAllocator();
-const stdout = std.io.getStdOut().writer();
+var buf: [4096]u8 = undefined;
+var stdout = std.fs.File.stdout().writerStreaming(&.{});
 
 const SolutionWrapper = struct {
     tag: []const u8,
@@ -58,8 +59,8 @@ fn testString(actual: []const u8, expected: []const u8) TestError!void {
 
 fn printResult(solution: *SolutionWrapper) !*SolutionWrapper {
     if (solution.iteration == 1) {
-        try stdout.print("\n{s}: (ms) IO > Part > Overall\n", .{solution.tag});
-        try stdout.print(
+        try stdout.interface.print("\n{s}: (ms) IO > Part > Overall\n", .{solution.tag});
+        try stdout.interface.print(
             "Timer: {d:.3} > {d:.3} > {d:.3}\n",
             .{
                 @as(f64, @floatFromInt(solution.bench[0][2])) / 1_000_000.0,
@@ -68,8 +69,8 @@ fn printResult(solution: *SolutionWrapper) !*SolutionWrapper {
             },
         );
     } else {
-        try stdout.print("\n{s}: (ms) min..max avg\n", .{solution.tag});
-        try stdout.print(
+        try stdout.interface.print("\n{s}: (ms) min..max avg\n", .{solution.tag});
+        try stdout.interface.print(
             "IO: {d:.3} .. {d:.3} - {d:.3}\n",
             .{
                 @as(f64, @floatFromInt(solution.bench[0][0])) / 1_000_000.0,
@@ -77,7 +78,7 @@ fn printResult(solution: *SolutionWrapper) !*SolutionWrapper {
                 @as(f64, @floatFromInt(solution.bench[0][2])) / @as(f64, @floatFromInt(solution.iteration)) / 1_000_000.0,
             },
         );
-        try stdout.print(
+        try stdout.interface.print(
             "Part: {d:.3} .. {d:.3} - {d:.3}\n",
             .{
                 @as(f64, @floatFromInt(solution.bench[1][0])) / 1_000_000.0,
@@ -85,7 +86,7 @@ fn printResult(solution: *SolutionWrapper) !*SolutionWrapper {
                 @as(f64, @floatFromInt(solution.bench[1][2])) / @as(f64, @floatFromInt(solution.iteration)) / 1_000_000.0,
             },
         );
-        try stdout.print(
+        try stdout.interface.print(
             "Overall: {d:.3} .. {d:.3} - {d:.3}\n",
             .{
                 @as(f64, @floatFromInt(solution.bench[2][0])) / 1_000_000.0,
@@ -94,7 +95,7 @@ fn printResult(solution: *SolutionWrapper) !*SolutionWrapper {
             },
         );
     }
-    try stdout.print("Result: {s}\n", .{solution.result});
+    try stdout.interface.print("Result: {s}\n", .{solution.result});
 
     return solution;
 }

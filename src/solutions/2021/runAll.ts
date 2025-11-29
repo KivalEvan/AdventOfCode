@@ -14,11 +14,11 @@ let overallA1 = 0;
 let overallA2 = 0;
 let overall = 0;
 for (let day = 1; day <= 25; day++) {
-   const path = `./day-${day.toString().padStart(2, '0')}/`;
+   const path = `./day-${day.toString().padStart(2, "0")}/`;
    let bA1 = 0,
       bA2 = 0;
    try {
-      const d = await import(path + 'index.ts');
+      const d = await import(path + "index.ts");
       console.log(`warming up day ${day}`);
       for (let i = 0; i < 100; i++) {
          await d.part1(path);
@@ -37,9 +37,11 @@ for (let day = 1; day <= 25; day++) {
       }
       bA1 = benchmark[1].reduce((t, n) => t + n, 0) / benchmark[1].length;
       bA2 = benchmark[2].reduce((t, n) => t + n, 0) / benchmark[2].length;
-   } catch (_e) {
+   }
+   catch (_e) {
       console.error(`day ${day} is not done yet`);
-   } finally {
+   }
+   finally {
       overallA1 += bA1;
       overallA2 += bA2;
       overall += bA1 + bA2;
@@ -58,4 +60,4 @@ readme += `| Overall | ${overallA1.toFixed(3)}ms | ${
 
 The benchmark is measured by mean of 100 run loop, with 100 run loop as warm-up, through all excluding IO (typically takes around 2-4ms). Programmed using \`TypeScript\` ran via \`Deno 1.16.3\` with flag \`--allow-read --allow-write --allow-hrtime --watch\`. Part 1 and part 2 is separated in the runtime. CPU used is \`Intel Core i9-9900K\`. Single run typically result up to 1-16x duration depending on the test.
 `;
-Deno.writeTextFile('README.md', readme);
+Deno.writeTextFile("README.md", readme);

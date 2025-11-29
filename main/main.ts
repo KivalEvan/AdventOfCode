@@ -1,12 +1,12 @@
-import { getLang, langName } from './lang.ts';
-import { fetchArgs } from './args.ts';
-import { runner } from './runner.ts';
+import { getLang, langName } from "./lang.ts";
+import { fetchArgs } from "./args.ts";
+import { runner } from "./runner.ts";
 
-console.log('https://adventofcode.com/');
+console.log("https://adventofcode.com/");
 
 const args = fetchArgs();
 
-const lang = getLang(args.lang || 'ts');
+const lang = getLang(args.lang || "ts");
 
 const currentDate = new Date();
 let yearStart = currentDate.getFullYear();
@@ -40,16 +40,17 @@ if (args.month) {
    dayEnd = 25;
 }
 
-const itBench = typeof args.bench === 'string' ? +args.bench : args.bench ? 1_000 : 1;
+const itBench = typeof args.bench === "string" ? +args.bench : args.bench ? 1_000 : 1;
 
 for (let year = yearStart; year <= yearEnd; year++) {
    console.log(`Advent of Code -- year ${year}`);
-   console.log('Language:', langName[lang]);
+   console.log("Language:", langName[lang]);
    for (let day = dayStart; day <= dayEnd; day++) {
       console.log(`\n----\\________\n${year} -- day ${day}`);
       try {
          await runner(lang, year, day, itBench);
-      } catch (e) {
+      }
+      catch (e) {
          console.error(e.message);
          break;
       }
@@ -58,7 +59,7 @@ for (let year = yearStart; year <= yearEnd; year++) {
          break;
       }
       if (day === 25) {
-         console.log('\nMerry Christmas.');
+         console.log("\nMerry Christmas.");
       }
    }
    console.log();

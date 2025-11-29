@@ -1,6 +1,6 @@
-import { argv } from 'node:process';
-import type { SolutionOptions } from 'src/options.ts';
-import { run } from 'src/run.ts';
+import { argv } from "node:process";
+import type { SolutionOptions } from "src/options.ts";
+import { run } from "src/run.ts";
 
 const options: SolutionOptions = {
    hasAlternate: true,
@@ -8,13 +8,13 @@ const options: SolutionOptions = {
 };
 
 function part1(input: string, _isTest: boolean): string {
-   const sides = input.split('\n\n');
-   const instructions = sides[0].replaceAll('L', '0').replaceAll('R', '1');
+   const sides = input.split("\n\n");
+   const instructions = sides[0].replaceAll("L", "0").replaceAll("R", "1");
    const maps = sides[1]
-      .split('\n')
+      .split("\n")
       .map((str) => {
-         const [dest, lr] = str.split(' = ');
-         return [dest, lr.slice(1, lr.length - 1).split(', ')] as [string, [string, string]];
+         const [dest, lr] = str.split(" = ");
+         return [dest, lr.slice(1, lr.length - 1).split(", ")] as [string, [string, string]];
       })
       .reduce((pv, v) => {
          pv[v[0]] = v[1];
@@ -22,12 +22,12 @@ function part1(input: string, _isTest: boolean): string {
       }, {} as Record<string, [string, string]>);
 
    let i = 0;
-   let nav = 'AAA';
+   let nav = "AAA";
    while (true) {
       const map = maps[nav];
-      nav = map[instructions[i % instructions.length] as '0'];
+      nav = map[instructions[i % instructions.length] as "0"];
       i++;
-      if (nav === 'ZZZ') break;
+      if (nav === "ZZZ") break;
    }
    return i.toString();
 }
@@ -41,28 +41,28 @@ function lcm(a: number, b: number): number {
 }
 
 function part2(input: string, _isTest: boolean): string {
-   const sides = input.split('\n\n');
-   const instructions = sides[0].replaceAll('L', '0').replaceAll('R', '1');
+   const sides = input.split("\n\n");
+   const instructions = sides[0].replaceAll("L", "0").replaceAll("R", "1");
    const maps = sides[1]
-      .split('\n')
+      .split("\n")
       .map((str) => {
-         const [dest, lr] = str.split(' = ');
-         return [dest, lr.slice(1, lr.length - 1).split(', ')] as [string, [string, string]];
+         const [dest, lr] = str.split(" = ");
+         return [dest, lr.slice(1, lr.length - 1).split(", ")] as [string, [string, string]];
       })
       .reduce((pv, v) => {
          pv[v[0]] = v[1];
          return pv;
       }, {} as Record<string, [string, string]>);
 
-   const navs = Object.keys(maps).filter((s) => s[2] === 'A');
+   const navs = Object.keys(maps).filter((s) => s[2] === "A");
    const dists = new Array(navs.length).fill(0);
    for (let i = 0; i < navs.length; i++) {
       let j = 0;
       while (true) {
          const map = maps[navs[i]];
-         navs[i] = map[instructions[j % instructions.length] as '0'];
+         navs[i] = map[instructions[j % instructions.length] as "0"];
          j++;
-         if (navs[i][2] === 'Z') break;
+         if (navs[i][2] === "Z") break;
       }
       dists[i] = j;
    }

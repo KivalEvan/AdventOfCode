@@ -13,10 +13,14 @@ func main() {
 	core.Run(os.Args, part1, part2, options)
 }
 
-func part1(input string, isTest bool) string {
+func solve(input string, p2 bool) string {
 	return ""
 }
 
+func part1(input string, isTest bool) string {
+	return solve(input, false)
+}
+
 func part2(input string, isTest bool) string {
-	return ""
+	return solve(input, true)
 }

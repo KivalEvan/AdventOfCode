@@ -1,6 +1,6 @@
-import { argv } from 'node:process';
-import type { SolutionOptions } from 'src/options.ts';
-import { run } from 'src/run.ts';
+import { argv } from "node:process";
+import type { SolutionOptions } from "src/options.ts";
+import { run } from "src/run.ts";
 
 const options: SolutionOptions = {
    hasAlternate: false,
@@ -15,20 +15,20 @@ const direction = {
 } as const;
 
 const numToDirection = {
-   0: 'R',
-   1: 'D',
-   2: 'L',
-   3: 'U',
+   0: "R",
+   1: "D",
+   2: "L",
+   3: "U",
 } as const;
 
 function parseInput(
    input: string,
    hex: boolean,
-): ['U' | 'D' | 'L' | 'R', number, number][] {
-   return input.split('\n').map((str) => {
-      const m = str.split(' ');
+): ["U" | "D" | "L" | "R", number, number][] {
+   return input.split("\n").map((str) => {
+      const m = str.split(" ");
       return [
-         hex ? numToDirection[m[2].at(-2) as '0'] : (m[0] as 'U' | 'D' | 'L' | 'R'),
+         hex ? numToDirection[m[2].at(-2) as "0"] : (m[0] as "U" | "D" | "L" | "R"),
          Number(m[1]),
          parseInt(m[2].slice(2, 7), 16),
       ];

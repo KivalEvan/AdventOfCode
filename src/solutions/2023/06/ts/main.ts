@@ -1,6 +1,6 @@
-import { argv } from 'node:process';
-import type { SolutionOptions } from 'src/options.ts';
-import { run } from 'src/run.ts';
+import { argv } from "node:process";
+import type { SolutionOptions } from "src/options.ts";
+import { run } from "src/run.ts";
 
 const options: SolutionOptions = {
    hasAlternate: false,
@@ -16,7 +16,7 @@ function ohnomath(b: number, c: number, pepsilon = 0.001) {
 }
 
 function part1(input: string, _isTest: boolean): string {
-   const td = input.split('\n').map((str) => str.split(':')[1].trim().split(/\s+/).map(Number));
+   const td = input.split("\n").map((str) => str.split(":")[1].trim().split(/\s+/).map(Number));
    let res = 1;
    for (let i = 0; i < td[0].length; i++) res *= ohnomath(td[0][i], td[1][i]);
    return res.toString();
@@ -24,8 +24,8 @@ function part1(input: string, _isTest: boolean): string {
 
 function part2(input: string, _isTest: boolean): string {
    const td = input
-      .split('\n')
-      .map((str) => Number(str.split(':')[1].trim().split(/\s+/).join('')));
+      .split("\n")
+      .map((str) => Number(str.split(":")[1].trim().split(/\s+/).join("")));
    return ohnomath(td[0], td[1]).toString();
 }
 

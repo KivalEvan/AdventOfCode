@@ -1,6 +1,6 @@
 YEAR = $(shell date '+%Y')
 DAY = $(shell date '+%d')
-AOC_PATH = src/solutions/$(YEAR)/$(DAY)
+AOC_PATH = ./src/solutions/$(YEAR)/$(DAY)
 ITERATION = 1
 ARGS = 
 __ARGUMENTS = $(AOC_PATH) $(ITERATION) $(ARGS)
@@ -14,7 +14,7 @@ JS_RUNTIME = deno run --allow-read=.
 # JS_RUNTIME = bun
 LUA_RUNTIME = luajit
 OCAML_RUNTIME = opam exec -- dune exec
-MEMORY_USAGE_CMD = /usr/bin/time -f "\nMemory used (KB): %M"
+MEMORY_USAGE_CMD = /usr/bin/time -f "Memory used (KB): %M\nElapsed (s): %e"
 
 SRCS = $(wildcard $(SRC_DIR)/c/*.c)
 OBJS = $(patsubst $(SRC_DIR)/c/%.c, $(TEMP_DIR)/%.o, $(SRCS))
@@ -55,7 +55,7 @@ $(TEMP_DIR):
 
 # imagine "compiling" these with makefile lmao
 java_compile: $(AOC_PATH)/java/Main.java
-	@javac --enable-preview --release 23 -Xlint:unchecked -d $(TEMP_DIR) -cp $(TEMP_DIR)\; \
+	@javac --enable-preview --release 25 -Xlint:unchecked -d $(TEMP_DIR) -cp $(TEMP_DIR)\; \
 		$(SRC_DIR)/java/Input.java \
 		$(SRC_DIR)/java/Options.java \
 		$(SRC_DIR)/java/Runner.java \
@@ -65,16 +65,15 @@ java:
 	@$(MEMORY_USAGE_CMD) java --enable-preview -cp $(TEMP_DIR) kival/aoc/year${YEAR}/day${DAY}/Main $(__ARGUMENTS)
 
 csharp_compile: $(AOC_PATH)/csharp/Main.cs
-	@dotnet clean AdventOfCode.csproj --nologo -v=q
-	@dotnet build AdventOfCode.csproj -v=q \
+	@dotnet clean $(AOC_PATH)/csharp/Main.csproj --nologo -v=q
+	@dotnet build $(AOC_PATH)/csharp/Main.csproj -v=q \
 		--nologo \
 		--no-incremental \
 		--configuration Release \
-		-p:StartupObject=Year$(YEAR).Day$(DAY) \
 		-o temp/csharp
 
 csharp:
-	@$(MEMORY_USAGE_CMD) temp/csharp/AdventOfCode $(__ARGUMENTS)
+	@$(MEMORY_USAGE_CMD) temp/csharp/Main $(__ARGUMENTS)
 
 go_compile: $(AOC_PATH)/go/main.go
 	@go build -o $(TEMP_DIR)/aoc_go $(AOC_PATH)/go/main.go
@@ -110,7 +109,7 @@ zig:
 clean:
 	go mod tidy
 	go clean
-	dotnet clean AdventOfCode.csproj --nologo
+	dotnet clean --nologo
 	cargo clean
 	rm -rf ./.zig-cache
 	rm -rf ./zig-out
@@ -126,7 +125,7 @@ format:
 	find $(SRC_DIR)/c/includes/*.h | xargs clang-format -i
 	find $(SRC_DIR)/../solutions/*/*/c/*.c | xargs clang-format -i
 	go fmt ./...
-	dotnet format AdventOfCode.csproj
+	dotnet format
 	deno fmt
 	find $(SRC_DIR)/python/*.py | xargs yapf -ip
 	find $(SRC_DIR)/../solutions/*/*/python/*.py | xargs yapf -ip

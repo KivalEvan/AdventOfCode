@@ -1,6 +1,6 @@
-import { argv } from 'node:process';
-import type { SolutionOptions } from 'src/options.ts';
-import { run } from 'src/run.ts';
+import { argv } from "node:process";
+import type { SolutionOptions } from "src/options.ts";
+import { run } from "src/run.ts";
 
 const options: SolutionOptions = {
    hasAlternate: false,
@@ -8,12 +8,12 @@ const options: SolutionOptions = {
 };
 
 function solve(input: string, p2: boolean): string {
-   const grid = input.split('\n');
+   const grid = input.split("\n");
    const visited = grid.map(() => new Array(grid[0].length).fill(false));
    const antennas: Record<string, [number, number][]> = {};
    grid.forEach((line, y) => {
-      line.split('').forEach((char, x) => {
-         if (char !== '.') {
+      line.split("").forEach((char, x) => {
+         if (char !== ".") {
             if (!antennas[char]) antennas[char] = [];
             antennas[char].push([x, y]);
          }
@@ -45,16 +45,17 @@ function solve(input: string, p2: boolean): string {
                   calcX -= distX;
                   calcY -= distY;
                }
-            } else {
+            }
+            else {
                if (
-                  grid[y + distY]?.[x + distX] !== char &&
-                  grid[y + distY]?.[x + distX] !== undefined
+                  grid[y + distY]?.[x + distX] !== char
+                  && grid[y + distY]?.[x + distX] !== undefined
                ) {
                   visited[y + distY][x + distX] = true;
                }
                if (
-                  grid[y - distY]?.[x - distX] !== char &&
-                  grid[y - distY]?.[x - distX] !== undefined
+                  grid[y - distY]?.[x - distX] !== char
+                  && grid[y - distY]?.[x - distX] !== undefined
                ) {
                   visited[y - distY][x - distX] = true;
                }

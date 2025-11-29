@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { readFileSync } from "node:fs";
 
 export type Answers = {
    part1: string;
@@ -13,7 +13,7 @@ export type Answers = {
  * @returns
  */
 export function getInput(path: string): string {
-   return readFileSync(path, 'utf8').replace(/\n$/, '');
+   return readFileSync(path, "utf8").replace(/\n$/, "");
 }
 
 /**
@@ -23,7 +23,7 @@ export function getInput(path: string): string {
  */
 export function getAnswers(path: string): Answers {
    return getInput(path)
-      .split('\n')
+      .split("\n")
       .reduce(
          (answers, value, idx) => {
             value = value.trim();
@@ -44,10 +44,10 @@ export function getAnswers(path: string): Answers {
             return answers;
          },
          {
-            part1: '',
-            part2: '',
-            test1: '',
-            test2: '',
+            part1: "",
+            part2: "",
+            test1: "",
+            test2: "",
          } satisfies Answers,
       );
 }

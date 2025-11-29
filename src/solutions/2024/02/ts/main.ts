@@ -1,6 +1,6 @@
-import { argv } from 'node:process';
-import type { SolutionOptions } from 'src/options.ts';
-import { run } from 'src/run.ts';
+import { argv } from "node:process";
+import type { SolutionOptions } from "src/options.ts";
+import { run } from "src/run.ts";
 
 const options: SolutionOptions = {
    hasAlternate: false,
@@ -24,17 +24,17 @@ function killme(ary: number[]): boolean {
 
 function part1(input: string, _isTest: boolean): string {
    return input
-      .split('\n')
-      .map((line): number => (killme(line.split(' ').map((e) => +e)) ? 1 : 0))
+      .split("\n")
+      .map((line): number => (killme(line.split(" ").map((e) => +e)) ? 1 : 0))
       .reduce((p, v) => p + v, 0)
       .toString();
 }
 
 function part2(input: string, _isTest: boolean): string {
    return input
-      .split('\n')
+      .split("\n")
       .map((line): number => {
-         const num = line.split(' ').map((e) => +e);
+         const num = line.split(" ").map((e) => +e);
          if (killme(num)) return 1;
          for (let i = 0; i < num.length; i++) {
             const ary = [...num];

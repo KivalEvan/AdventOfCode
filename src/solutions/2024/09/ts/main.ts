@@ -1,23 +1,26 @@
-import { argv } from 'node:process';
-import type { SolutionOptions } from 'src/options.ts';
-import { run } from 'src/run.ts';
+import { argv } from "node:process";
+import type { SolutionOptions } from "src/options.ts";
+import { run } from "src/run.ts";
 
 const options: SolutionOptions = {
    hasAlternate: false,
    hasIo: false,
 };
 
+type Disk = {
+   size: number;
+   free: number;
+   moved: number;
+   space: number[];
+};
+
 function solve(input: string, p2: boolean): string {
-   const disks: {
-      size: number;
-      free: number;
-      space: number[];
-      moved: number;
-   }[] = [];
+   const disks: Disk[] = [];
    for (let i = 0; i < input.length; i += 2) {
       if (i + 1 === input.length) {
          disks.push({ size: +input[i], free: 0, space: [], moved: 0 });
-      } else {
+      }
+      else {
          disks.push({
             size: +input[i],
             free: +input[i + 1],
@@ -29,6 +32,7 @@ function solve(input: string, p2: boolean): string {
 
    let left = 0;
    let right = disks.length - 1;
+   let firstPos = 0;
    if (p2) {
       while (left < right) {
          if (disks[left].free >= disks[right].size) {
@@ -38,18 +42,24 @@ function solve(input: string, p2: boolean): string {
             disks[left].free -= disks[right].size;
             disks[right].moved += disks[right].size;
             disks[right].size = 0;
-            left = 0;
+            left = firstPos;
             right--;
-         } else {
+         }
+         else {
             left++;
          }
 
+         if (disks[firstPos].free === 0) {
+            firstPos = left;
+         }
+
          if (left === right) {
-            left = 0;
+            left = firstPos;
             right--;
          }
       }
-   } else {
+   }
+   else {
       while (left < right) {
          if (disks[left].free > 0 && disks[right].size > 0) {
             disks[left].space.push(right);

@@ -1,7 +1,7 @@
-import { argv } from 'node:process';
-import type { SolutionOptions } from 'src/options.ts';
-import { run } from 'src/run.ts';
-import { mincut } from 'npm:@graph-algorithm/minimum-cut';
+import { argv } from "node:process";
+import type { SolutionOptions } from "src/options.ts";
+import { run } from "src/run.ts";
+import { mincut } from "npm:@graph-algorithm/minimum-cut";
 
 const options: SolutionOptions = {
    hasAlternate: false,
@@ -12,9 +12,9 @@ function parseInput(input: string) {
    const edges: [string, string][] = [];
    const graph: Record<string, string[]> = {};
 
-   input.split('\n').forEach((line) => {
-      const [component, strAry] = line.split(': ');
-      const connectedTo = strAry.split(' ');
+   input.split("\n").forEach((line) => {
+      const [component, strAry] = line.split(": ");
+      const connectedTo = strAry.split(" ");
 
       graph[component] ||= [];
       graph[component].push(...connectedTo);
@@ -82,7 +82,7 @@ function part1(input: string, _isTest: boolean): string {
 }
 
 function part2(input: string, _isTest: boolean): string {
-   return '';
+   return "";
 }
 
 if (import.meta.main) {

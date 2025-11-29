@@ -1,6 +1,6 @@
-import { argv } from 'node:process';
-import type { SolutionOptions } from 'src/options.ts';
-import { run } from 'src/run.ts';
+import { argv } from "node:process";
+import type { SolutionOptions } from "src/options.ts";
+import { run } from "src/run.ts";
 
 const options: SolutionOptions = {
    hasAlternate: false,
@@ -9,17 +9,17 @@ const options: SolutionOptions = {
 
 function part1(input: string, _isTest: boolean): string {
    const [sections_str, pages_str] = input
-      .split('\n\n')
-      .map((lines) => lines.split('\n'));
+      .split("\n\n")
+      .map((lines) => lines.split("\n"));
    const sections_map: Record<number, number[]> = {};
    sections_str.forEach((section) => {
-      const [k, v] = section.split('|').map(Number);
+      const [k, v] = section.split("|").map(Number);
       sections_map[k] ||= [];
       sections_map[k].push(v);
    });
 
    let total = 0;
-   const pages = pages_str.map((page) => page.split(',').map(Number));
+   const pages = pages_str.map((page) => page.split(",").map(Number));
    main: for (const page of pages) {
       for (let i = 0; i < page.length; i++) {
          for (let j = i + 1; j < page.length; j++) {
@@ -36,17 +36,17 @@ function part1(input: string, _isTest: boolean): string {
 
 function part2(input: string, _isTest: boolean): string {
    const [sections_str, pages_str] = input
-      .split('\n\n')
-      .map((lines) => lines.split('\n'));
+      .split("\n\n")
+      .map((lines) => lines.split("\n"));
    const sections_map: Record<number, number[]> = {};
    sections_str.forEach((section) => {
-      const [k, v] = section.split('|').map(Number);
+      const [k, v] = section.split("|").map(Number);
       sections_map[k] ||= [];
       sections_map[k].push(v);
    });
 
    let total = 0;
-   const pages = pages_str.map((page) => page.split(',').map(Number));
+   const pages = pages_str.map((page) => page.split(",").map(Number));
    main: for (const page of pages) {
       for (let i = 0; i < page.length; i++) {
          for (let j = i + 1; j < page.length; j++) {

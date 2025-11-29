@@ -1,6 +1,6 @@
-import { argv } from 'node:process';
-import type { SolutionOptions } from 'src/options.ts';
-import { run } from 'src/run.ts';
+import { argv } from "node:process";
+import type { SolutionOptions } from "src/options.ts";
+import { run } from "src/run.ts";
 
 const options: SolutionOptions = {
    hasAlternate: false,
@@ -15,14 +15,14 @@ const direction = [
 ];
 
 function part1(input: string, _isTest: boolean): string {
-   const grid = input.split('\n').map((str) => str.split(''));
+   const grid = input.split("\n").map((str) => str.split(""));
    const startPos: [number, number] = [0, 0];
    main: for (let y = 0; y < grid.length; y++) {
       for (let x = 0; x < grid[0].length; x++) {
-         if (grid[y][x] === 'S') {
+         if (grid[y][x] === "S") {
             startPos[0] = x;
             startPos[1] = y;
-            grid[y][x] = '.';
+            grid[y][x] = ".";
             break main;
          }
       }
@@ -42,16 +42,16 @@ function part1(input: string, _isTest: boolean): string {
             const destY = pos[1] + dir[1];
 
             if (
-               destX < 0 ||
-               destX >= grid[0].length ||
-               destY < 0 ||
-               destY >= grid.length
+               destX < 0
+               || destX >= grid[0].length
+               || destY < 0
+               || destY >= grid.length
             ) {
                continue;
             }
 
-            if (grid[destY][destX] === '.') {
-               const key = destX + ',' + destY;
+            if (grid[destY][destX] === ".") {
+               const key = destX + "," + destY;
                if (visited.has(key)) continue;
                visited.add(key);
 
@@ -71,14 +71,14 @@ function wrapAround(x: number, m: number) {
 }
 
 function part2(input: string, _isTest: boolean): string {
-   const grid = input.split('\n').map((str) => str.split(''));
+   const grid = input.split("\n").map((str) => str.split(""));
    const startPos: [number, number] = [0, 0];
    main: for (let y = 0; y < grid.length; y++) {
       for (let x = 0; x < grid[0].length; x++) {
-         if (grid[y][x] === 'S') {
+         if (grid[y][x] === "S") {
             startPos[0] = x;
             startPos[1] = y;
-            grid[y][x] = '.';
+            grid[y][x] = ".";
             break main;
          }
       }
@@ -103,9 +103,9 @@ function part2(input: string, _isTest: boolean): string {
             if (
                grid[wrapAround(destY, grid.length)][
                   wrapAround(destX, grid[0].length)
-               ] === '.'
+               ] === "."
             ) {
-               const pos = destX + ',' + destY;
+               const pos = destX + "," + destY;
                if (prevSpot.has(pos)) continue;
                newSpot.add(pos);
             }
@@ -116,12 +116,13 @@ function part2(input: string, _isTest: boolean): string {
       if (step % 2) {
          evens += newSpot.size;
          prevOdds = newSpot;
-      } else {
+      }
+      else {
          odds += newSpot.size;
          prevEvens = newSpot;
       }
       for (const s of newSpot.values()) {
-         stack.push(s.split(',').map(Number) as [number, number]);
+         stack.push(s.split(",").map(Number) as [number, number]);
       }
       // console.log(newSpot.size, stack);
    }

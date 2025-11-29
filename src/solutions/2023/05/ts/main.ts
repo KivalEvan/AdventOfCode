@@ -1,6 +1,6 @@
-import { argv } from 'node:process';
-import type { SolutionOptions } from 'src/options.ts';
-import { run } from 'src/run.ts';
+import { argv } from "node:process";
+import type { SolutionOptions } from "src/options.ts";
+import { run } from "src/run.ts";
 
 const options: SolutionOptions = {
    hasAlternate: false,
@@ -8,10 +8,10 @@ const options: SolutionOptions = {
 };
 
 function parseInput(input: string, single: boolean) {
-   const parsed = input.split('\n\n');
+   const parsed = input.split("\n\n");
    const seedRanges = parsed[0]
-      .split(':')[1]
-      .split(' ')
+      .split(":")[1]
+      .split(" ")
       .filter((str) => str)
       .map(Number)
       .reduce((p, v, i, ary) => {
@@ -24,9 +24,9 @@ function parseInput(input: string, single: boolean) {
    const srcToDestRanges = parsed.slice(1).map(
       (p) =>
          p
-            .split('\n')
+            .split("\n")
             .slice(1)
-            .map((str) => str.split(' ').map(Number))
+            .map((str) => str.split(" ").map(Number))
             .map((v) => {
                return [
                   [v[1], v[1] + v[2] - 1],
@@ -56,10 +56,10 @@ function solve(input: string, single: boolean) {
       for (const r of seedRanges) {
          const found = groups.find(
             (g) =>
-               g[0][0] <= r[0] &&
-               r[0] <= g[0][1] &&
-               r[1] >= g[0][0] &&
-               g[0][1] >= r[1],
+               g[0][0] <= r[0]
+               && r[0] <= g[0][1]
+               && r[1] >= g[0][0]
+               && g[0][1] >= r[1],
          );
          if (found) {
             const diff = found[1][0] - found[0][0];

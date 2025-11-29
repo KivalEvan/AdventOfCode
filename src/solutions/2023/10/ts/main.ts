@@ -1,6 +1,6 @@
-import { argv } from 'node:process';
-import type { SolutionOptions } from 'src/options.ts';
-import { run } from 'src/run.ts';
+import { argv } from "node:process";
+import type { SolutionOptions } from "src/options.ts";
+import { run } from "src/run.ts";
 
 const options: SolutionOptions = {
    hasAlternate: true,
@@ -10,7 +10,7 @@ const options: SolutionOptions = {
 function findStart(grid: string[] | string[][]): [x: number, y: number] {
    let x, y;
    for (y = 0; y < grid.length; y++) {
-      x = grid[y].indexOf('S');
+      x = grid[y].indexOf("S");
       if (x !== -1) return [x, y];
    }
    throw new Error("Couldn't find starting point");
@@ -20,7 +20,7 @@ function goUp(
    grid: string[] | string[][],
    x: number,
    y: number,
-   criteria = 'S7F|',
+   criteria = "S7F|",
 ) {
    return y > 0 && criteria.includes(grid[y - 1][x]);
 }
@@ -29,7 +29,7 @@ function goDown(
    grid: string[] | string[][],
    x: number,
    y: number,
-   criteria = 'SLJ|',
+   criteria = "SLJ|",
 ) {
    return y < grid.length - 1 && criteria.includes(grid[y + 1][x]);
 }
@@ -38,7 +38,7 @@ function goLeft(
    grid: string[] | string[][],
    x: number,
    y: number,
-   criteria = 'SLF-',
+   criteria = "SLF-",
 ) {
    return x > 0 && criteria.includes(grid[y][x - 1]);
 }
@@ -47,7 +47,7 @@ function goRight(
    grid: string[] | string[][],
    x: number,
    y: number,
-   criteria = 'S7J-',
+   criteria = "S7J-",
 ) {
    return x < grid[y].length - 1 && criteria.includes(grid[y][x + 1]);
 }
@@ -60,44 +60,44 @@ function lookUp(
    const char = grid[y][x];
    const res: [number, number][] = [];
    switch (char) {
-      case '|':
+      case "|":
          if (goUp(grid, x, y)) res.push([x, y - 1]);
          if (goDown(grid, x, y)) res.push([x, y + 1]);
          break;
-      case '-':
+      case "-":
          if (goLeft(grid, x, y)) res.push([x - 1, y]);
          if (goRight(grid, x, y)) res.push([x + 1, y]);
          break;
-      case 'L':
+      case "L":
          if (goUp(grid, x, y)) res.push([x, y - 1]);
          if (goRight(grid, x, y)) res.push([x + 1, y]);
          break;
-      case 'J':
+      case "J":
          if (goUp(grid, x, y)) res.push([x, y - 1]);
          if (goLeft(grid, x, y)) res.push([x - 1, y]);
          break;
-      case '7':
+      case "7":
          if (goDown(grid, x, y)) res.push([x, y + 1]);
          if (goLeft(grid, x, y)) res.push([x - 1, y]);
          break;
-      case 'F':
+      case "F":
          if (goDown(grid, x, y)) res.push([x, y + 1]);
          if (goRight(grid, x, y)) res.push([x + 1, y]);
          break;
-      case 'S':
+      case "S":
          if (goUp(grid, x, y)) res.push([x, y - 1]);
          if (goDown(grid, x, y)) res.push([x, y + 1]);
          if (goLeft(grid, x, y)) res.push([x - 1, y]);
          if (goRight(grid, x, y)) res.push([x + 1, y]);
          break;
       default:
-         throw new Error('ayo wtf?');
+         throw new Error("ayo wtf?");
    }
    return res;
 }
 
 function part1(input: string, _isTest: boolean): string {
-   const grid = input.split('\n');
+   const grid = input.split("\n");
    const visited = new Array(grid.length)
       .fill(0)
       .map((_) => new Array(grid[0].length).fill(false));
@@ -121,7 +121,7 @@ function part1(input: string, _isTest: boolean): string {
 }
 
 function part2(input: string, _isTest: boolean): string {
-   const grid = input.split('\n');
+   const grid = input.split("\n");
    const visited: boolean[][] = new Array(grid.length * 3)
       .fill(0)
       .map((_) => new Array(grid[0].length * 3).fill(false));

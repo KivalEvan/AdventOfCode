@@ -1,6 +1,6 @@
-import { argv } from 'node:process';
-import type { SolutionOptions } from 'src/options.ts';
-import { run } from 'src/run.ts';
+import { argv } from "node:process";
+import type { SolutionOptions } from "src/options.ts";
+import { run } from "src/run.ts";
 
 const enum Type {
    BROADCAST,
@@ -36,21 +36,21 @@ const options: SolutionOptions = {
 };
 
 function parseInput(input: string) {
-   const lines = input.split('\n');
+   const lines = input.split("\n");
    const modules: Record<string, AllModule> = {};
 
    for (const line of lines) {
-      const part = line.split(' -> ');
-      const target = part[1].split(', ');
+      const part = line.split(" -> ");
+      const target = part[1].split(", ");
       const name = part[0].slice(1);
-      if (part[0] === 'broadcaster') {
-         modules['broadcaster'] = {
+      if (part[0] === "broadcaster") {
+         modules["broadcaster"] = {
             type: Type.BROADCAST,
             target,
             input: [],
          };
       }
-      if (part[0].startsWith('%')) {
+      if (part[0].startsWith("%")) {
          modules[name] = {
             type: Type.FLIP_FLOP,
             target,
@@ -58,7 +58,7 @@ function parseInput(input: string) {
             state: false,
          };
       }
-      if (part[0].startsWith('&')) {
+      if (part[0].startsWith("&")) {
          modules[name] = {
             type: Type.CONJUNCTION,
             target,
@@ -128,7 +128,8 @@ function part1(input: string, _isTest: boolean): string {
                mod.target.forEach((out) => {
                   queue.push([target, out, true]);
                });
-            } else {
+            }
+            else {
                mod.state = false;
                mod.target.forEach((out) => {
                   queue.push([target, out, false]);
@@ -144,7 +145,8 @@ function part1(input: string, _isTest: boolean): string {
             mod.target.forEach((out) => {
                queue.push([target, out, false]);
             });
-         } else {
+         }
+         else {
             mod.target.forEach((out) => {
                queue.push([target, out, true]);
             });
@@ -154,7 +156,7 @@ function part1(input: string, _isTest: boolean): string {
 
    let i = 0;
    while (i < 1000) {
-      queue.push(['button', 'broadcaster', false]);
+      queue.push(["button", "broadcaster", false]);
       while (queue.length) processSignal(...queue.shift()!);
       i++;
    }
@@ -163,7 +165,7 @@ function part1(input: string, _isTest: boolean): string {
 }
 
 function part2(input: string, _isTest: boolean): string {
-   return '';
+   return "";
 }
 
 if (import.meta.main) {

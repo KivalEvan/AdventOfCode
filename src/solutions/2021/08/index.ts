@@ -1,12 +1,12 @@
-export const part1 = async (path = '') => {
-   const fileInput = await Deno.readTextFile(path + 'input.txt');
+export const part1 = async (path = "") => {
+   const fileInput = await Deno.readTextFile(path + "input.txt");
    const startTime = performance.now();
 
    const parsed = fileInput
       .trim()
-      .split('\n')
-      .filter((s) => s !== '')
-      .map((n) => n.split('|').map((s) => s.trim().split(' ')));
+      .split("\n")
+      .filter((s) => s !== "")
+      .map((n) => n.split("|").map((s) => s.trim().split(" ")));
 
    let count = 0;
    for (const line of parsed) {
@@ -30,15 +30,15 @@ export const part1 = async (path = '') => {
    return [count, runTime];
 };
 
-export const part2 = async (path = '') => {
-   const fileInput = await Deno.readTextFile(path + 'input.txt');
+export const part2 = async (path = "") => {
+   const fileInput = await Deno.readTextFile(path + "input.txt");
    const startTime = performance.now();
 
    const parsed = fileInput
       .trim()
-      .split('\n')
-      .filter((s) => s !== '')
-      .map((n) => n.split('|').map((s) => s.trim().split(' ')));
+      .split("\n")
+      .filter((s) => s !== "")
+      .map((n) => n.split("|").map((s) => s.trim().split(" ")));
 
    const pattern: { [key: string]: RegExp } = {
       0: /^[abcefg]{6}$/,
@@ -54,7 +54,7 @@ export const part2 = async (path = '') => {
    };
 
    const difference = (curr: string, toComp: string): string => {
-      let result = '';
+      let result = "";
       for (let i = 0; i < toComp.length; i++) {
          if (!curr.includes(toComp[i])) {
             result += toComp[i];
@@ -63,7 +63,7 @@ export const part2 = async (path = '') => {
       return result;
    };
    const include = (curr: string, toComp: string): string => {
-      let result = '';
+      let result = "";
       for (let i = 0; i < toComp.length; i++) {
          if (curr.includes(toComp[i])) {
             result += toComp[i];
@@ -102,12 +102,12 @@ export const part2 = async (path = '') => {
       mapping.d = difference(zero, eight);
       mapping.e = difference(nine, eight);
       mapping.b = difference(mapping.c + mapping.d + mapping.f, four);
-      mapping.g = difference(Object.values(mapping).join('').trim(), eight);
+      mapping.g = difference(Object.values(mapping).join("").trim(), eight);
 
       const digit = parseInt(
          line[1]
             .map((l) => {
-               let str = '';
+               let str = "";
                for (const n of l) {
                   for (const p in mapping) {
                      if (mapping[p] === n) {
@@ -124,7 +124,7 @@ export const part2 = async (path = '') => {
                }
                return str;
             })
-            .join(''),
+            .join(""),
       );
 
       count += digit;

@@ -1,6 +1,6 @@
-import { argv } from 'node:process';
-import type { SolutionOptions } from 'src/options.ts';
-import { run } from 'src/run.ts';
+import { argv } from "node:process";
+import type { SolutionOptions } from "src/options.ts";
+import { run } from "src/run.ts";
 
 const options: SolutionOptions = {
    hasAlternate: false,
@@ -9,15 +9,15 @@ const options: SolutionOptions = {
 
 function part1(input: string, _isTest: boolean): string {
    return input
-      .split('\n')
+      .split("\n")
       .map((s) => {
          const [winNum, numIhaveIguess] = s
-            .slice(s.indexOf(':') + 1)
-            .split('|')
+            .slice(s.indexOf(":") + 1)
+            .split("|")
             .map((r) =>
                r
-                  .split(' ')
-                  .filter((e) => e !== '')
+                  .split(" ")
+                  .filter((e) => e !== "")
                   .map(Number)
             );
          let i = -1;
@@ -29,17 +29,17 @@ function part1(input: string, _isTest: boolean): string {
 }
 
 function part2(input: string, _isTest: boolean): string {
-   const lines = input.split('\n');
+   const lines = input.split("\n");
    const instances = new Array(lines.length).fill(1);
    return lines
       .map((s, idx) => {
          const [winNum, numIhaveIguess] = s
-            .slice(s.indexOf(':') + 1)
-            .split('|')
+            .slice(s.indexOf(":") + 1)
+            .split("|")
             .map((r) =>
                r
-                  .split(' ')
-                  .filter((e) => e !== '')
+                  .split(" ")
+                  .filter((e) => e !== "")
                   .map(Number)
             );
          let i = 0;

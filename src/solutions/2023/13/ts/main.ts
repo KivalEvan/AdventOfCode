@@ -1,6 +1,6 @@
-import { argv } from 'node:process';
-import type { SolutionOptions } from 'src/options.ts';
-import { run } from 'src/run.ts';
+import { argv } from "node:process";
+import type { SolutionOptions } from "src/options.ts";
+import { run } from "src/run.ts";
 
 const options: SolutionOptions = {
    hasAlternate: false,
@@ -32,7 +32,7 @@ function mirrorVertical(grid: string[], smudge = 0): number {
 }
 
 function part1(input: string, _isTest: boolean): string {
-   const parsed = input.split('\n\n').map((str) => str.split('\n'));
+   const parsed = input.split("\n\n").map((str) => str.split("\n"));
 
    let res = 0;
    for (const pattern of parsed) {
@@ -45,7 +45,7 @@ function part1(input: string, _isTest: boolean): string {
 }
 
 function part2(input: string, _isTest: boolean): string {
-   const parsed = input.split('\n\n').map((str) => str.split('\n'));
+   const parsed = input.split("\n\n").map((str) => str.split("\n"));
 
    let res = 0;
    for (const pattern of parsed) {

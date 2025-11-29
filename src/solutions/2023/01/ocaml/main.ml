@@ -1,7 +1,7 @@
 let options = Hashtbl.create 128;;
 
 Hashtbl.add options "has_alternate" true;;
-Hashtbl.add options "has_io" false
+Hashtbl.add options "has_io" false;;
 
 let is_digit = function
   | '0' .. '9' -> true

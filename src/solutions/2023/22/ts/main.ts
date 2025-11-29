@@ -1,6 +1,6 @@
-import { argv } from 'node:process';
-import type { SolutionOptions } from 'src/options.ts';
-import { run } from 'src/run.ts';
+import { argv } from "node:process";
+import type { SolutionOptions } from "src/options.ts";
+import { run } from "src/run.ts";
 
 const options: SolutionOptions = {
    hasAlternate: false,
@@ -24,23 +24,23 @@ function isAreaIntersect(v1: [Vector3, Vector3], v2: [Vector3, Vector3]) {
    });
 
    return !(
-      r2.x[0] > r1.x[1] ||
-      r2.x[1] < r1.x[0] ||
-      r2.y[0] > r1.y[1] ||
-      r2.y[1] < r1.y[0]
+      r2.x[0] > r1.x[1]
+      || r2.x[1] < r1.x[0]
+      || r2.y[0] > r1.y[1]
+      || r2.y[1] < r1.y[0]
    );
 }
 
 function constructGraph(input: string) {
    const bricks = input
-      .split('\n')
+      .split("\n")
       .map((str, i) => {
          return {
             label: i,
             pos: str
-               .split('~')
+               .split("~")
                .map((m) => {
-                  const temp = m.split(',').map(Number);
+                  const temp = m.split(",").map(Number);
                   return { x: temp[0], y: temp[1], z: temp[2] };
                })
                .sort((a, b) => a.z - b.z) as [Vector3, Vector3],
@@ -59,15 +59,16 @@ function constructGraph(input: string) {
       const bBelow = bAry
          .filter(
             (b) =>
-               isAreaIntersect(b.pos, currBrick.pos) &&
-               b.pos[1].z < currBrick.pos[0].z,
+               isAreaIntersect(b.pos, currBrick.pos)
+               && b.pos[1].z < currBrick.pos[0].z,
          )
          .sort((a, b) => b.pos[1].z - a.pos[1].z)[0];
       if (bBelow) {
          const zDiff = currBrick.pos[0].z - bBelow.pos[1].z - 1;
          currBrick.pos[0].z -= zDiff;
          currBrick.pos[1].z -= zDiff;
-      } else {
+      }
+      else {
          const zDiff = currBrick.pos[0].z - 1;
          currBrick.pos[0].z -= zDiff;
          currBrick.pos[1].z -= zDiff;
@@ -77,8 +78,8 @@ function constructGraph(input: string) {
    for (const currBrick of bAry) {
       const bricksBelow = bAry.filter(
          (b) =>
-            isAreaIntersect(b.pos, currBrick.pos) &&
-            currBrick.pos[0].z - b.pos[1].z === 1,
+            isAreaIntersect(b.pos, currBrick.pos)
+            && currBrick.pos[0].z - b.pos[1].z === 1,
       );
       for (const belowBrick of bricksBelow) {
          belowBrick.supporting.push(bricks[currBrick.label]);

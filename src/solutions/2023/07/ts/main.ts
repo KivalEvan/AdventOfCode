@@ -1,6 +1,6 @@
-import { argv } from 'node:process';
-import type { SolutionOptions } from 'src/options.ts';
-import { run } from 'src/run.ts';
+import { argv } from "node:process";
+import type { SolutionOptions } from "src/options.ts";
+import { run } from "src/run.ts";
 
 const options: SolutionOptions = {
    hasAlternate: false,
@@ -13,15 +13,15 @@ const ranking: Record<string, number> = {
    Q: 11,
    J: 10,
    T: 9,
-   '9': 8,
-   '8': 7,
-   '7': 6,
-   '6': 5,
-   '5': 4,
-   '4': 3,
-   '3': 2,
-   '2': 1,
-   '1': 0,
+   "9": 8,
+   "8": 7,
+   "7": 6,
+   "6": 5,
+   "5": 4,
+   "4": 3,
+   "3": 2,
+   "2": 1,
+   "1": 0,
 };
 
 const enum Type {
@@ -72,11 +72,11 @@ function getType(str: string): number {
 
 function parseInput(input: string, joker: boolean): [string, number][][] {
    return input
-      .split('\n')
+      .split("\n")
       .map((str) => {
-         const temp: unknown[] = str.split(' ');
+         const temp: unknown[] = str.split(" ");
          temp[1] = Number(temp[1]);
-         if (joker) temp[0] = (temp[0] as string).replaceAll('J', '1');
+         if (joker) temp[0] = (temp[0] as string).replaceAll("J", "1");
          return temp as [string, number];
       })
       .reduce((p, set) => {

@@ -15,8 +15,8 @@ public static class Day09
    {
       public long size;
       public long free;
-      public long[] space;
       public long moved;
+      public long[] space;
    }
 
    static private string Solve(string input, bool p2)
@@ -43,6 +43,7 @@ public static class Day09
 
       var left = 0;
       var right = disks.Length - 1;
+      var firstPos = 0;
       if (p2)
       {
          while (left < right)
@@ -56,7 +57,7 @@ public static class Day09
                   disks[right].moved++;
                }
                disks[right].size = 0;
-               left = 0;
+               left = firstPos;
                right--;
             }
             else
@@ -64,9 +65,14 @@ public static class Day09
                left++;
             }
 
+            if (disks[firstPos].free == 0)
+            {
+               firstPos = left;
+            }
+
             if (left == right)
             {
-               left = 0;
+               left = firstPos;
                right--;
             }
          }

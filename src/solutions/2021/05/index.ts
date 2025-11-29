@@ -1,11 +1,11 @@
-export const part1 = async (path = '') => {
-   const fileInput = await Deno.readTextFile(path + 'input.txt');
+export const part1 = async (path = "") => {
+   const fileInput = await Deno.readTextFile(path + "input.txt");
    const startTime = performance.now();
 
    const parsed = fileInput
-      .split('\n')
-      .filter((s) => s !== '')
-      .map((s) => s.split(' -> ').map((n) => n.split(',').map((m) => parseInt(m))));
+      .split("\n")
+      .filter((s) => s !== "")
+      .map((s) => s.split(" -> ").map((n) => n.split(",").map((m) => parseInt(m))));
 
    const sizeX = Math.max(...parsed.map((i) => i.map((n) => n[0])).flat());
    const point: { [key: number]: number } = {};
@@ -39,14 +39,14 @@ export const part1 = async (path = '') => {
    return [total, runTime];
 };
 
-export const part2 = async (path = '') => {
-   const fileInput = await Deno.readTextFile(path + 'input.txt');
+export const part2 = async (path = "") => {
+   const fileInput = await Deno.readTextFile(path + "input.txt");
    const startTime = performance.now();
 
    const parsed = fileInput
-      .split('\n')
-      .filter((s) => s !== '')
-      .map((s) => s.split(' -> ').map((n) => n.split(',').map((m) => parseInt(m))));
+      .split("\n")
+      .filter((s) => s !== "")
+      .map((s) => s.split(" -> ").map((n) => n.split(",").map((m) => parseInt(m))));
 
    const sizeX = Math.max(...parsed.map((i) => i.map((n) => n[0])).flat());
    const point: { [key: number]: number } = {};
@@ -75,8 +75,8 @@ export const part2 = async (path = '') => {
          }
          if (dX === dY) {
             for (let d = 0; d <= dX; d++) {
-               const pos = (line[0][1] < line[1][1] ? minY + d : maxY - d) * sizeX +
-                  (line[0][0] < line[1][0] ? minX + d : maxX - d);
+               const pos = (line[0][1] < line[1][1] ? minY + d : maxY - d) * sizeX
+                  + (line[0][0] < line[1][0] ? minX + d : maxX - d);
                point[pos] = point[pos] ? ++point[pos] : 1;
             }
             continue;

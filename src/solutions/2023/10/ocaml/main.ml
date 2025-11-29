@@ -1,7 +1,7 @@
 let options = Hashtbl.create 128;;
 
 Hashtbl.add options "has_alternate" true;;
-Hashtbl.add options "has_io" false
+Hashtbl.add options "has_io" false;;
 
 let part_1 (input : string) (_is_test : bool) : string = input
 let part_2 (input : string) (_is_test : bool) : string = input

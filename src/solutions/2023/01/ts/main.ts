@@ -1,6 +1,6 @@
-import { argv } from 'node:process';
-import type { SolutionOptions } from 'src/options.ts';
-import { run } from 'src/run.ts';
+import { argv } from "node:process";
+import type { SolutionOptions } from "src/options.ts";
+import { run } from "src/run.ts";
 
 const options: SolutionOptions = {
    hasAlternate: true,
@@ -9,40 +9,40 @@ const options: SolutionOptions = {
 
 function isNum(str: string) {
    return (
-      str === '0' ||
-      str === '1' ||
-      str === '2' ||
-      str === '3' ||
-      str === '4' ||
-      str === '5' ||
-      str === '6' ||
-      str === '7' ||
-      str === '8' ||
-      str === '9'
+      str === "0"
+      || str === "1"
+      || str === "2"
+      || str === "3"
+      || str === "4"
+      || str === "5"
+      || str === "6"
+      || str === "7"
+      || str === "8"
+      || str === "9"
    );
 }
 
 function getNum(str: string): string {
-   if (str.startsWith('zero')) return '0';
-   if (str.startsWith('one')) return '1';
-   if (str.startsWith('two')) return '2';
-   if (str.startsWith('three')) return '3';
-   if (str.startsWith('four')) return '4';
-   if (str.startsWith('five')) return '5';
-   if (str.startsWith('six')) return '6';
-   if (str.startsWith('seven')) return '7';
-   if (str.startsWith('eight')) return '8';
-   if (str.startsWith('nine')) return '9';
-   return '';
+   if (str.startsWith("zero")) return "0";
+   if (str.startsWith("one")) return "1";
+   if (str.startsWith("two")) return "2";
+   if (str.startsWith("three")) return "3";
+   if (str.startsWith("four")) return "4";
+   if (str.startsWith("five")) return "5";
+   if (str.startsWith("six")) return "6";
+   if (str.startsWith("seven")) return "7";
+   if (str.startsWith("eight")) return "8";
+   if (str.startsWith("nine")) return "9";
+   return "";
 }
 
 // i dont feel like doing single pass
 function part1(input: string, _isTest: boolean): string {
    return input
-      .split('\n')
+      .split("\n")
       .reduce((res, s) => {
-         let first = '';
-         let last = '';
+         let first = "";
+         let last = "";
          for (let i = 0; i < s.length; i++) {
             if (isNum(s[i])) {
                first = s[i];
@@ -63,10 +63,10 @@ function part1(input: string, _isTest: boolean): string {
 
 function part2(input: string, _isTest: boolean): string {
    return input
-      .split('\n')
+      .split("\n")
       .reduce((res, s) => {
-         let first = '';
-         let last = '';
+         let first = "";
+         let last = "";
          for (let i = 0; i < s.length; i++) {
             if (isNum(s[i])) {
                first = s[i];

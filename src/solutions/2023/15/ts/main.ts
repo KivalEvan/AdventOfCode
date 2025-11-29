@@ -1,6 +1,6 @@
-import { argv } from 'node:process';
-import { run } from 'src/run.ts';
-import type { SolutionOptions } from 'src/options';
+import { argv } from "node:process";
+import { run } from "src/run.ts";
+import type { SolutionOptions } from "src/options";
 
 const options: SolutionOptions = {
    hasAlternate: false,
@@ -14,24 +14,25 @@ function elfHash(str: string) {
 }
 
 function part1(input: string, _isTest: boolean): string {
-   const parsed = input.split(',');
+   const parsed = input.split(",");
    let res = 0;
    for (const h of parsed) res += elfHash(h);
    return res.toString();
 }
 
 function part2(input: string, _isTest: boolean): string {
-   const parsed = input.split(',');
+   const parsed = input.split(",");
    const boxes: [string, number][][] = new Array(256);
    for (let i = 0; i < 256; i++) boxes[i] = [];
 
    for (const h of parsed) {
-      if (h.endsWith('-')) {
-         const label = h.slice(0, h.indexOf('-'));
+      if (h.endsWith("-")) {
+         const label = h.slice(0, h.indexOf("-"));
          const hash = elfHash(label);
          boxes[hash] = boxes[hash].filter((e) => e[0] !== label);
-      } else {
-         const [label, len] = h.split('=');
+      }
+      else {
+         const [label, len] = h.split("=");
          const hash = elfHash(label);
          const found = boxes[hash].find((e) => e[0] === label);
          if (found) found[1] = Number(len);

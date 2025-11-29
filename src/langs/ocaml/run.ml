@@ -11,12 +11,12 @@ type solutionwrapper =
   }
 
 let get_solution
-  (tag : string)
-  (func : string -> bool -> string)
-  (path : string)
-  (test : string)
-  (iteration : int)
-  (options : (string, bool) Hashtbl.t)
+      (tag : string)
+      (func : string -> bool -> string)
+      (path : string)
+      (test : string)
+      (iteration : int)
+      (options : (string, bool) Hashtbl.t)
   : solutionwrapper
   =
   { tag
@@ -121,10 +121,10 @@ let perform (solution : solutionwrapper) : solutionwrapper =
 ;;
 
 let run
-  (args : string array)
-  (part_1 : string -> bool -> string)
-  (part_2 : string -> bool -> string)
-  (options : (string, bool) Hashtbl.t)
+      (args : string array)
+      (part_1 : string -> bool -> string)
+      (part_2 : string -> bool -> string)
+      (options : (string, bool) Hashtbl.t)
   : unit
   =
   if Array.length args < 2 then failwith "No input";

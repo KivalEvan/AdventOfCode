@@ -1,12 +1,12 @@
-export const part1 = async (path = '') => {
-   const fileInput = await Deno.readTextFile(path + 'input.txt');
+export const part1 = async (path = "") => {
+   const fileInput = await Deno.readTextFile(path + "input.txt");
    const startTime = performance.now();
 
    const parsed = fileInput
       .trim()
-      .split('\n')
-      .filter((s) => s !== '')
-      .map((n) => n.split('').map((s) => parseInt(s)));
+      .split("\n")
+      .filter((s) => s !== "")
+      .map((n) => n.split("").map((s) => parseInt(s)));
 
    const maxW = parsed[0].length;
    const maxH = parsed.length;
@@ -15,10 +15,10 @@ export const part1 = async (path = '') => {
    for (let h = 0; h < maxH; h++) {
       for (let w = 0; w < maxW; w++) {
          if (
-            parsed[h][w] < (parsed[h - 1]?.[w] ?? 9) && // dont mind if i do
-            parsed[h][w] < (parsed[h + 1]?.[w] ?? 9) &&
-            parsed[h][w] < (parsed[h][w - 1] ?? 9) &&
-            parsed[h][w] < (parsed[h][w + 1] ?? 9)
+            parsed[h][w] < (parsed[h - 1]?.[w] ?? 9) // dont mind if i do
+            && parsed[h][w] < (parsed[h + 1]?.[w] ?? 9)
+            && parsed[h][w] < (parsed[h][w - 1] ?? 9)
+            && parsed[h][w] < (parsed[h][w + 1] ?? 9)
          ) {
             count += parsed[h][w] + 1;
          }
@@ -29,15 +29,15 @@ export const part1 = async (path = '') => {
    return [count, runTime];
 };
 
-export const part2 = async (path = '') => {
-   const fileInput = await Deno.readTextFile(path + 'input.txt');
+export const part2 = async (path = "") => {
+   const fileInput = await Deno.readTextFile(path + "input.txt");
    const startTime = performance.now();
 
    const parsed = fileInput
       .trim()
-      .split('\n')
-      .filter((s) => s !== '')
-      .map((n) => n.split('').map((s) => parseInt(s)));
+      .split("\n")
+      .filter((s) => s !== "")
+      .map((n) => n.split("").map((s) => parseInt(s)));
 
    const maxW = parsed[0].length;
    const maxH = parsed.length;
@@ -46,10 +46,10 @@ export const part2 = async (path = '') => {
    for (let h = 0; h < maxH; h++) {
       for (let w = 0; w < maxW; w++) {
          if (
-            parsed[h][w] < (parsed[h - 1]?.[w] ?? 9) &&
-            parsed[h][w] < (parsed[h + 1]?.[w] ?? 9) &&
-            parsed[h][w] < (parsed[h][w - 1] ?? 9) &&
-            parsed[h][w] < (parsed[h][w + 1] ?? 9)
+            parsed[h][w] < (parsed[h - 1]?.[w] ?? 9)
+            && parsed[h][w] < (parsed[h + 1]?.[w] ?? 9)
+            && parsed[h][w] < (parsed[h][w - 1] ?? 9)
+            && parsed[h][w] < (parsed[h][w + 1] ?? 9)
          ) {
             position.push([w, h]);
          }
@@ -83,7 +83,7 @@ export const part2 = async (path = '') => {
 
    const size = [];
    for (const p of position) {
-      const ary = search(...p).map((n) => n.split(',').map((m) => parseInt(m)));
+      const ary = search(...p).map((n) => n.split(",").map((m) => parseInt(m)));
       size.push(ary.length);
    }
    size.sort((a, b) => b - a);

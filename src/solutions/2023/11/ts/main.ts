@@ -1,6 +1,6 @@
-import { argv } from 'node:process';
-import type { SolutionOptions } from 'src/options.ts';
-import { run } from 'src/run.ts';
+import { argv } from "node:process";
+import type { SolutionOptions } from "src/options.ts";
+import { run } from "src/run.ts";
 
 const options: SolutionOptions = {
    hasAlternate: false,
@@ -12,7 +12,7 @@ function isBetween(val: number, n1: number, n2: number) {
 }
 
 function part1(input: string, _isTest: boolean): string {
-   const grid: string[] = input.split('\n');
+   const grid: string[] = input.split("\n");
    const galaxies = [];
    const xRowAdd = [];
    const yRowAdd = [];
@@ -20,13 +20,13 @@ function part1(input: string, _isTest: boolean): string {
    for (let x = 0; x < grid[0].length; x++) {
       let flag = false;
       for (let y = 0; y < grid.length; y++) {
-         if (grid[y][x] === '#') galaxies[sz++] = [x, y];
-         flag ||= grid[y][x] === '#';
+         if (grid[y][x] === "#") galaxies[sz++] = [x, y];
+         flag ||= grid[y][x] === "#";
       }
       if (!flag) xRowAdd.push(x);
    }
    xdd: for (let y = 0; y < grid.length; y++) {
-      for (let x = 0; x < grid[0].length; x++) if (grid[y][x] === '#') continue xdd;
+      for (let x = 0; x < grid[0].length; x++) if (grid[y][x] === "#") continue xdd;
       yRowAdd.push(y);
    }
 
@@ -35,8 +35,8 @@ function part1(input: string, _isTest: boolean): string {
       for (let n = m + 1; n < sz; n++) {
          const loc1 = galaxies[m];
          const loc2 = galaxies[n];
-         const add = xRowAdd.filter((x) => isBetween(x, loc1[0], loc2[0])).length +
-            yRowAdd.filter((y) => isBetween(y, loc1[1], loc2[1])).length;
+         const add = xRowAdd.filter((x) => isBetween(x, loc1[0], loc2[0])).length
+            + yRowAdd.filter((y) => isBetween(y, loc1[1], loc2[1])).length;
          res += Math.abs(loc1[0] - loc2[0]) + Math.abs(loc1[1] - loc2[1]) + add;
       }
    }
@@ -45,7 +45,7 @@ function part1(input: string, _isTest: boolean): string {
 }
 
 function part2(input: string, _isTest: boolean): string {
-   const grid: string[] = input.split('\n');
+   const grid: string[] = input.split("\n");
    const galaxies = [];
    const xRowAdd = [];
    const yRowAdd = [];
@@ -53,13 +53,13 @@ function part2(input: string, _isTest: boolean): string {
    for (let x = 0; x < grid[0].length; x++) {
       let flag = false;
       for (let y = 0; y < grid.length; y++) {
-         if (grid[y][x] === '#') galaxies[sz++] = [x, y];
-         flag ||= grid[y][x] === '#';
+         if (grid[y][x] === "#") galaxies[sz++] = [x, y];
+         flag ||= grid[y][x] === "#";
       }
       if (!flag) xRowAdd.push(x);
    }
    xdd: for (let y = 0; y < grid.length; y++) {
-      for (let x = 0; x < grid[0].length; x++) if (grid[y][x] === '#') continue xdd;
+      for (let x = 0; x < grid[0].length; x++) if (grid[y][x] === "#") continue xdd;
       yRowAdd.push(y);
    }
 
@@ -68,8 +68,8 @@ function part2(input: string, _isTest: boolean): string {
       for (let n = m + 1; n < sz; n++) {
          const loc1 = galaxies[m];
          const loc2 = galaxies[n];
-         const add = xRowAdd.filter((x) => isBetween(x, loc1[0], loc2[0])).length +
-            yRowAdd.filter((y) => isBetween(y, loc1[1], loc2[1])).length;
+         const add = xRowAdd.filter((x) => isBetween(x, loc1[0], loc2[0])).length
+            + yRowAdd.filter((y) => isBetween(y, loc1[1], loc2[1])).length;
          res += Math.abs(loc1[0] - loc2[0]) + Math.abs(loc1[1] - loc2[1]) + add * 1_000_000 - add;
       }
    }

@@ -1,6 +1,6 @@
-import { argv } from 'node:process';
-import type { SolutionOptions } from 'src/options.ts';
-import { run } from 'src/run.ts';
+import { argv } from "node:process";
+import type { SolutionOptions } from "src/options.ts";
+import { run } from "src/run.ts";
 
 const options: SolutionOptions = {
    hasAlternate: false,
@@ -8,27 +8,27 @@ const options: SolutionOptions = {
 };
 
 const direction = [
-   [0, -1, '^'],
-   [0, 1, 'v'],
-   [-1, 0, '<'],
-   [1, 0, '>'],
+   [0, -1, "^"],
+   [0, 1, "v"],
+   [-1, 0, "<"],
+   [1, 0, ">"],
 ] as const;
 
 function parseInput(input: string) {
-   const grid = input.split('\n');
+   const grid = input.split("\n");
    const dest: [number, number, number, boolean, string] = [
       1,
       0,
       0,
       false,
-      '1,0',
+      "1,0",
    ];
    const end = [grid[0].length - 2, grid.length - 1];
    const graph: Record<
       string,
       { edge: Record<string, number>; next: Record<string, number> }
    > = {
-      '1,0': { edge: {}, next: {} },
+      "1,0": { edge: {}, next: {} },
    };
 
    let queue = [dest];
@@ -44,13 +44,13 @@ function parseInput(input: string) {
             if (x < 0 || x >= grid[0].length || y < 0 || y >= grid.length) {
                continue;
             }
-            if (grid[y][x] === '#') continue;
-            if (pos[3] && grid[y][x] !== dir[2] && grid[y][x] !== '.') continue;
+            if (grid[y][x] === "#") continue;
+            if (pos[3] && grid[y][x] !== dir[2] && grid[y][x] !== ".") continue;
 
-            const key = x.toString() + ',' + y.toString();
+            const key = x.toString() + "," + y.toString();
             if (
-               (grid[pos[1]][pos[0]] === dir[2] && !pos[3]) ||
-               (pos[1] === end[1] && pos[0] === end[0])
+               (grid[pos[1]][pos[0]] === dir[2] && !pos[3])
+               || (pos[1] === end[1] && pos[0] === end[0])
             ) {
                graph[key] ||= { edge: {}, next: {} };
                graph[pos[4]].next[key] = pos[2];
@@ -70,8 +70,10 @@ function parseInput(input: string) {
                      !pos[3],
                      pos[3] ? pos[4] : key,
                   ]);
-               } else newQ.push([x, y, 1, true, key]);
-            } else {
+               }
+               else newQ.push([x, y, 1, true, key]);
+            }
+            else {
                newQ.push([x, y, pos[2] + 1, pos[3], pos[4]]);
             }
          }
@@ -93,7 +95,7 @@ function part1(input: string, _isTest: boolean): string {
       }
       return max;
    }
-   const maxDist = recursiveMax('1,0');
+   const maxDist = recursiveMax("1,0");
    return maxDist.toString();
 }
 
@@ -116,7 +118,7 @@ function part2(input: string, _isTest: boolean): string {
    }
    const visit: Record<string, boolean> = {};
    for (const k in graph) visit[k] = false;
-   const maxDist = recursiveMax('1,0', visit);
+   const maxDist = recursiveMax("1,0", visit);
    return maxDist.toString();
 }
 

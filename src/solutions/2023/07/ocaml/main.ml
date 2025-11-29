@@ -1,7 +1,7 @@
 let options = Hashtbl.create 128;;
 
 Hashtbl.add options "has_alternate" false;;
-Hashtbl.add options "has_io" false
+Hashtbl.add options "has_io" false;;
 
 let ( +/ ) = Int64.add
 let ( */ ) = Int64.mul
@@ -93,10 +93,10 @@ let parse_input (input : string) (joker : bool) =
 let solve (input : string) (joker : bool) : string =
   let groups = parse_input input joker in
   let rec loop
-    (i : int)
-    (groups : (string * int64) list array)
-    (count : int64)
-    (res : int64)
+            (i : int)
+            (groups : (string * int64) list array)
+            (count : int64)
+            (res : int64)
     : int64
     =
     if i = 7

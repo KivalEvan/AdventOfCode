@@ -1,26 +1,26 @@
-import { argv } from 'node:process';
-import type { SolutionOptions } from 'src/options.ts';
-import { run } from 'src/run.ts';
+import { argv } from "node:process";
+import type { SolutionOptions } from "src/options.ts";
+import { run } from "src/run.ts";
 
 const options: SolutionOptions = {
    hasAlternate: false,
    hasIo: false,
 };
 
-function getSequences(game: string): [number, 'red' | 'green' | 'blue'][] {
+function getSequences(game: string): [number, "red" | "green" | "blue"][] {
    return game
-      .slice(game.indexOf(':') + 1)
+      .slice(game.indexOf(":") + 1)
       .split(/,|;/g)
       .map((str) => {
-         const val = str.trim().split(' ');
-         return [Number(val[0]), val[1] as 'red'];
+         const val = str.trim().split(" ");
+         return [Number(val[0]), val[1] as "red"];
       });
 }
 
 const RGB = [12, 13, 14];
 function part1(input: string, _isTest: boolean): string {
    return input
-      .split('\n')
+      .split("\n")
       .map(getSequences)
       .reduce((result, cubes, idx) => {
          for (const cube of cubes) {
@@ -34,7 +34,7 @@ function part1(input: string, _isTest: boolean): string {
 
 function part2(input: string, _isTest: boolean): string {
    return input
-      .split('\n')
+      .split("\n")
       .map(getSequences)
       .reduce((result, cubes) => {
          const rgb = [0, 0, 0];

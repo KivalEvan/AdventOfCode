@@ -8,16 +8,16 @@ learning purposes because fun and pain.
 This is also the order of priority that I will solve the problem with, ~~totally not because of job
 market~~:
 
-- TypeScript 5.6.2 with Deno 2.2.1 for `.ts`
-- Python 3.10.14 with PyPy 7.3.17 for `.py`
-- Rust 1.82.0 for `.rust`
-- Go 1.23.3 for `.go`
-- C# 12 with .NET 8.0.110 for `.cs`
-- C23 with Clang 18.1.8 for `.c`
-- Zig 0.13 for `.zig`
-- Lua 5.4.7 with LuaJIT 2.1 for `.lua`
-- Java 23 for `.java`
-- OCaml 5.2.0 for `.ml`
+- TypeScript 5.9.2 with Deno 2.5.6 for `.ts`
+- Python 3.11.13 with PyPy 7.3.20 for `.py`
+- Rust 1.87.0 for `.rust`
+- Go 1.25.4 for `.go`
+- C# 14 with .NET 10.0.100 for `.cs`
+- C23 with Clang 21.1.6 for `.c`
+- Zig 0.15.2 for `.zig`
+- Lua 5.4.8 with LuaJIT 2.1 for `.lua`
+- Java 25 with OpenJDK 25.0.1 for `.java`
+- OCaml 5.4.0 for `.ml`
 
 Parallelism/concurrency are allowed only in solution implementation. Result must always convert to
 and return string. The performance metric is evaluated only on IO read and function call and does
@@ -70,8 +70,8 @@ Will try `bash` when I feel like it.
 | 6   | ✅         |        | ✅   | ✅ | ✅ |   |     |     |      |       |
 | 7   | ✅         |        |      |    | ✅ |   |     |     |      |       |
 | 8   | ✅         |        |      |    |    |   |     |     |      |       |
-| 9   | ✅         |        |      |    | ✅ |   |     |     |      |       |
-| 10  |            |        |      |    |    |   |     |     |      |       |
+| 9   | ✅         |        | ✅   | ✅ | ✅ |   |     |     |      |       |
+| 10  | ✅         |        |      |    |    |   |     |     |      |       |
 | 11  |            |        |      |    |    |   |     |     |      |       |
 | 12  |            |        |      |    |    |   |     |     |      |       |
 | 13  |            |        |      |    |    |   |     |     |      |       |

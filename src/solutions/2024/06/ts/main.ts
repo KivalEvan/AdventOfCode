@@ -1,6 +1,6 @@
-import { argv } from 'node:process';
-import type { SolutionOptions } from 'src/options.ts';
-import { run } from 'src/run.ts';
+import { argv } from "node:process";
+import type { SolutionOptions } from "src/options.ts";
+import { run } from "src/run.ts";
 
 const options: SolutionOptions = {
    hasAlternate: false,
@@ -15,15 +15,15 @@ function findStart(grid: number[][]): { x: number; y: number } {
          }
       }
    }
-   throw new Error('Start not found');
+   throw new Error("Start not found");
 }
 
 function solve(input: string, p2: boolean): string {
    const grid: number[][] = [];
    grid.push(
-      ...input.split('\n').map((str) =>
+      ...input.split("\n").map((str) =>
          [3].concat(
-            str.split('').map((x) => (x === '#' ? 1 : x === '^' ? 2 : 0)),
+            str.split("").map((x) => (x === "#" ? 1 : x === "^" ? 2 : 0)),
             [3],
          )
       ),
@@ -52,17 +52,21 @@ function solve(input: string, p2: boolean): string {
          if (direction.y === -1) {
             direction.x = 1;
             direction.y = 0;
-         } else if (direction.x === 1) {
+         }
+         else if (direction.x === 1) {
             direction.x = 0;
             direction.y = 1;
-         } else if (direction.y === 1) {
+         }
+         else if (direction.y === 1) {
             direction.x = -1;
             direction.y = 0;
-         } else if (direction.x === -1) {
+         }
+         else if (direction.x === -1) {
             direction.x = 0;
             direction.y = -1;
          }
-      } else {
+      }
+      else {
          location.x = xNext;
          location.y = yNext;
       }
@@ -94,17 +98,21 @@ function solve(input: string, p2: boolean): string {
                if (direction.y === -1) {
                   direction.x = 1;
                   direction.y = 0;
-               } else if (direction.x === 1) {
+               }
+               else if (direction.x === 1) {
                   direction.x = 0;
                   direction.y = 1;
-               } else if (direction.y === 1) {
+               }
+               else if (direction.y === 1) {
                   direction.x = -1;
                   direction.y = 0;
-               } else if (direction.x === -1) {
+               }
+               else if (direction.x === -1) {
                   direction.x = 0;
                   direction.y = -1;
                }
-            } else {
+            }
+            else {
                location.x = xNext;
                location.y = yNext;
             }

@@ -1,3 +1,3 @@
-(lang dune 3.16)
+(lang dune 3.20)
 
 (name aoc_ml)

@@ -33,7 +33,7 @@ pub fn getInput(path: []const u8) []const u8 {
 
     const file_size = (file.stat() catch return "").size;
     const buffer = allocator.alloc(u8, file_size) catch return "";
-    file.reader().readNoEof(buffer) catch return "";
+    _ = file.read(buffer) catch return "";
 
     return std.mem.trimRight(u8, buffer, "\n");
 }

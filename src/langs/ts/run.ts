@@ -1,6 +1,6 @@
-import { getAnswers, getInput } from './input.ts';
-import { resolve } from 'node:path';
-import { SolutionOptions } from './options.ts';
+import { getAnswers, getInput } from "./input.ts";
+import { resolve } from "node:path";
+import { SolutionOptions } from "./options.ts";
 
 type SolutionWrapper = {
    readonly tag: string;
@@ -28,7 +28,7 @@ function getSolutionWrapper(
       test,
       iteration,
       options,
-      result: '',
+      result: "",
       elapsed: [0, 0],
       bench: [[], [], []],
    };
@@ -36,49 +36,50 @@ function getSolutionWrapper(
 
 function printResult(solution: SolutionWrapper): SolutionWrapper {
    if (solution.iteration === 1) {
-      console.log('\n' + solution.tag + ': (ms) IO > Part > Overall');
+      console.log("\n" + solution.tag + ": (ms) IO > Part > Overall");
       console.log(
-         'Timer:',
+         "Timer:",
          round(solution.bench[0][2]),
-         '>',
+         ">",
          round(solution.bench[1][2]),
-         '>',
-         round(solution.bench[2][2]),
-      );
-   } else {
-      console.log('\n' + solution.tag + ': (ms) min..max avg');
-      console.log(
-         'IO:',
-         round(solution.bench[0][0]),
-         '..',
-         round(solution.bench[0][1]),
-         '-',
-         round(solution.bench[0][2]),
-      );
-      console.log(
-         'Part:',
-         round(solution.bench[1][0]),
-         '..',
-         round(solution.bench[1][1]),
-         '-',
-         round(solution.bench[1][2]),
-      );
-      console.log(
-         'Overall:',
-         round(solution.bench[2][0]),
-         '..',
-         round(solution.bench[2][1]),
-         '-',
+         ">",
          round(solution.bench[2][2]),
       );
    }
-   console.log('Result:', solution.result);
+   else {
+      console.log("\n" + solution.tag + ": (ms) min..max avg");
+      console.log(
+         "IO:",
+         round(solution.bench[0][0]),
+         "..",
+         round(solution.bench[0][1]),
+         "-",
+         round(solution.bench[0][2]),
+      );
+      console.log(
+         "Part:",
+         round(solution.bench[1][0]),
+         "..",
+         round(solution.bench[1][1]),
+         "-",
+         round(solution.bench[1][2]),
+      );
+      console.log(
+         "Overall:",
+         round(solution.bench[2][0]),
+         "..",
+         round(solution.bench[2][1]),
+         "-",
+         round(solution.bench[2][2]),
+      );
+   }
+   console.log("Result:", solution.result);
 
    return solution;
 }
 
 function test(actual: unknown, expected: unknown) {
-   if (expected == '') return;
+   if (expected == "") return;
    if (actual != expected) {
       throw new Error(`Expected ${expected} got ${actual}`);
    }
@@ -96,7 +97,7 @@ function round(num: number, r = 3): number {
 }
 
 function execute(solution: SolutionWrapper): SolutionWrapper {
-   const isTest = solution.tag.startsWith('Test');
+   const isTest = solution.tag.startsWith("Test");
 
    const [input, elapsedIo] = timer(() => {
       return solution.options.hasIo ? solution.path : getInput(solution.path);
@@ -158,18 +159,18 @@ export function run(
    options: SolutionOptions = {},
 ) {
    const [path, itStr] = args.slice(2);
-   const pathAnswers = resolve(path, 'answers.txt');
-   const pathInputTest1 = resolve(path, 'test1.txt');
+   const pathAnswers = resolve(path, "answers.txt");
+   const pathInputTest1 = resolve(path, "test1.txt");
    const pathInputTest2 = options.hasAlternate
-      ? resolve(path, 'test2.txt')
-      : resolve(path, 'test1.txt');
-   const pathInputMain = resolve(path, 'input.txt');
+      ? resolve(path, "test2.txt")
+      : resolve(path, "test1.txt");
+   const pathInputMain = resolve(path, "input.txt");
    const it = +itStr;
 
    const answers = getAnswers(pathAnswers);
    const solutions = [
       getSolutionWrapper(
-         'Test 1',
+         "Test 1",
          part1,
          pathInputTest1,
          answers.test1,
@@ -177,7 +178,7 @@ export function run(
          options,
       ),
       getSolutionWrapper(
-         'Part 1',
+         "Part 1",
          part1,
          pathInputMain,
          answers.part1,
@@ -185,7 +186,7 @@ export function run(
          options,
       ),
       getSolutionWrapper(
-         'Test 2',
+         "Test 2",
          part2,
          pathInputTest2,
          answers.test2,
@@ -193,7 +194,7 @@ export function run(
          options,
       ),
       getSolutionWrapper(
-         'Part 2',
+         "Part 2",
          part2,
          pathInputMain,
          answers.part2,

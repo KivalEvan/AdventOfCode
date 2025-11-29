@@ -1,10 +1,10 @@
-export const part1 = async (path = '') => {
-   const fileInput = await Deno.readTextFile(path + 'input.txt');
+export const part1 = async (path = "") => {
+   const fileInput = await Deno.readTextFile(path + "input.txt");
    const startTime = performance.now();
 
    const parsed = fileInput
       .trim()
-      .split(',')
+      .split(",")
       .map((n) => parseInt(n));
 
    const maxH = Math.max(...parsed);
@@ -20,13 +20,13 @@ export const part1 = async (path = '') => {
    return [min, runTime];
 };
 
-export const part2 = async (path = '') => {
-   const fileInput = await Deno.readTextFile(path + 'input.txt');
+export const part2 = async (path = "") => {
+   const fileInput = await Deno.readTextFile(path + "input.txt");
    const startTime = performance.now();
 
    const parsed = fileInput
       .trim()
-      .split(',')
+      .split(",")
       .map((n) => parseInt(n));
 
    const maxH = Math.max(...parsed);

@@ -1,6 +1,6 @@
-import { argv } from 'node:process';
-import type { SolutionOptions } from 'src/options.ts';
-import { run } from 'src/run.ts';
+import { argv } from "node:process";
+import type { SolutionOptions } from "src/options.ts";
+import { run } from "src/run.ts";
 
 const options: SolutionOptions = {
    hasAlternate: false,
@@ -54,7 +54,7 @@ function sendhelp(grid: number[][], minTurn: number, maxStep: number): number {
             if (h[3] !== d[2] && h[2] < minTurn) continue;
             if (nS > maxStep || nX < 0 || nX >= maxX || nY < 0 || nY >= maxY) continue;
 
-            const key = nX.toString() + ',' + nY.toString() + nS.toString() + d[2].toString();
+            const key = nX.toString() + "," + nY.toString() + nS.toString() + d[2].toString();
             if (seen.has(key)) continue;
             seen.add(key);
 
@@ -71,12 +71,12 @@ function sendhelp(grid: number[][], minTurn: number, maxStep: number): number {
 }
 
 function part1(input: string, _isTest: boolean): string {
-   const grid = input.split('\n').map((str) => str.split('').map(Number));
+   const grid = input.split("\n").map((str) => str.split("").map(Number));
    return sendhelp(grid, 0, 3).toString();
 }
 
 function part2(input: string, _isTest: boolean): string {
-   const grid = input.split('\n').map((str) => str.split('').map(Number));
+   const grid = input.split("\n").map((str) => str.split("").map(Number));
    return sendhelp(grid, 4, 10).toString();
 }
 

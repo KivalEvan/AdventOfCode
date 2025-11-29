@@ -1,6 +1,6 @@
-import { argv } from 'node:process';
-import type { SolutionOptions } from 'src/options.ts';
-import { run } from 'src/run.ts';
+import { argv } from "node:process";
+import type { SolutionOptions } from "src/options.ts";
+import { run } from "src/run.ts";
 
 const options: SolutionOptions = {
    hasAlternate: false,
@@ -11,8 +11,8 @@ function solve(input: string, p2: boolean): string {
    const l: number[] = [];
    const r: number[] = [];
    const hashmap: { [key: number]: number } = {};
-   input.split('\n').forEach((line) => {
-      const pair = line.split('   ');
+   input.split("\n").forEach((line) => {
+      const pair = line.split("   ");
       const k = +pair[0];
       const v = +pair[1];
       l.push(k);
@@ -29,7 +29,8 @@ function solve(input: string, p2: boolean): string {
       for (const e of l) {
          sum += e * hashmap[e];
       }
-   } else {
+   }
+   else {
       for (let i = 0; i < l.length; i++) {
          sum += Math.abs(l[i] - r[i]);
       }

@@ -1,6 +1,6 @@
-import { argv } from 'node:process';
-import type { SolutionOptions } from 'src/options.ts';
-import { run } from 'src/run.ts';
+import { argv } from "node:process";
+import type { SolutionOptions } from "src/options.ts";
+import { run } from "src/run.ts";
 
 const options: SolutionOptions = {
    hasAlternate: false,
@@ -9,39 +9,39 @@ const options: SolutionOptions = {
 
 function isNum(c: string) {
    return (
-      c === '0' ||
-      c === '1' ||
-      c === '2' ||
-      c === '3' ||
-      c === '4' ||
-      c === '5' ||
-      c === '6' ||
-      c === '7' ||
-      c === '8' ||
-      c === '9'
+      c === "0"
+      || c === "1"
+      || c === "2"
+      || c === "3"
+      || c === "4"
+      || c === "5"
+      || c === "6"
+      || c === "7"
+      || c === "8"
+      || c === "9"
    );
 }
 
 function isSymbol(c: string) {
    return (
-      c === '*' ||
-      c === '$' ||
-      c === '=' ||
-      c === '#' ||
-      c === '%' ||
-      c === '/' ||
-      c === '&' ||
-      c === '+' ||
-      c === '-' ||
-      c === '@'
+      c === "*"
+      || c === "$"
+      || c === "="
+      || c === "#"
+      || c === "%"
+      || c === "/"
+      || c === "&"
+      || c === "+"
+      || c === "-"
+      || c === "@"
    );
 }
 
 function yeetTheNumber(grid: string[][], x: number, y: number): string {
-   let res = '';
+   let res = "";
    if (isNum(grid[y][x])) {
       res += grid[y][x];
-      grid[y][x] = '.';
+      grid[y][x] = ".";
 
       if (x > 0) res = yeetTheNumber(grid, x - 1, y) + res;
       if (x < grid[y].length - 1) res += yeetTheNumber(grid, x + 1, y);
@@ -50,7 +50,7 @@ function yeetTheNumber(grid: string[][], x: number, y: number): string {
 }
 
 function part1(input: string, _isTest: boolean): string {
-   const grid = input.split('\n').map((s) => s.split(''));
+   const grid = input.split("\n").map((s) => s.split(""));
    const SZ = grid.length;
 
    let res = 0;
@@ -78,14 +78,14 @@ function part1(input: string, _isTest: boolean): string {
 }
 
 function part2(input: string, _isTest: boolean): string {
-   const grid = input.split('\n').map((s) => s.split(''));
+   const grid = input.split("\n").map((s) => s.split(""));
    const SZ = grid.length;
 
    let res = 0;
 
    for (let y = 0; y < SZ; y++) {
       for (let x = 0; x < SZ; x++) {
-         if (grid[y][x] === '*') {
+         if (grid[y][x] === "*") {
             let ary = [];
             if (x > 0) {
                if (y < SZ - 1) ary.push(Number(yeetTheNumber(grid, x - 1, y + 1)));

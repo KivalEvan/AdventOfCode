@@ -1,6 +1,6 @@
-import { argv } from 'node:process';
-import type { SolutionOptions } from 'src/options.ts';
-import { run } from 'src/run.ts';
+import { argv } from "node:process";
+import type { SolutionOptions } from "src/options.ts";
+import { run } from "src/run.ts";
 // 200_000_000_000_000
 // 400_000_000_000_000
 const options: SolutionOptions = {
@@ -10,8 +10,8 @@ const options: SolutionOptions = {
 
 function parseInput(input: string) {
    const hailstones = input
-      .split('\n')
-      .map((str) => str.split('@').map((e) => e.split(',').map(Number)));
+      .split("\n")
+      .map((str) => str.split("@").map((e) => e.split(",").map(Number)));
    return hailstones;
 }
 
@@ -57,16 +57,16 @@ function part1(input: string, _isTest: boolean): string {
             const x = intersection.x;
             const y = intersection.y;
             if (
-               x > xAp == xAv - xAp > 0 &&
-               y > yAp == yAv - yAp > 0 &&
-               x > xBp == xBv - xBp > 0 &&
-               y > yBp == yBv - yBp > 0
+               x > xAp == xAv - xAp > 0
+               && y > yAp == yAv - yAp > 0
+               && x > xBp == xBv - xBp > 0
+               && y > yBp == yBv - yBp > 0
             ) {
                if (
-                  x >= testMin &&
-                  x <= testMax &&
-                  y >= testMin &&
-                  y <= testMax
+                  x >= testMin
+                  && x <= testMax
+                  && y >= testMin
+                  && y <= testMax
                ) {
                   count++;
                }
@@ -80,7 +80,7 @@ function part1(input: string, _isTest: boolean): string {
 function part2(input: string, _isTest: boolean): string {
    const hailstones = parseInput(input);
 
-   console.log('eqs = [');
+   console.log("eqs = [");
    for (let i = 0; i < 3; i++) {
       console.log(
          `  ${hailstones[i][0][0]} + ${hailstones[i][1][0]} * t${i + 1} == x + vx * t${i + 1},`,
@@ -92,9 +92,9 @@ function part2(input: string, _isTest: boolean): string {
          `  ${hailstones[i][0][2]} + ${hailstones[i][1][2]} * t${i + 1} == z + vz * t${i + 1},`,
       );
    }
-   console.log(']');
+   console.log("]");
 
-   return '47';
+   return "47";
 }
 
 if (import.meta.main) {

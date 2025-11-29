@@ -1,6 +1,6 @@
-import { argv } from 'node:process';
-import type { SolutionOptions } from 'src/options.ts';
-import { run } from 'src/run.ts';
+import { argv } from "node:process";
+import type { SolutionOptions } from "src/options.ts";
+import { run } from "src/run.ts";
 
 const options: SolutionOptions = {
    hasAlternate: false,
@@ -20,7 +20,7 @@ function extrapolate(ary: number[], sz: number): number {
 }
 
 function parseInput(input: string): number[][] {
-   return input.split('\n').map((str) => str.split(' ').map(Number));
+   return input.split("\n").map((str) => str.split(" ").map(Number));
 }
 
 function part1(input: string, _isTest: boolean): string {

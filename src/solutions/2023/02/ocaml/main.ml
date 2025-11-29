@@ -1,7 +1,7 @@
 let options = Hashtbl.create 128;;
 
 Hashtbl.add options "has_alternate" false;;
-Hashtbl.add options "has_io" false
+Hashtbl.add options "has_io" false;;
 
 let make_sequences (game : string list) : int * int =
   ( int_of_string (List.hd game)

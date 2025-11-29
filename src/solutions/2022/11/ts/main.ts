@@ -1,6 +1,6 @@
-import { argv } from 'node:process';
-import type { SolutionOptions } from 'src/options.ts';
-import { run } from 'src/run.ts';
+import { argv } from "node:process";
+import type { SolutionOptions } from "src/options.ts";
+import { run } from "src/run.ts";
 
 const options: SolutionOptions = {
    hasAlternate: false,
@@ -8,11 +8,11 @@ const options: SolutionOptions = {
 };
 
 function part1(input: string, _isTest: boolean): string {
-   return '';
+   return "";
 }
 
 function part2(input: string, _isTest: boolean): string {
-   return '';
+   return "";
 }
 
 if (import.meta.main) {
