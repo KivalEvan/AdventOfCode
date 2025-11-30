@@ -1,13 +1,12 @@
-using System;
 using System.Diagnostics;
-using System.Linq;
 
 namespace Core;
+
 public static class Runner
 {
    private class SolutionWrapper
    {
-      public SolutionWrapper(string tag, SolutionPart func, string path, string test, int iteration, SolutionOptions options)
+      public SolutionWrapper(string tag, in SolutionPart func, string path, string test, int iteration, in SolutionOptions options)
       {
          this.tag = tag;
          this.fn = func;
@@ -50,7 +49,7 @@ public static class Runner
       if (expected != actual) { Console.WriteLine("Expected " + expected + " but received " + actual); throw new Exception("Test failed"); }
    }
 
-   private static SolutionWrapper PrintResult(SolutionWrapper solution)
+   private static SolutionWrapper PrintResult(in SolutionWrapper solution)
    {
       if (solution.iteration == 1)
       {
@@ -83,7 +82,7 @@ public static class Runner
       return solution;
    }
 
-   private static SolutionWrapper Perform(SolutionWrapper solution)
+   private static SolutionWrapper Perform(in SolutionWrapper solution)
    {
       double[] timesIo = new double[solution.iteration];
       double[] timesPart = new double[solution.iteration];
@@ -120,7 +119,7 @@ public static class Runner
       return solution;
    }
 
-   public static void Run(string[] args, SolutionPart part1, SolutionPart part2, SolutionOptions options)
+   public static void Run(string[] args, in SolutionPart part1, in SolutionPart part2, in SolutionOptions options)
    {
       string pathAnswers = Path.Combine(args[0], "answers.txt");
       string pathTest1 = Path.Combine(args[0], "test1.txt");

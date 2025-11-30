@@ -1,9 +1,9 @@
 
 using Core;
 
-namespace Year2023;
+namespace Year2025;
 
-public static class Day11
+public static class Day01
 {
    static SolutionOptions OPTIONS = new()
    {
@@ -11,14 +11,16 @@ public static class Day11
       HasIO = false,
    };
 
+   static private string Solve(string input, bool p2) { return ""; }
+
    static string Part1(string input, bool isTest = false)
    {
-      return "";
+      return Solve(input, false);
    }
 
    static string Part2(string input, bool isTest = false)
    {
-      return "";
+      return Solve(input, true);
    }
 
    static void Main(string[] args)

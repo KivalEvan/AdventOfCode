@@ -1,7 +1,5 @@
-using System;
-using System.IO;
-
 namespace Core;
+
 public static class Input
 {
    public record struct Answers

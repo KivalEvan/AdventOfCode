@@ -50,5 +50,6 @@
       "options.h": "c",
       "strings.h": "c"
    },
-   "java.compile.nullAnalysis.mode": "automatic"
+   "java.compile.nullAnalysis.mode": "automatic",
+   "dotnet.defaultSolution": "AdventOfCode.sln"
 }

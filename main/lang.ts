@@ -28,16 +28,29 @@ export const langCompile: LangName[] = [
    "zig",
 ];
 
+export const langExt: Record<LangName, string> = {
+   ts: "ts",
+   python: "py",
+   csharp: "cs",
+   c: "c",
+   lua: "lua",
+   go: "go",
+   rust: "rs",
+   java: "java",
+   zig: "zig",
+   ocaml: "ml",
+};
+
 export const langName: Record<LangName, string> = {
    ts: "TypeScript 5.9",
    python: "Python 3.11",
-   rust: "Rust 1.87",
-   go: "Go 1.25",
    csharp: "C# 14",
    c: "C23",
-   zig: "Zig 0.15",
    lua: "Lua 5.4",
+   go: "Go 1.25",
+   rust: "Rust 1.87",
    java: "Java 25",
+   zig: "Zig 0.15",
    ocaml: "OCaml 5.4",
 };
 

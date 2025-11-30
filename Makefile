@@ -35,7 +35,7 @@ all:
 	@echo -e "You must specify which to run:"
 	@echo "make <language> YEAR=<current_year_by_default> DAY=<current_day_by_default> ITERATION=<any_input_to_bench>"
 	@echo ""
-	@echo "Languages available: ts, c, java"
+	@echo "Languages available: ts, python, cs, c, lua, go, rust, java, zig, ocaml"
 
 c_compile: $(OBJS) $(TEMP_DIR)
 	@$(CC) $(LDFLAGS) -c $(AOC_PATH)/c/main.c -o $(TEMP_DIR)/main.o
@@ -65,15 +65,16 @@ java:
 	@$(MEMORY_USAGE_CMD) java --enable-preview -cp $(TEMP_DIR) kival/aoc/year${YEAR}/day${DAY}/Main $(__ARGUMENTS)
 
 csharp_compile: $(AOC_PATH)/csharp/Main.cs
-	@dotnet clean $(AOC_PATH)/csharp/Main.csproj --nologo -v=q
-	@dotnet build $(AOC_PATH)/csharp/Main.csproj -v=q \
+# 	@dotnet clean ./AdventOfCode.csproj --nologo -v=q
+	@dotnet build ./AdventOfCode.csproj -v=q \
 		--nologo \
 		--no-incremental \
 		--configuration Release \
+		-p:StartupObject=Year$(YEAR).Day$(DAY) \
 		-o temp/csharp
 
 csharp:
-	@$(MEMORY_USAGE_CMD) temp/csharp/Main $(__ARGUMENTS)
+	@$(MEMORY_USAGE_CMD) temp/csharp/AdventOfCode $(__ARGUMENTS)
 
 go_compile: $(AOC_PATH)/go/main.go
 	@go build -o $(TEMP_DIR)/aoc_go $(AOC_PATH)/go/main.go
@@ -125,7 +126,7 @@ format:
 	find $(SRC_DIR)/c/includes/*.h | xargs clang-format -i
 	find $(SRC_DIR)/../solutions/*/*/c/*.c | xargs clang-format -i
 	go fmt ./...
-	dotnet format
+	dotnet format AdventOfCode.csproj
 	deno fmt
 	find $(SRC_DIR)/python/*.py | xargs yapf -ip
 	find $(SRC_DIR)/../solutions/*/*/python/*.py | xargs yapf -ip

@@ -2,6 +2,7 @@
 using Core;
 
 namespace Year;
+
 public static class Day
 {
    static SolutionOptions OPTIONS = new()

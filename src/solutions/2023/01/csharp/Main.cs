@@ -1,8 +1,8 @@
-
 using Core;
 
 namespace Year2023;
-public class Day01
+
+public static class Day01
 {
    static SolutionOptions OPTIONS = new(
    )
@@ -13,6 +13,7 @@ public class Day01
 
    private static char GetNum(string str)
    {
+
       if (str.StartsWith("zero"))
          return '0';
       if (str.StartsWith("one"))

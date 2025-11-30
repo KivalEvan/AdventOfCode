@@ -12,6 +12,7 @@ export function fetchArgs() {
          lang: { type: "string", short: "l" },
          bench: { type: "string", short: "b" },
          debug: { type: "boolean", short: "h" },
+         watch: { type: "boolean", short: "w" },
       },
    }).values;
 }

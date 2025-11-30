@@ -14,6 +14,7 @@ export async function runner(
 
    if (needCompile) {
       console.log("Compiling...");
+      console.time("compile-time");
       const cmd = await execAsync(
          "make "
             + [
@@ -22,6 +23,7 @@ export async function runner(
                "DAY=" + day.toString().padStart(2, "0"),
             ].join(" "),
       );
+      console.timeEnd("compile-time");
 
       const stderr = cmd.stderr.trim();
       if (stderr && stderr.length !== 118) {

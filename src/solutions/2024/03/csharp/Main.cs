@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using Core;
 
 namespace Year2024;
+
 public static class Day03
 {
    static SolutionOptions OPTIONS = new()

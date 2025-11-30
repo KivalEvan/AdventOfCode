@@ -3,6 +3,7 @@ using System.Drawing;
 using Core;
 
 namespace Year2024;
+
 public static class Day09
 {
    static SolutionOptions OPTIONS = new()

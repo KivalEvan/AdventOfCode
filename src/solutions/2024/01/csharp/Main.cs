@@ -3,6 +3,7 @@ using System;
 using Core;
 
 namespace Year2024;
+
 public static class Day01
 {
    static SolutionOptions OPTIONS = new()
