@@ -2,6 +2,18 @@
 #define UTILS_MATH_H_
 #include <stdint.h>
 
+int8_t math_i8mod(const int8_t a, const int8_t b);
+int16_t math_i16mod(const int16_t a, const int16_t b);
+int32_t math_i32mod(const int32_t a, const int32_t b);
+int64_t math_i64mod(const int64_t a, const int64_t b);
+#define math_mod(a, b)                                                         \
+   _Generic((a),                                                               \
+       int8_t: math_i8mod,                                                     \
+       int16_t: math_i16mod,                                                   \
+       int32_t: math_i32mod,                                                   \
+       int64_t: math_i64mod,                                                   \
+       default: math_i64mod)(a, b)
+
 int32_t math_i32gcd(const int32_t a, const int32_t b);
 uint32_t math_ui32gcd(const uint32_t a, const uint32_t b);
 int64_t math_i64gcd(const int64_t a, const int64_t b);

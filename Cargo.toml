@@ -4,6 +4,7 @@ members = [
    "src/langs/rust",
    "src/solutions/2023/*/rust",
    "src/solutions/2024/*/rust",
+   "src/solutions/2025/*/rust",
 ]
 
 [workspace.dependencies]

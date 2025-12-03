@@ -3,7 +3,7 @@ const aoc = @import("aoc");
 
 const options = aoc.SolutionOptions.init();
 
-fn solve(input: []const u8, p2: bool, is_test: bool) []const u8 {
+fn solve(input: []const u8, is_test: bool, p2: bool) []const u8 {
     _ = is_test;
     var res: i64 = 0;
 
@@ -13,11 +13,11 @@ fn solve(input: []const u8, p2: bool, is_test: bool) []const u8 {
 }
 
 fn part1(input: []const u8, is_test: bool) []const u8 {
-    return solve(input, false, is_test);
+    return solve(input, is_test, false);
 }
 
 fn part2(input: []const u8, is_test: bool) []const u8 {
-    return solve(input, true, is_test);
+    return solve(input, is_test, true);
 }
 
 pub fn main() !void {

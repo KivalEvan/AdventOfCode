@@ -12,7 +12,25 @@ def main() -> None:
 
 
 def solve(input: str, is_test: bool, p2: bool) -> str:
-   return ''
+   res = 0
+   for line in input.split('\n'):
+      start = 0
+      max = 12 if p2 else 2
+      b = line.encode('utf-8')
+      for digit in range(max):
+         marked = 0
+         n = 0
+         t = max - 1 - digit
+         l = len(line) - t
+         for it in range(start, l):
+            parsed = b[it] - int.from_bytes(b'0')
+            if n < parsed:
+               marked = it
+               n = parsed
+         start = marked + 1
+         res += n * (10**t)
+
+   return str(res)
 
 
 def part_one(input: str, is_test: bool) -> str:

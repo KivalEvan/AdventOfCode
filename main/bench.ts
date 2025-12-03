@@ -5,9 +5,13 @@ import { exec } from "node:child_process";
 
 const args = fetchArgs();
 
-const langList: LangName[] = Object.keys(langName).filter(
-   (l) => l === getLang(l) || l,
-) as LangName[];
+let langList: LangName[] = Object.keys(langName) as LangName[];
+if (args.lang) {
+   langList = args.lang
+      .split(",")
+      .map((l) => getLang(l))
+      .filter((l) => l in langName);
+}
 
 const currentDate = new Date();
 let yearStart = currentDate.getFullYear();
@@ -40,6 +44,7 @@ if (args.month) {
    dayStart = 1;
    dayEnd = 25;
 }
+
 function getCode(open: number, close: number) {
    return {
       open: `\x1b[${open}m`,
@@ -72,20 +77,19 @@ const iteration = typeof args.bench === "string" ? +args.bench : args.bench ? 1_
 console.log("Benchmark iterating", iteration, "times");
 console.log("Measured in average milliseconds");
 
-const baseline = "";
-const overallTimes: Record<string, number> = Object.keys(langName).reduce(
+const overallTimes: Record<string, number> = langList.reduce(
    (p, v) => ({ ...p, [langName[v as LangName]]: 0 }),
    {},
 );
 
 for (let year = yearStart; year <= yearEnd; year++) {
    for (let day = dayStart; day <= dayEnd; day++) {
-      const timers: Record<string, number[]> = Object.keys(langName).reduce(
+      const timeTaken: Record<string, number[]> = langList.reduce(
          (p, v) => ({ ...p, [langName[v as LangName]]: [] }),
          {},
       );
-      const memories: Record<string, number[]> = Object.keys(langName).reduce(
-         (p, v) => ({ ...p, [langName[v as LangName]]: [] }),
+      const memoryUsage: Record<string, number> = langList.reduce(
+         (p, v) => ({ ...p, [langName[v as LangName]]: 0 }),
          {},
       );
       for (const lang of langList) {
@@ -110,7 +114,7 @@ for (let year = yearStart; year <= yearEnd; year++) {
             output.some((e) => e.startsWith("make: ***"))
             || !output.some((e) => e.startsWith("Memory used"))
          ) {
-            delete timers[langName[lang]];
+            delete timeTaken[langName[lang]];
             continue;
          }
          const idx = output.findIndex((e) => e.startsWith("Benchmarking..."));
@@ -123,43 +127,48 @@ for (let year = yearStart; year <= yearEnd; year++) {
          const elapsed = output
             .slice(idx)
             .filter((e) => e.startsWith("Elapsed"));
-         timers[langName[lang]][0] = obtainTime(benchmarks.at(1)!)[2];
-         timers[langName[lang]][1] = obtainTime(benchmarks.at(3)!)[2];
-         timers[langName[lang]][2] = timers[langName[lang]][0] + timers[langName[lang]][1];
-         timers[langName[lang]][3] = +elapsed[0].split(" ").at(-1)!;
-         memories[langName[lang]][0] = +mems[0].split(" ").at(-1)! / 1024;
-         overallTimes[langName[lang]] += timers[langName[lang]][2];
+         timeTaken[langName[lang]][0] = obtainTime(benchmarks.at(1)!)[2];
+         timeTaken[langName[lang]][1] = obtainTime(benchmarks.at(3)!)[2];
+         timeTaken[langName[lang]][2] = timeTaken[langName[lang]][0] + timeTaken[langName[lang]][1];
+         timeTaken[langName[lang]][3] = +elapsed[0].split(" ").at(-1)!;
+         memoryUsage[langName[lang]] = +mems[0].split(" ").at(-1)! / 1024;
+         overallTimes[langName[lang]] += timeTaken[langName[lang]][2];
       }
 
       const minTime = [
-         Math.min(...Object.values(timers).map((v) => v[0])),
-         Math.min(...Object.values(timers).map((v) => v[1])),
-         Math.min(...Object.values(timers).map((v) => v[2])),
+         Math.min(...Object.values(timeTaken).map((v) => v[0])),
+         Math.min(...Object.values(timeTaken).map((v) => v[1])),
+         Math.min(...Object.values(timeTaken).map((v) => v[2])),
          Math.min(
             ...Object.values(overallTimes)
                .filter((x) => x)
                .map((v) => v),
          ),
-         Math.min(...Object.values(timers).map((v) => v[3])),
+         Math.min(
+            ...Object.values(timeTaken)
+               .map((v) => v[3])
+               .filter((v) => v),
+         ),
+         Math.min(...Object.values(timeTaken).map((v) => v[3])),
       ];
       const maxTime = [
-         Math.max(...Object.values(timers).map((v) => v[0])),
-         Math.max(...Object.values(timers).map((v) => v[1])),
-         Math.max(...Object.values(timers).map((v) => v[2])),
+         Math.max(...Object.values(timeTaken).map((v) => v[0])),
+         Math.max(...Object.values(timeTaken).map((v) => v[1])),
+         Math.max(...Object.values(timeTaken).map((v) => v[2])),
          Math.max(
             ...Object.values(overallTimes)
                .filter((x) => x)
                .map((v) => v),
          ),
-         Math.max(...Object.values(timers).map((v) => v[3])),
+         Math.max(...Object.values(timeTaken).map((v) => v[3])),
       ];
 
-      const minPeak = Math.min(
-         ...Object.values(memories)
-            .filter((x) => x[0] > 0)
-            .map((v) => v[0]),
+      const minMemory = Math.min(
+         ...Object.values(memoryUsage).filter((v) => v),
       );
-      const maxPeak = Math.max(...Object.values(memories).map((v) => v[0]));
+      const maxMemory = Math.max(
+         ...Object.values(memoryUsage).filter((v) => v),
+      );
       console.log("\n", year, "--", day);
       console.log(
          "".padStart(16, " "),
@@ -172,12 +181,12 @@ for (let year = yearStart; year <= yearEnd; year++) {
          "          Elapsed",
          "           Memory",
       );
-      for (const lang in timers) {
+      for (const lang in timeTaken) {
          const overallTime = overallTimes[lang];
          console.log(
             lang.padStart(16, " "),
             "|",
-            timers[lang]
+            timeTaken[lang]
                .slice(0, 3)
                .map((v, i) =>
                   minTime[i] === v
@@ -187,9 +196,9 @@ for (let year = yearStart; year <= yearEnd; year++) {
                      : v.toFixed(3).padStart(8, " ")
                )
                .join("   "),
-            timers[lang][2] === minTime[2]
+            timeTaken[lang][2] === minTime[2]
                ? "".padStart(8, " ")
-               : ((timers[lang][2] / minTime[2]).toFixed(2) + "x").padStart(
+               : ((timeTaken[lang][2] / minTime[2]).toFixed(2) + "x").padStart(
                   8,
                   " ",
                ),
@@ -204,31 +213,25 @@ for (let year = yearStart; year <= yearEnd; year++) {
                   8,
                   " ",
                ),
-            minTime[4] === timers[lang][3]
-               ? green(timers[lang][3].toFixed(2).padStart(8, " "))
-               : maxTime[4] === timers[lang][3]
-               ? red(timers[lang][3].toFixed(2).padStart(8, " "))
-               : timers[lang][3].toFixed(2).padStart(8, " "),
-            timers[lang][3] === minTime[4]
+            minTime[5] === timeTaken[lang][3]
+               ? green(timeTaken[lang][3].toFixed(2).padStart(8, " "))
+               : maxTime[4] === timeTaken[lang][3]
+               ? red(timeTaken[lang][3].toFixed(2).padStart(8, " "))
+               : timeTaken[lang][3].toFixed(2).padStart(8, " "),
+            timeTaken[lang][3] === minTime[4]
                ? "".padStart(8, " ")
-               : ((timers[lang][3] / minTime[4]).toFixed(2) + "x").padStart(
+               : ((timeTaken[lang][3] / minTime[4]).toFixed(2) + "x").padStart(
                   8,
                   " ",
                ),
-            memories[lang][0] === 0
-               ? "".padStart(8, " ")
-               : minPeak === memories[lang][0]
-               ? green(memories[lang][0].toFixed(2).padStart(8, " "))
-               : maxPeak === memories[lang][0]
-               ? red(memories[lang][0].toFixed(2).padStart(8, " "))
-               : memories[lang][0].toFixed(2).padStart(8, " "),
-            memories[lang][0] === 0
-               ? "".padStart(8, " ")
-               : minPeak === memories[lang][0]
-               ? "".padStart(8, " ")
-               : (
-                  (memories[lang][0] / (minPeak || 1)).toFixed(2) + "x"
-               ).padStart(8, " "),
+            minMemory === memoryUsage[lang]
+               ? green(memoryUsage[lang].toFixed(2).padStart(8, " "))
+               : maxMemory === memoryUsage[lang]
+               ? red(memoryUsage[lang].toFixed(2).padStart(8, " "))
+               : memoryUsage[lang].toFixed(2).padStart(8, " "),
+            minMemory === memoryUsage[lang] ? "".padStart(8, " ") : (
+               (memoryUsage[lang] / (minMemory || 1)).toFixed(2) + "x"
+            ).padStart(8, " "),
          );
       }
    }

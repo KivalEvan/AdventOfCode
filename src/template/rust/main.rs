@@ -7,16 +7,16 @@ fn get_options() -> aoc_core::options::SolutionOptions {
    }
 }
 
-fn solve(input: &str, p2: bool) -> String {
+fn solve(input: &str, _is_test: bool, p2: bool) -> String {
    input.to_string()
 }
 
-fn part_1(input: &str, _is_test: bool) -> String {
-   solve(input, false)
+fn part_1(input: &str, is_test: bool) -> String {
+   solve(input, is_test, false)
 }
- 
-fn part_2(input: &str, _is_test: bool) -> String {
-   solve(input, true)
+
+fn part_2(input: &str, is_test: bool) -> String {
+   solve(input, is_test, true)
 }
 
 fn main() {

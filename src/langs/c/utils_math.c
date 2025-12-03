@@ -2,6 +2,26 @@
 #include <math.h>
 #include <stdlib.h>
 
+int8_t math_i8mod(const int8_t a, const int8_t b) {
+   int8_t r = a % b;
+   return r < 0 ? r + b : r;
+}
+
+int16_t math_i16mod(const int16_t a, const int16_t b) {
+   int16_t r = a % b;
+   return r < 0 ? r + b : r;
+}
+
+int32_t math_i32mod(const int32_t a, const int32_t b) {
+   int32_t r = a % b;
+   return r < 0 ? r + b : r;
+}
+
+int64_t math_i64mod(const int64_t a, const int64_t b) {
+   int64_t r = a % b;
+   return r < 0 ? r + b : r;
+}
+
 int32_t math_i32gcd(const int32_t a, const int32_t b) {
    return !b ? a : math_i32gcd(b, a % b);
 }

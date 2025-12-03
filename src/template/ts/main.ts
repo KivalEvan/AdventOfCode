@@ -7,16 +7,16 @@ const options: SolutionOptions = {
    hasIo: false,
 };
 
-function solve(input: string, p2: boolean): string {
+function solve(input: string, isTest: boolean, p2: boolean): string {
    return "";
 }
 
-function part1(input: string, _isTest: boolean): string {
-   return solve(input, false);
+function part1(input: string, isTest: boolean): string {
+   return solve(input, isTest, false);
 }
 
-function part2(input: string, _isTest: boolean): string {
-   return solve(input, true);
+function part2(input: string, isTest: boolean): string {
+   return solve(input, isTest, true);
 }
 
 if (import.meta.main) {

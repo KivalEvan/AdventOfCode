@@ -10,7 +10,30 @@ local options = {
 ---@param p2 boolean
 ---@return string
 local function solve(input, is_test, p2)
-   return ''
+   local dial = 50
+   local zero = 0
+   for line in input:gmatch('[^\n]+') do
+      local newDial = tonumber(line:sub(2), 10)
+      if line:sub(0, 1) == 'L' then
+         newDial = newDial * -1
+      end
+      newDial = dial + newDial
+
+      if p2 then
+         zero = zero + math.floor(math.abs(newDial) / 100)
+         if dial ~= 0 and newDial <= 0 then
+            zero = zero + 1
+         end
+         dial = newDial % 100
+      else
+         dial = newDial
+         if dial % 100 == 0 then
+            zero = zero + 1
+         end
+      end
+   end
+
+   return tostring(zero)
 end
 
 ---@param input string
