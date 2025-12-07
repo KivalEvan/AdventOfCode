@@ -12,7 +12,7 @@ def main() -> None:
 
 
 def solve(input: str, p2: bool) -> str:
-   pairs = [line.split() for line in input.split('\n')]
+   pairs = [line.split() for line in input.splitlines()]
    l, r = ((list([int(y) for y in x])) for x in zip(*pairs))
    hashmap = {int(pair[0]): 0 for pair in pairs}
    for pair in pairs:

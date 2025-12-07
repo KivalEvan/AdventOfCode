@@ -82,7 +82,7 @@ def parse_input(input: str, joker: bool) -> [str, int]:
 
 def solve(input: str, joker: bool) -> str:
    groups = [[] for _ in range(7)]
-   for y in [parse_input(x, joker) for x in input.split('\n')]:
+   for y in [parse_input(x, joker) for x in input.splitlines()]:
       groups[get_type(y[0])].append(y)
 
    res = 0

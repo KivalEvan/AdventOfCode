@@ -22,7 +22,7 @@ def ohnomath(b: int, c: int) -> int:
 
 def part_one(input: str, is_test: bool) -> str:
    td = [[int(y) for y in x.split(':')[1].strip().split(' ') if y != '']
-         for x in input.split('\n')]
+         for x in input.splitlines()]
    res = 1
    for i in range(len(td[0])):
       res *= ohnomath(td[0][i], td[1][i])
@@ -31,7 +31,7 @@ def part_one(input: str, is_test: bool) -> str:
 
 def part_two(input: str, is_test: bool) -> str:
    td = [
-       ''.join(x.split(':')[1].strip().split(' ')) for x in input.split('\n')
+       ''.join(x.split(':')[1].strip().split(' ')) for x in input.splitlines()
    ]
    return str(ohnomath(int(td[0]), int(td[1])))
 

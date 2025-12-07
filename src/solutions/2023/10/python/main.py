@@ -88,7 +88,7 @@ def look_up(grid: typing.List[str], x: int,
 
 
 def part_one(input: str, is_test: bool) -> str:
-   grid = [x for x in input.split('\n')]
+   grid = [x for x in input.splitlines()]
    visited = [[False for _ in range(len(grid[0]))] for _ in range(len(grid))]
 
    i = 0
@@ -108,7 +108,7 @@ def part_one(input: str, is_test: bool) -> str:
 
 
 def part_two(input: str, is_test: bool) -> str:
-   grid = [x for x in input.split('\n')]
+   grid = [x for x in input.splitlines()]
    visited = [[False for _ in range(len(grid[0]) * 3)]
               for _ in range(len(grid) * 3)]
 

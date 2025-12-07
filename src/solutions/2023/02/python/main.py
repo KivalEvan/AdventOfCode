@@ -37,7 +37,7 @@ def part_one(input: str, is_test: bool) -> str:
    return str(
        sum([
            do_part_one(x, idx) for idx, x in enumerate(
-               [get_sequences(x) for x in input.split('\n')])
+               [get_sequences(x) for x in input.splitlines()])
        ]))
 
 
@@ -54,7 +54,7 @@ def part_two(input: str, is_test: bool) -> str:
    return str(
        sum([
            do_part_two(x)
-           for x in [get_sequences(x) for x in input.split('\n')]
+           for x in [get_sequences(x) for x in input.splitlines()]
        ]))
 
 

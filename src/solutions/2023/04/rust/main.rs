@@ -9,7 +9,7 @@ fn get_options() -> aoc_core::options::SolutionOptions {
 
 fn part_1(input: &str, _is_test: bool) -> String {
    input
-      .split('\n')
+      .lines()
       .map(|x| {
          let nums = x
             .split(':')
@@ -41,7 +41,7 @@ fn part_1(input: &str, _is_test: bool) -> String {
 }
 
 fn part_2(input: &str, _is_test: bool) -> String {
-   let lines = input.split('\n');
+   let lines = input.lines();
    let mut instances = vec![1_i64; input.lines().count()];
 
    lines.enumerate().for_each(|(i, x)| {

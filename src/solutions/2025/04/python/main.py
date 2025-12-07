@@ -15,7 +15,9 @@ def count_neighbour(x: int, y: int, m: int, input: str) -> int:
          if input[index] == '@': adjacent += 1
    return adjacent - 1
 
-def update_neighbour(x: int, y: int, m: int, grid: bytearray, candidates: typing.List) -> None:
+
+def update_neighbour(x: int, y: int, m: int, grid: bytearray,
+                     candidates: typing.List) -> None:
    for nX in range(-1, 2):
       for nY in range(-1, 2):
          index = m * (y + nY) + x + nX + y + nY
@@ -34,7 +36,7 @@ def main() -> None:
 def solve(input: str, is_test: bool, p2: bool) -> str:
    grid = bytearray(len(input))
    m = input.index('\n')
-   
+
    candidates = []
    for index in range(m * m + m - 1):
       if input[index] == '@':
@@ -43,7 +45,7 @@ def solve(input: str, is_test: bool, p2: bool) -> str:
          grid[index] = count_neighbour(x, y, m, input)
          if grid[index] < 4:
             candidates.append((x, y))
-            
+
    if not p2: return str(len(candidates))
 
    total = 0

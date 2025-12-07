@@ -26,7 +26,7 @@ def extrapolate(history: List[int], length: int) -> int:
 
 
 def part_one(input: str, is_test: bool) -> str:
-   parsed = [[int(y) for y in x.split(' ')] for x in input.split('\n')]
+   parsed = [[int(y) for y in x.split(' ')] for x in input.splitlines()]
    res = 0
    for history in parsed:
       res += extrapolate(history, len(history))
@@ -34,7 +34,7 @@ def part_one(input: str, is_test: bool) -> str:
 
 
 def part_two(input: str, is_test: bool) -> str:
-   parsed = [[int(y) for y in x.split(' ')] for x in input.split('\n')]
+   parsed = [[int(y) for y in x.split(' ')] for x in input.splitlines()]
    res = 0
    for history in parsed:
       history.reverse()

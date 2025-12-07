@@ -27,7 +27,7 @@ def parse_input(
    else:
       seed_ranges = [[header[idx - 1], header[idx - 1] + header[idx]]
                      for idx, x in enumerate(header) if idx % 2 == 1]
-   src_to_dest_ranges = [[tuple_moment(y) for y in x.split('\n')[1:]]
+   src_to_dest_ranges = [[tuple_moment(y) for y in x.splitlines()[1:]]
                          for x in parsed[1:]]
    return [seed_ranges, src_to_dest_ranges]
 

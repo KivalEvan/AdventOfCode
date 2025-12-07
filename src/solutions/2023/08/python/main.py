@@ -20,7 +20,7 @@ def lcm(a: int, b: int) -> int:
 
 
 def part_one(input: str, is_test: bool) -> str:
-   lines = input.split('\n')
+   lines = input.splitlines()
    instructions = [0 if x == 'L' else 1 for x in lines[0]]
    maps = {}
    for line in lines[2:]:
@@ -41,7 +41,7 @@ def part_one(input: str, is_test: bool) -> str:
 
 
 def part_two(input: str, is_test: bool) -> str:
-   lines = input.split('\n')
+   lines = input.splitlines()
    instructions = [0 if x == 'L' else 1 for x in lines[0]]
    maps = {}
    navs = []

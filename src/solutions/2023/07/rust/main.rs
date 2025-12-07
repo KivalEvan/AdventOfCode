@@ -80,7 +80,7 @@ fn get_type(cards: &Vec<char>) -> CardType {
 
 fn parse_input(input: &str, joker: bool) -> Vec<Vec<(Vec<char>, i64)>> {
    input
-      .split('\n')
+      .lines()
       .map(|str| {
          let mut temp = str.split(' ');
          let mut s = temp.next().unwrap().to_string();

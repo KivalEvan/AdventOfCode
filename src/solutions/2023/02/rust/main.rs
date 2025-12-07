@@ -27,7 +27,7 @@ fn get_sequences(game: &str) -> Vec<(i32, usize)> {
 const RGB: [i32; 3] = [12, 13, 14];
 fn part_1(input: &str, _is_test: bool) -> String {
    input
-      .split('\n')
+      .lines()
       .map(get_sequences)
       .enumerate()
       .map(|x| {
@@ -44,7 +44,7 @@ fn part_1(input: &str, _is_test: bool) -> String {
 
 fn part_2(input: &str, _is_test: bool) -> String {
    input
-      .split('\n')
+      .lines()
       .map(get_sequences)
       .map(|x| {
          let mut rgb = [0, 0, 0];

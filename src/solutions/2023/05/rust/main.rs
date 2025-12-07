@@ -37,7 +37,7 @@ fn parse_input(input: &str, single: bool) -> (Vec<(i64, i64)>, Vec<Vec<((i64, i6
    let src_to_dest_ranges = parsed
       .into_iter()
       .map(|x| {
-         x.split('\n')
+         x.lines()
             .skip(1)
             .map(|str| {
                str.split(' ')

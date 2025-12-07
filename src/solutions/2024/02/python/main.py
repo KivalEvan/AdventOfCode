@@ -40,14 +40,15 @@ def killme2(ary: list[int]) -> bool:
 def part_one(input: str, is_test: bool) -> str:
    return str(
        sum([
-           1 for x in input.split('\n') if killme([int(y) for y in x.split()])
+           1 for x in input.splitlines() if killme([int(y) for y in x.split()])
        ]))
 
 
 def part_two(input: str, is_test: bool) -> str:
    return str(
        sum([
-           1 for x in input.split('\n') if killme2([int(y) for y in x.split()])
+           1 for x in input.splitlines()
+           if killme2([int(y) for y in x.split()])
        ]))
 
 

@@ -14,7 +14,7 @@ def main() -> None:
 def solve(input: str, p2: bool) -> str:
    dial = 50
    zero = 0
-   for n in input.split('\n'):
+   for n in input.splitlines():
       newDial = dial + int(n[1:]) * (1 if n[0] == 'R' else -1)
 
       if p2:

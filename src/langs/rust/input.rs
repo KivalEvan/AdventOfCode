@@ -12,6 +12,6 @@ pub fn get_answers(path: &str) -> (String, String, String, String) {
    let mut f = File::open(path).unwrap();
    let mut s = String::new();
    f.read_to_string(&mut s).unwrap();
-   let v: Vec<&str> = s.trim_end().split('\n').collect();
+   let v: Vec<&str> = s.trim_end().lines().collect();
    (v[0].to_string(), v[1].to_string(), v[2].to_string(), v[3].to_string())
 }

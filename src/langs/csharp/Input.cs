@@ -12,7 +12,7 @@ public static class Input
 
    public static string GetInput(string path)
    {
-      return File.ReadAllText(path).TrimEnd();
+      return File.ReadAllText(path).TrimEnd('\n');
    }
 
    public static Answers GetAnswers(string path)

@@ -19,7 +19,7 @@ fn modulo(x: i32, y: i32) -> i32 {
 fn solve(input: &str, _is_test: bool, p2: bool) -> String {
    let mut dial = 50;
    input
-      .split('\n')
+      .lines()
       .map(|line| {
          let new_dial = dial
             + line[1..].parse::<i32>().unwrap()

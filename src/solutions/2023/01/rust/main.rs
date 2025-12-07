@@ -44,7 +44,7 @@ fn _get_num(str: &str) -> char {
 
 fn part_1(input: &str, _is_test: bool) -> String {
    input
-      .split('\n')
+      .lines()
       .map(|f| {
          let mut first = ' ';
          let mut last = ' ';
@@ -71,7 +71,7 @@ fn part_1(input: &str, _is_test: bool) -> String {
 
 fn part_2(input: &str, _is_test: bool) -> String {
    input
-      .split('\n')
+      .lines()
       .map(|f| {
          let mut first = ' ';
          let mut last = ' ';

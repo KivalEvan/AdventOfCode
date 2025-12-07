@@ -109,7 +109,7 @@ fn look_up(grid: &Vec<Vec<char>>, x: usize, y: usize) -> Vec<(usize, usize)> {
 }
 
 fn part_1(input: &str, _is_test: bool) -> String {
-   let grid: Vec<Vec<char>> = input.split('\n').map(|s| s.chars().collect()).collect();
+   let grid: Vec<Vec<char>> = input.lines().map(|s| s.chars().collect()).collect();
    let mut visited = vec![vec![false; grid[0].len()]; grid.len()];
 
    let mut i = 0;
@@ -130,7 +130,7 @@ fn part_1(input: &str, _is_test: bool) -> String {
 }
 
 fn part_2(input: &str, _is_test: bool) -> String {
-   let grid: Vec<Vec<char>> = input.split('\n').map(|s| s.chars().collect()).collect();
+   let grid: Vec<Vec<char>> = input.lines().map(|s| s.chars().collect()).collect();
    let mut visited = vec![vec![false; grid[0].len() * 3]; grid.len() * 3];
 
    let mut queue = vec![find_start(&grid)];

@@ -16,7 +16,7 @@ fn ohnomath(b: i64, c: i64) -> i64 {
 
 fn part_1(input: &str, _is_test: bool) -> String {
    let td = input
-      .split('\n')
+      .lines()
       .map(|str| {
          str.split(':')
             .nth(1)
@@ -37,7 +37,7 @@ fn part_1(input: &str, _is_test: bool) -> String {
 
 fn part_2(input: &str, _is_test: bool) -> String {
    let td = input
-      .split('\n')
+      .lines()
       .map(|str| {
          str.split(':')
             .nth(1)

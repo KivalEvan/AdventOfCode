@@ -47,7 +47,7 @@ def int_try_parse(value: str) -> int:
 
 
 def part_one(input: str, is_test: bool) -> str:
-   grid = [list(x) for x in input.split('\n')]
+   grid = [list(x) for x in input.splitlines()]
    sz = len(grid[0])
 
    res = 0
@@ -75,7 +75,7 @@ def part_one(input: str, is_test: bool) -> str:
 
 
 def part_two(input: str, is_test: bool) -> str:
-   grid = [list(x) for x in input.split('\n')]
+   grid = [list(x) for x in input.splitlines()]
    sz = len(grid[0])
 
    res = 0

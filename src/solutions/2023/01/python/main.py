@@ -47,7 +47,7 @@ def do_part_one(line: str) -> int:
 
 
 def part_one(input: str, is_test: bool) -> str:
-   return str(sum(do_part_one(x) for x in input.split('\n')))
+   return str(sum(do_part_one(x) for x in input.splitlines()))
 
 
 def do_part_two(line: str) -> int:
@@ -67,7 +67,7 @@ def do_part_two(line: str) -> int:
 
 
 def part_two(input: str, is_test: bool) -> str:
-   return str(sum(do_part_two(x) for x in input.split('\n')))
+   return str(sum(do_part_two(x) for x in input.splitlines()))
 
 
 if __name__ == '__main__':

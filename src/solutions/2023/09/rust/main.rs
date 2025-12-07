@@ -26,7 +26,7 @@ fn extrapolate(ary: &mut Vec<i64>, sz: usize) -> i64 {
 
 fn part_1(input: &str, _is_test: bool) -> String {
    let parsed: Vec<Vec<i64>> = input
-      .split('\n')
+      .lines()
       .map(|x| x.split(' ').map(|y| y.parse::<i64>().unwrap()).collect())
       .collect();
    let mut res = 0_i64;
@@ -39,7 +39,7 @@ fn part_1(input: &str, _is_test: bool) -> String {
 
 fn part_2(input: &str, _is_test: bool) -> String {
    let parsed: Vec<Vec<i64>> = input
-      .split('\n')
+      .lines()
       .map(|x| x.split(' ').map(|y| y.parse::<i64>().unwrap()).rev().collect())
       .collect();
    let mut res = 0_i64;

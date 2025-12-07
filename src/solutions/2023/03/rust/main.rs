@@ -33,7 +33,7 @@ fn yeet_the_number(grid: &mut Vec<Vec<char>>, x: usize, y: usize) -> String {
 }
 
 fn part_1(input: &str, _is_test: bool) -> String {
-   let mut grid: Vec<Vec<char>> = input.split('\n').map(|s| s.chars().collect()).collect();
+   let mut grid: Vec<Vec<char>> = input.lines().map(|s| s.chars().collect()).collect();
    let sz = grid.len();
    let mut res = 0;
 
@@ -88,7 +88,7 @@ fn part_1(input: &str, _is_test: bool) -> String {
 }
 
 fn part_2(input: &str, _is_test: bool) -> String {
-   let mut grid: Vec<Vec<char>> = input.split('\n').map(|s| s.chars().collect()).collect();
+   let mut grid: Vec<Vec<char>> = input.lines().map(|s| s.chars().collect()).collect();
    let sz = grid.len();
    let mut res = 0;
 

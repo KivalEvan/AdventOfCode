@@ -13,7 +13,7 @@ def main() -> None:
 
 def solve(input: str, is_test: bool, p2: bool) -> str:
    res = 0
-   for line in input.split('\n'):
+   for line in input.splitlines():
       start = 0
       max = 12 if p2 else 2
       b = line.encode('utf-8')
