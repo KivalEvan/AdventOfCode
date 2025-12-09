@@ -4,8 +4,8 @@
 #include <string.h>
 
 char *str_replacec(char *restrict str, const char replace, const char with) {
-   size_t i;
-   for (i = 0; i < strlen(str); i++) {
+   size_t i, len = strlen(str);
+   for (i = 0; i < len; i++) {
       if (str[i] == replace)
          str[i] = with;
    }
@@ -102,8 +102,8 @@ char **str_split(const char *restrict string, const char *delimiter,
 }
 
 size_t str_idxofc(const char *restrict str, const char search) {
-   size_t i;
-   for (i = 0; i < strlen(str); i++)
+   size_t i, len = strlen(str);
+   for (i = 0; i < len; i++)
       if (str[i] == search)
          return i;
    return -1;

@@ -8,34 +8,20 @@ const options: SolutionOptions = {
 };
 
 function solve(input: string, isTest: boolean, p2: boolean): string {
-   const splitters = input
-      .split("\n")
-      .map((x) =>
-         x
-            .split("")
-            .map((x, i) => (x === "^" ? i : -1))
-      );
-
-   const visited = {};
-   function depth(column: number, row: number): number {
-      if (row >= splitters.length) return 1;
-      const key = `${row},${column}`;
-      if (key in visited) return visited[key];
-
-      let res = 0;
-      if (splitters[row].includes(column)) {
-         res = depth(column - 1, row + 2) + depth(column + 1, row + 2);
-         visited[key] = res;
-      }
-      else {
-         res = depth(column, row + 2);
-      }
-
-      return res;
+   let total = 0;
+   const len = input.indexOf("\n");
+   const buffer = new Array(len).fill(0);
+   buffer[input.indexOf("S")] = 1;
+   for (let i = 0; i < input.length; i++) {
+      const x = i % (len + 1);
+      if (input[i] != "^") continue;
+      if (buffer[x] > 0) total++;
+      buffer[x - 1] += buffer[x];
+      buffer[x + 1] += buffer[x];
+      buffer[x] = 0;
    }
 
-   const timelines = depth(input.indexOf("S"), 0);
-   return p2 ? timelines.toString() : Object.keys(visited).length.toString();
+   return p2 ? buffer.reduce((a, b) => a + b, 0).toString() : total.toString();
 }
 
 function part1(input: string, isTest: boolean): string {

@@ -13,40 +13,21 @@ public static class Day07
 
    static private string Solve(string input, bool isTest, bool p2)
    {
-      var splitters = input
-         .Split('\n')
-         .Select(s => s
-            .Select((c, i) => c == '^' ? i : -1)
-            .Where(i => i != -1)
-            .ToArray())
-         .Where(s => s.Length > 0)
-         .ToArray();
-
-      Dictionary<(int, int), long> visited = new(2047);
-      long Depth(int column, int row)
+      var total = 0L;
+      var len = input.IndexOf('\n');
+      var buffer = new long[141];
+      buffer[input.IndexOf('S')] = 1;
+      for (var i = 0; i < input.Length; i++)
       {
-         if (row >= splitters.Length)
-         {
-            return 1L;
-         }
-         if (visited.ContainsKey((column, row))) return visited[(column, row)];
-
-         long res;
-         if (splitters[row].Contains(column))
-         {
-            res = Depth(column - 1, row + 1) + Depth(column + 1, row + 1);
-            visited[(column, row)] = res;
-         }
-         else
-         {
-            res = Depth(column, row + 1);
-         }
-
-         return res;
+         var x = i % (len + 1);
+         if (input[i] != '^') continue;
+         if (buffer[x] > 0) total++;
+         buffer[x - 1] += buffer[x];
+         buffer[x + 1] += buffer[x];
+         buffer[x] = 0;
       }
 
-      var timelines = Depth(input.IndexOf('S'), 0).ToString();
-      return p2 ? timelines.ToString() : visited.Count.ToString();
+      return p2 ? buffer.Sum().ToString() : total.ToString();
    }
 
    static string Part1(string input, bool isTest = false)

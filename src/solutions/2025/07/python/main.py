@@ -12,33 +12,21 @@ def main() -> None:
 
 
 def solve(input: str, is_test: bool, p2: bool) -> str:
-   splitters = [
-       res for res in [[i for i, c in enumerate(line) if c == '^']
-                       for line in input.splitlines()] if len(res)
-   ]
+   total = 0
+   length = input.index('\n')
+   buffer = [0] * length
+   buffer[input.index('S')] = 1
+   for i, c in enumerate(input):
+      x = i % (length + 1)
+      if c != '^':
+         continue
+      if buffer[x] > 0:
+         total += 1
+      buffer[x - 1] += buffer[x]
+      buffer[x + 1] += buffer[x]
+      buffer[x] = 0
 
-   visited: typing.Dict[typing.Tuple[int, int], int] = {}
-
-   def depth(x: int, y: int) -> int:
-      if y >= len(splitters):
-         return 1
-      if (x, y) in visited:
-         return visited[(x, y)]
-
-      res = 0
-      if x in splitters[y]:
-         res = depth(x - 1, y + 1) + depth(x + 1, y + 1)
-         visited[(x, y)] = res
-      else:
-         res = depth(x, y + 1)
-      return res
-
-   timelines = depth(input.index('S'), 0)
-
-   if p2:
-      return str(timelines)
-   else:
-      return str(len(visited.keys()))
+   return str(sum(buffer) if p2 else total)
 
 
 def part_one(input: str, is_test: bool) -> str:
